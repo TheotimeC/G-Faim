@@ -15,7 +15,22 @@ li{
     color: #47494E;
     font-family: Inter;
     font-weight: bold; 
+    transition: all 0.3s ease;
 }
+.activeLink {
+  color: #03081F;
+  border-bottom: 4px solid #298029;
+  /*padding-bottom: 11px;*/
+}
+
+.a::after {
+    display: block;
+    width: 0;
+    height: 4px;
+    background: #298029;
+    transition: width 0.3s ease;
+  }
+
 
 .logo {
 

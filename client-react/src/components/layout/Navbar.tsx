@@ -13,37 +13,22 @@ const Navbar = () =>{
         <div className="bar">
             <div className="navbar-top-rectangle">
                 <div className='icon'><img src={Loc}/></div>
-                <button className="navbar-button">2 rue Doigby, Strasbourg</button> {/* Texte du bouton ici */}
+                <button className="navbar-button">2 rue Doigby, Strasbourg</button>
                 <div className='icon'><img src={Arrow}/></div>
             </div>
             <div className="navbar-menu">
             <img src={Logo} className="logo"></img>
                 <ul className="navbar-nav">
                     <li>
-                        <NavLink to="/" className="a" style={({ isActive }) => 
-                        isActive ? { 
-                            color: '#03081F', 
-                            borderBottom: '4px solid #298029',
-                        } : {}
-                        }> Accueil</NavLink>
+                        <NavLink to="/" className={({ isActive }) => isActive ? "a activeLink" : "a"}> Accueil</NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/Restaurants" className="a" style={({ isActive }) => 
-                        isActive ? { 
-                            color: '#03081F', 
-                            borderBottom: '4px solid #298029' 
-                        } : {}
-                        }> Restaurants</NavLink>
+                        <NavLink to="/Restaurants" className={({ isActive }) => isActive ? "a activeLink" : "a"}> Restaurants</NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/Commandes" className="a" style={({ isActive }) => 
-                        isActive ? { 
-                            color: '#03081F', 
-                            borderBottom: '4px solid #298029' 
-                        } : {}
-                        }> Commandes</NavLink>
+                        <NavLink to="/Commandes" className={({ isActive }) => isActive ? "a activeLink" : "a"}> Commandes</NavLink>
                     </li>
                      
                     <li>
