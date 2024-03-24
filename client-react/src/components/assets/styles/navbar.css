@@ -1,0 +1,104 @@
+li{
+    display: inline;
+    text-align: center;
+    float: left;
+    display: flex;
+    gap: 1em;
+    font-size: 22px;
+    padding: 5px 14px;
+    margin-right: 50px;
+    margin-top: 5%;
+    list-style-type: none;
+}
+.a{
+    text-decoration: none;
+    color: #47494E;
+    font-family: Inter;
+    font-weight: bold; 
+}
+
+.logo {
+
+    height: 100px; /* Hauteur du logo */
+    width: auto; /* Largeur automatique pour maintenir le rapport d'aspect */
+    margin-right: 20px; /* Espace à droite du logo */
+    vertical-align: middle; /* Alignement vertical si d'autres éléments sont présents */
+    padding: 5px;
+
+   }
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    flex-basis: auto;
+    flex-grow: 1;
+    text-decoration: none;
+    
+}
+.navbar-nav{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    padding-left: 0;
+    flex-direction: row;
+    margin-left: auto;
+}
+.bar{
+    background-color: #D9D9D9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar-top-rectangle {
+    display: flex;
+    position: absolute;
+    justify-content: center; /* Centrez les éléments horizontalement */
+    align-items: center;
+    top: 0;
+    right: 10%; /* Ajustez selon l'espacement désiré par rapport à la droite */
+    padding: 4px 20px; /* Ajustez le padding pour l'espacement autour du texte */
+    background-color: #FFA500;
+    z-index: 10; /* Pour s'assurer qu'il se trouve au-dessus des autres éléments */
+    border-radius: 0px 0px 15px 15px;
+  }
+  
+.navbar-button {
+  background: none;
+  margin:0 10px;
+  padding: 4px 8px;;
+  border: none;
+  color: #ffffff; /* Couleur du texte du bouton */
+  font-weight: bold; /* Si vous voulez que le texte soit en gras */
+  cursor: pointer; /* Change le curseur pour indiquer que c'est un bouton */
+
+}
+.icon img{
+    width: auto;
+    height: 20px;
+}
+
+.icon-link {
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; 
+    margin-left: 5px; /* Espace entre les icônes */
+  }
+  
+  .icon-background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    background-color: #298029; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+  }
+  
+  .navbar-icon {
+    width: auto; 
+    height: 20px; 
+
+  }

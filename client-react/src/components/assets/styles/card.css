@@ -1,0 +1,39 @@
+/* Card.css */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: white;
+    width: 220px; /* Adjust width as needed */
+    margin: 10px;
+    overflow: hidden;
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .card-image {
+    background: #c4c4c4; /* Placeholder color */
+    width: 100%;
+    height: 150px; /* Adjust height as needed */
+  }
+  
+  .card-text {
+    padding: 16px;
+  }
+  
+  .card-title {
+    margin: 0;
+    text-align: left;
+    color: #333; /* Adjust text color as needed */
+    font-size: 1.25rem;
+  }
+  
+  .card-subtitle {
+    color: #666; /* Adjust subtitle color as needed */
+    text-align: left;
+    font-size: 1rem;
+  }
+  
