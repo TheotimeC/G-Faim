@@ -34,12 +34,12 @@ li{
 
 .logo {
 
-    height: 100px; /* Hauteur du logo */
+    height: 80px; /* Hauteur du logo */
     width: auto; /* Largeur automatique pour maintenir le rapport d'aspect */
     margin-right: 20px; /* Espace à droite du logo */
     vertical-align: middle; /* Alignement vertical si d'autres éléments sont présents */
     padding: 5px;
-
+    margin: 10px 10px 10px 10px;
    }
 
 .navbar-menu {
