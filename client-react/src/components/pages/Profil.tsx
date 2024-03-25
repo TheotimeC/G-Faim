@@ -1,11 +1,11 @@
 import '../assets/styles/navbar.css'; 
 
-const Accueil = () =>{
+const Profil = () =>{
     return(
         <div>
-            <h1>Accueil</h1>
+            <h1>Profil</h1>
         </div>
     );
 }
 
-export default Accueil
+export default Profil

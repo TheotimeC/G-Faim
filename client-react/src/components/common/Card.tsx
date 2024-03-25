@@ -12,7 +12,7 @@ const Card: React.FC<CardProps> = ({ title, subtitle, img }) => {
   return (
     <div className="card">
       <div className="card-content">
-        <img src={img} alt={`${title} image`} className="card-image" />
+        <img src={img} alt={`${title}`} className="card-image" />
         <div className="card-text">
           <h3 className="card-title">{title}</h3>
           <p className="card-subtitle">{subtitle}</p>

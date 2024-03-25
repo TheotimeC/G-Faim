@@ -1,0 +1,47 @@
+.SearchBarRow{
+    text-align: center;
+    padding-top: 2%;
+}
+.Row1{
+    text-align: center;
+}
+
+.Col1{
+    text-align: left;
+    padding-left: 5%;
+}
+.Col3{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 90px;
+}
+
+.Titre{
+    font-family: Poppins;
+    font-weight: bold;
+    font-size: 32px;
+    color: #03081F;
+}
+.Sous-titre{
+    font-size: 20px;
+    color:#9A9BA1;
+    font-weight: 500;
+}
+.card{
+    display: inline-block;
+
+}
+.Row2{
+    text-align: center;
+}
+.carcontainer{
+    text-align: center;
+
+}
+.Row2{
+    text-align: center;
+}
+.Col2-1{
+    width: 10px;
+}

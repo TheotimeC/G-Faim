@@ -1,23 +1,23 @@
-import React from 'react';
 import {NavLink} from 'react-router-dom';
 import Logo from '../assets/images/logo.png'
-import Loc from '../assets/images/marker.svg'
-import User from '../assets/images/user.svg'
-import Cart from '../assets/images/shopping-cart.svg'
-import Arrow from '../assets/images/angle-small-down.svg'
 import '../assets/styles/navbar.css'; 
+import Icon from '@mdi/react';
+import { mdiCartOutline  } from '@mdi/js';
+import { mdiAccountOutline } from '@mdi/js';
+import { mdiMapMarkerRadius } from '@mdi/js';
+import { mdiChevronDown } from '@mdi/js';
 
 const Navbar = () =>{
     
     return(
         <div className="bar">
             <div className="navbar-top-rectangle">
-                <div className='icon'><img src={Loc}/></div>
+                <Icon path={mdiMapMarkerRadius} size={1} color={"white"}/>
                 <button className="navbar-button">2 rue Doigby, Strasbourg</button>
-                <div className='icon'><img src={Arrow}/></div>
+                <Icon path={mdiChevronDown} size={1} color={"white"}/>
             </div>
             <div className="navbar-menu">
-            <img src={Logo} className="logo"></img>
+            <img src={Logo} className="logo" alt='logo'></img>
                 <ul className="navbar-nav">
                     <li>
                         <NavLink to="/" className={({ isActive }) => isActive ? "a activeLink" : "a"}> Accueil</NavLink>
@@ -34,15 +34,15 @@ const Navbar = () =>{
                     <li>
                         <NavLink to="/Restaurants" className="icon-link"> 
                             <div className="icon-background">
-                                <img src={Cart} alt="Icone 2" className="navbar-icon" />
+                            <Icon path={mdiCartOutline} size={1} color={"white"}/>
                             </div>
                         </NavLink>
                     </li>   
 
                     <li>
-                        <NavLink to="/Restaurants" className="icon-link">
+                        <NavLink to="/profil" className="icon-link">
                             <div className="icon-background">
-                                <img src={User} alt="Icone 2" className="navbar-icon" />
+                                <Icon path={mdiAccountOutline} size={1} color={"white"}/>
                             </div>
                         </NavLink>
                     </li>
