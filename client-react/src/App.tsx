@@ -7,7 +7,7 @@ import Navbar from "./components/layout/Navbar"
 
 function App() {
   return (
-    <div>
+    <>
       <Router>
         <Navbar />
         <Routes>
@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
         </Routes>
       </Router>
-    </div>
+    </>
   );
 }
 
