@@ -2,6 +2,7 @@ import '../assets/styles/profil.css'
 import { Col, Row, Typography, Modal, Upload, UploadFile, UploadProps } from 'antd';
 import  { useState } from 'react';
 import UserData from '../assets/FakeData/User.json';
+import DefaultButton from '../common/DefaultButton';
 import { PlusOutlined } from '@ant-design/icons';
 import Icon from '@mdi/react';
 import { mdiCheck } from '@mdi/js';
@@ -126,8 +127,8 @@ const Profil = () =>{
                             
                         </Row> 
                         <div className='button-container'>
-                                <button>Annuler</button>
-                                <button>Mettre à jour</button>
+                            <DefaultButton text="Refuser" textColor="FFFFFF" bgColor="FF3A44" textSize="1rem" width="15%"/>
+                            <DefaultButton text="Accepter" textColor="FFFFFF" bgColor="298029" textSize="1rem" width="15%"/>
                         </div>
                            
 
