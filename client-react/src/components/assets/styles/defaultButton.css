@@ -1,0 +1,14 @@
+.default-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s;
+    font-weight: bold;
+  }
+  
+  .default-button:hover {
+    /* Assombrir légèrement le bouton au survol */
+    filter: brightness(90%);
+  }

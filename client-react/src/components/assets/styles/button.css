@@ -1,0 +1,37 @@
+.button {
+    font-size: 1em;
+    padding: 0.5em 1em;
+    white-space: nowrap; /* Empêche le texte de passer à la ligne suivante */
+    overflow: hidden; /* Empêche le débordement du texte hors du bouton */
+    min-width: 50px; /* Exemple de largeur minimale */
+    text-overflow: ellipsis; /* Ajoute des points de suspension si le texte déborde */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    /* Assombrir légèrement le bouton au survol */
+    filter: brightness(90%);
+  }
+  
+  @media (max-width: 768px) {
+    .button {
+      font-size: 0.8em;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .button {
+      font-size: 0.7em;
+    }
+  }
