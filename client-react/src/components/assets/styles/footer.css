@@ -1,0 +1,163 @@
+.footer {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #D9D9D9;
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed; /* Si vous voulez que le footer reste fixé en bas */
+    bottom: 0; /* Fixe le footer au bas de la fenêtre */
+    width: 100%;
+    /* Plus de styles CSS pour ajuster la présentation du footer selon vos besoins */
+  }
+  
+
+
+  .footer-section{
+    flex: 1;
+  }
+
+  .logo {
+    /*font-family: 'Lilita One', cursive; /* Assurez-vous que la police est importée dans votre CSS global ou HTML */
+    font-size: 5em; /* Ajustez la taille selon le design */
+    margin-right: 20px; /* Ajustez l'espace entre le logo et les badges */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-g {
+    color: #FFA500; /* Couleur du 'G' */
+  }
+  
+  .logo-faim {
+    color: #298029; /* Couleur de 'FAIM' */
+  }
+
+
+  .legal-section table {
+    width: 100%; 
+    border-collapse: collapse; /* Assure que le tableau n'a pas d'espaces entre les cellules */
+  }
+  
+  .legal-section td {
+    padding: 20px; 
+    vertical-align: top; 
+  }
+  
+  .legal-section h3 {
+    margin-top: 0;
+    font-weight: bold;
+    color: #03081F;
+  }
+  
+  .legal-section a {
+    display: block; 
+    color: #03081F; 
+    text-decoration: none; 
+    margin-bottom: 4px;
+  }
+  
+  .legal-section a:hover {
+    text-decoration: underline;
+  }
+
+
+  .subscription-section {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    background-color: #fff; /* couleur de fond pour l'ensemble de la section */
+    border-radius: 50px; /* bordures arrondies comme dans l'image */
+    padding: 0px; /* espacement autour de l'input et du bouton */
+    max-width: 500px; /* ou la largeur maximale souhaitée */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* ombre portée légère pour du relief */
+  }
+
+.subscription-section input {
+    border: none;
+    padding: 10px 15px; /* espacement interne à l'input */
+    border-radius: 50px; /* bordures arrondies pour l'input */
+    flex-grow: 1; /* permet à l'input de prendre la place disponible */
+  }
+  
+  
+  
+  
+  .subscription-section input:focus {
+    outline: none; /* retire la bordure de focus par défaut */
+  }
+
+  
+
+  
+
+  .legal-section {
+    /*display: flex;*/
+    flex: 1;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #D9D9D9; /* Couleur de fond du footer */
+    color: #333; /* Couleur du texte */
+  }
+  
+  .legal-section h3 {
+    margin-bottom: 10px; /* Espace entre le titre et la liste */
+  }
+  
+  .legal-section ul {
+    list-style: none; /* Supprime les puces de liste */
+    padding: 0; /* Supprime le padding par défaut de la liste */
+  }
+  
+  .legal-section li {
+    margin-bottom: 5px; /* Espace entre les liens */
+  }
+  
+  .legal-section a {
+    color: #333; /* Couleur des liens */
+    text-decoration: none; /* Supprime le soulignement des liens */
+    transition: color 0.3s ease; /* Animation pour le survol des liens */
+  }
+  
+  .legal-section a:hover {
+    color: #666; /* Couleur des liens au survol */
+  }
+  
+  /* Styles pour le responsive design */
+  @media (max-width: 768px) {
+    .footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .button {
+        font-size: 0.8em; /* ajustez si nécessaire pour les petits écrans */
+      }
+    .subscription-section input {
+        padding: 8px 10px; /* ajustez si nécessaire pour les petits écrans */
+      }
+    .legal-section {
+        flex-direction: column;
+      }
+    .legal-links, .important-links {
+        margin-bottom: 20px;
+      }
+  }
+  
+  /* Vous pouvez ajouter plus de styles personnalisés ici */
+  @media (max-width: 480px) {
+    .subscription-section {
+      flex-direction: column;
+    }
+  
+    .subscription-section input {
+      margin-right: 0;
+      margin-bottom: 10px; /* espace entre l'input et le bouton sur les petits écrans */
+    }
+
+    .button {
+        font-size: 0.7em; /* ajustez si nécessaire pour les très petits écrans */
+      }
+  }
