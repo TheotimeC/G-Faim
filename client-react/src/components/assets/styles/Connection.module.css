@@ -1,0 +1,63 @@
+
+.loginContainer{
+    margin: 0;
+    display: flex;
+    align-items: center; /* Centers vertically */
+    justify-content: center; /* Centers horizontally */
+    min-height: 80vh; /* Full viewport height */
+}
+.antRow {
+    flex: none; /* Do not grow or shrink */
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 2rem;
+    width: 100%; /* Take the full width of its container */
+    max-width: 65%; /* Limit max width to half of the container width */
+}
+/* This targets the column containing the form and title */
+.antCol:first-child {
+    display: flex; /* Enables flexbox */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center children vertically */
+    align-items: flex-start; /* Align children to the start (left) */
+    padding-right: 2rem; /* Adds padding to the right of the form */
+}
+
+/* Header styling */
+.columnFlex h1 {
+    margin-bottom: 5rem; /* Adds space below the header */
+    font-size: 2rem; /* Adjust font size as needed */
+}
+
+/* Style each Input */
+.antInput {
+    margin-bottom: 1rem; /* Adds space below each input */
+    font-size: 1rem; /* Adjusted for smaller size */
+}
+
+
+/* Vertical Divider */
+.dividerVertical {
+    background-color: #000; /* Divider color */
+    height: 100%; /* Set to auto to take the height of the content */
+    margin: auto;
+    width: 1px; /* Set the width of the divider */
+}
+.antInput {
+    border-radius: 50px; /* Set your desired border-radius here */
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: flex-end; /* Align button to the right */
+    margin-top: 1rem; /* Add space above the button as needed */
+    width: 100%;
+}
+
+.columnFlex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
