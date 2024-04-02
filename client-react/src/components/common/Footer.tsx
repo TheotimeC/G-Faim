@@ -1,8 +1,8 @@
 import React from 'react';
 import Button from './Button';
 import '../assets/styles/footer.css';
-import { Col, Row } from 'antd';
-import {FaInstagram, FaFacebook, FaTwitter} from "react-icons/fa";
+import Icon from '@mdi/react';
+import { mdiInstagram, mdiFacebook, mdiTwitter } from '@mdi/js';
 
 interface FooterProps {
   backgroundColor: string;
@@ -18,14 +18,14 @@ const Footer: React.FC<FooterProps> = ({ backgroundColor, /*onSubscribe*/ }) => 
   return (
     <footer className="footer" style={style}>
         <div className="footer-section">
-          <h1 className="logo">
+          <div className="logo">
               <span className="logo-g">G</span>
               <span className="logo-faim">FAIM</span>
-          </h1>
+          </div>
           <div className="social-icons">
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
-            <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><Icon path={mdiInstagram} size={2}/></a>
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><Icon path={mdiFacebook} size={2}/></a>
+            <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer"><Icon path={mdiTwitter} size={2}/></a>
           </div>
         </div>
         <div className="subscription">
@@ -41,13 +41,13 @@ const Footer: React.FC<FooterProps> = ({ backgroundColor, /*onSubscribe*/ }) => 
           <table>
               <tbody>
               <tr>
-                  <td>
+                  <td className='legal-pages'>
                   <h3>Pages Légales</h3>
                   <a href="/terms">Termes et conditions</a><br />
                   <a href="/privacy">Politique de confidentialité</a><br />
                   <a href="/cookies">Cookies</a>
                   </td>
-                  <td>
+                  <td className='important-links'>
                   <h3>Liens Importants</h3>
                   <a href="/help">Aide</a><br />
                   <a href="/add-restaurant">Ajouter votre restaurant</a><br />

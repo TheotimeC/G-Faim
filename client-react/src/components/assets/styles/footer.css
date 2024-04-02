@@ -5,11 +5,11 @@
     flex-wrap: wrap;
     background-color: #D9D9D9;
     box-sizing: border-box;
-    position: fixed; /* Si vous voulez que le footer reste fixé en bas */
-    bottom: 0; /* Fixe le footer au bas de la fenêtre */
+    position: fixed; 
+    bottom: 0; 
     width: 100%;
     margin-bottom: 25px;
-    /* Plus de styles CSS pour ajuster la présentation du footer selon vos besoins */
+    padding-bottom: 1em;
   }
   
 
@@ -18,8 +18,7 @@
     flex: 1;
   }
   .logo {
-    /*font-family: 'Lilita One', cursive; /* Assurez-vous que la police est importée dans votre CSS global ou HTML */
-    font-size: 5em; /* Ajustez la taille selon le design */
+    font-size: 5em;
     justify-content: center;
     display: flex;
     align-items: center;
@@ -41,13 +40,13 @@
   }
   
   .social-icons a {
-    margin: 0 5px; /* Espacement entre les icônes */
-    color: #03081F; /* Couleur des icônes */
-    font-size: 24px; /* Taille des icônes */
+    margin: 0 20px; 
+    color: #03081F; 
+    font-size: 24px; 
   }
   
   .social-icons a:hover {
-    color: #FFA500; /* Couleur des icônes au survol */
+    color: #FFA500; 
   }
 
 
@@ -64,38 +63,39 @@
     display: flex;
     flex: 1;
     align-items: center;
-    background-color: #ffffff; /* couleur de fond pour l'ensemble de la section */
-    border-radius: 50px; /* bordures arrondies comme dans l'image */
-    padding: 0px; /* espacement autour de l'input et du bouton */
-    max-width: 500px; /* ou la largeur maximale souhaitée */
+    background-color: #ffffff;
+    border-radius: 50px;
+    padding: 0px; 
+    max-width: 500px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* ombre portée légère pour du relief */
   }
   .subscription-section input {
     border: none;
-    padding: 7px; /* espacement interne à l'input */
-    border-radius: 50px; /* bordures arrondies pour l'input */
-    flex-grow: 1; /* permet à l'input de prendre la place disponible */
+    padding: 7px;
+    border-radius: 50px;
+    flex-grow: 1; 
   }
   .subscription-section input:focus {
-    outline: none; /* retire la bordure de focus par défaut */
+    outline: none; 
   }
 
 
   .legal-section {
-    /*display: flex;*/
     flex: 1;
-
   }
   .legal-section table {
     width: 100%; 
     border-collapse: collapse; /* Assure que le tableau n'a pas d'espaces entre les cellules */
   }
-  .legal-section td {
-    padding: 20px; 
+  .legal-pages{
+    padding-left: 4em;
+    vertical-align: top; 
+  }
+  .important-links{
+    padding-right: 4em;
     vertical-align: top; 
   }
   .legal-section h3 {
-    margin-top: 0;
     font-weight: bold;
     color: #03081F;
     font-family: poppins;
@@ -112,11 +112,10 @@
   }
 
   .footer-bottom {
-    background-color: #03081F; /* Fond noir pour la barre du bas */
-    color: #fff; /* Texte en blanc */
-    text-align: center; /* Centre le texte */
-    /*padding: 0px 0; /* Ajoute un peu d'espacement vertical */
-    font-size: 0.8em; /* Réduit la taille du texte si nécessaire */
+    background-color: #03081F; 
+    color: #fff; 
+    text-align: center; 
+    font-size: 0.8em; 
     position: fixed;
     bottom: 0;
     width: 100%;
