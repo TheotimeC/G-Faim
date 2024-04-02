@@ -3,10 +3,9 @@
     "Telephone": "0750910524",
     "email": "theotime.colinet@viacesi.fr",
     "mdp":"mot de passe",
- 
     "Adresse":"24 Rue Doigby",
-    "Ville":"Strasbourg",
-    "CP":"67500"
-
+    "Codeparrain":"GHE45",
+    "NbParrain":"2",
+    "CodeEntre":true
     
 }

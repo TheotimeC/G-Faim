@@ -1,7 +1,10 @@
 import '../assets/styles/navbar.css';
+
 import Button from '../common/Button';
 import DefaultButton from '../common/DefaultButton';
 import Footer from '../common/Footer';
+
+
 
 const Restaurants = () =>{
 
@@ -14,6 +17,7 @@ const Restaurants = () =>{
     return(
         <div>
             <h1>Restaurants</h1>
+
             <Button text="Voir Menu" color="298029" size="10" />
             <Button text="Commander" color="FFA500" size="10" />
             <DefaultButton text="Accepter" textColor="FFFFFF" bgColor="298029" textSize="1rem" width="150px" marginLeft="10px" marginRight="10px"/>

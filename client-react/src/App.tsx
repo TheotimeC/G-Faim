@@ -6,12 +6,13 @@ import Profil from './components/pages/Profil'
 import Navbar from "./components/layout/Navbar"
 
 function App() {
+  const userId = '6609c286c8c28a325095f8d1';
   return (
     <>
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/profil" element={<Profil/>} />
+          <Route path="/profil" element={<Profil userId={userId}/>} />
           <Route path="/restaurants" element={<Restaurants/>} />
           <Route path="/commandes" element={<Commandes/>} />
           <Route path="/" element={<Home />} />

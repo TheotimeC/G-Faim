@@ -9,9 +9,10 @@ interface DefaultButtonProps {
   width: string;
   marginLeft: string;
   marginRight: string;
+  onClick: () => void;
 }
 
-const DefaultButton: React.FC<DefaultButtonProps> = ({ text, textColor, textSize, bgColor,  width, marginLeft, marginRight,}) => {
+const DefaultButton: React.FC<DefaultButtonProps> = ({ text, textColor, textSize, bgColor,  width, marginLeft, marginRight,onClick}) => {
   const style = {
     color: `#${textColor}`,
     backgroundColor: `#${bgColor}`,
@@ -22,7 +23,7 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({ text, textColor, textSize
   };
 
   return (
-    <button className="default-button" style={style}>
+    <button className="default-button" style={style} onClick={onClick}>
       {text}
     </button>
   );

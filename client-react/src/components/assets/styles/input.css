@@ -1,0 +1,32 @@
+input{
+    border: none;
+    border-bottom: 2px solid #03081F;
+    font-size: 20px;
+    width: 90%;
+    font-size: 20px;
+    color: #03081F;
+    font-weight:500;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+}
+.icon{
+    position: relative;
+    z-index: 2;
+    left:-1.5rem;
+}
+.titre{
+    font-weight: 700;
+    text-align: left;
+    color: #03081F;
+    margin-top: 20px;
+}
+
+.inputglobal .icon {
+    cursor: pointer;
+  }
+.inputglobal{
+    display: flex;
+    align-items: center; /* Centre verticalement les enfants */
+  }
