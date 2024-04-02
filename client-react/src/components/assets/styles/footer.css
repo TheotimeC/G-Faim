@@ -29,11 +29,15 @@
   }
   
   .logo-g {
-    color: #FFA500; /* Couleur du 'G' */
+    color: #FFA500;
+    font-family: Lilita One; 
+    font-weight: bold;
   }
   
   .logo-faim {
-    color: #298029; /* Couleur de 'FAIM' */
+    color: #298029;
+    font-family: Lilita One; 
+    font-weight: bold;
   }
 
 
@@ -51,6 +55,7 @@
     margin-top: 0;
     font-weight: bold;
     color: #03081F;
+    font-family: poppins;
   }
   
   .legal-section a {
@@ -58,12 +63,17 @@
     color: #03081F; 
     text-decoration: none; 
     margin-bottom: 4px;
+    font-family: inter;
   }
   
   .legal-section a:hover {
     text-decoration: underline;
   }
 
+  .subscription{
+    font-family: poppins;
+    font-weight: bold;
+  }
 
   .subscription-section {
     display: flex;
