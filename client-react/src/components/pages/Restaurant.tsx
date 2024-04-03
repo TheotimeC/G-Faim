@@ -83,16 +83,16 @@ const Restaurant: FunctionComponent = () => {
         <>
         <div className="resto-cards-container">
           {restaurant.Menus.map((menu) => (
-            <div key={menu.Id}>
+            <div key={menu._id}>
               <h1>Menus</h1>
-              <RestoCard nom={menu.Titre} description={menu.Description} img={menu.Titre} prix={menu.Prix} />
+              <RestoCard nom={menu.Titre} description={menu.Description} img={restaurant.img} prix={menu.Prix} />
               
               </div>
           ))}
           {restaurant.Articles.map((article) => (
-            <div key={article.Id}>
+            <div key={article._id}>
               <h1>{article.Catégorie}</h1>
-              <RestoCard nom={article.Titre} description={article.Description} img={article.Titre} prix={article.Prix} />
+              <RestoCard nom={article.Titre} description={article.Description} img={restaurant.img} prix={article.Prix} />
               
               </div>
           ))}
@@ -105,10 +105,10 @@ const Restaurant: FunctionComponent = () => {
         <>
         <div className="resto-cards-container">
         {restaurant.Menus.map((menu) => (
-        <div key={menu.Id}>
+        <div key={menu._id}>
           
           <h1>Menus</h1>
-          <RestoCard nom={menu.Titre} description={menu.Description} img={menu.Titre} prix={menu.Prix} />
+          <RestoCard nom={menu.Titre} description={menu.Description} img={restaurant.img} prix={menu.Prix} />
         
         </div>
         
@@ -120,10 +120,10 @@ const Restaurant: FunctionComponent = () => {
         <>
         <div className="resto-cards-container">
         {restaurant.Articles.filter((article) => article.Catégorie === selectedCategory).map((article) => (
-        <div key={article.Id}>
+        <div key={article._id}>
           
           <h1>{article.Catégorie}</h1>
-          <RestoCard nom={article.Titre} description={article.Description} img={article.Titre} prix={article.Prix} />
+          <RestoCard nom={article.Titre} description={article.Description} img={restaurant.img} prix={article.Prix} />
           
           </div>
       ))}</div></>
@@ -137,7 +137,7 @@ const Restaurant: FunctionComponent = () => {
       <main className="restaurant1">
         <div className="fond-de-page" />
         <section className="frame-parent">
-          <Restoheader categorie={restaurant.Categorie} restaurantName={restaurant.Nom}/>
+          <Restoheader categorie={restaurant.Categorie} restaurantName={restaurant.Nom} img={restaurant.img}/>
 
               <Row className="rowresto">
                 <Col span={8} className="colresto">Carte de {restaurant.Nom}</Col>

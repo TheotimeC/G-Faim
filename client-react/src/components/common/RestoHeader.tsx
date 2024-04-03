@@ -4,9 +4,10 @@ import "../assets/styles/restoheader.css";
 interface FrameComponent3Props {
   categorie: string;
   restaurantName: string;
+  img:string;
 }
 
-const FrameComponent3: FunctionComponent<FrameComponent3Props> = ({ categorie, restaurantName }) => {
+const FrameComponent3: FunctionComponent<FrameComponent3Props> = ({ categorie, restaurantName, img }) => {
   return (
     <div className="frame-wrapper25">
       <div className="rectangle-parent23">
@@ -41,7 +42,7 @@ const FrameComponent3: FunctionComponent<FrameComponent3Props> = ({ categorie, r
             className="visual-karsa-y8fs7csn-vw-unspl-icon1"
             loading="lazy"
             alt=""
-            src="/visualkarsay8fs7csnvwunsplash-1@2x.png"
+            src={img}
           />
           
         </div>
