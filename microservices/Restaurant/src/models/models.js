@@ -20,6 +20,10 @@ const articleSchema = new mongoose.Schema({
   Catégorie: {
     type: String,
     required: true
+  },
+  img: {
+    type: String,
+    required: true
   }
 });
 
@@ -43,7 +47,11 @@ const menuSchema = new mongoose.Schema({
   Articles: [{
     type: String, // Supposant que ce sont les IDs des articles référencés
     required: true
-  }]
+  }],
+  img: {
+    type: String,
+    required: true
+  }
 });
 
 const horaireSchema = new mongoose.Schema({
