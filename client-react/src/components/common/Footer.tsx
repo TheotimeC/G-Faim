@@ -5,7 +5,7 @@ import Icon from '@mdi/react';
 import { mdiInstagram, mdiFacebook, mdiTwitter } from '@mdi/js';
 
 interface FooterProps {
-  backgroundColor: string;
+  backgroundColor?: string;
   //onSubscribe: () => void; // Une fonction callback pour gérer les événements d'abonnement
   // Vous pouvez ajouter plus de props selon vos besoins, par exemple pour gérer les textes et les liens
 }
