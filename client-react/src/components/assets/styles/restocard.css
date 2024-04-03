@@ -4,7 +4,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     background: white;
     width: 25rem; /* Adjust width as needed */
-    height: auto;
+    height: 10rem;
     margin: 10px;
     overflow: hidden;
     cursor: pointer;
@@ -19,10 +19,11 @@
   
   .resto-card-image {
     background: #c4c4c4; /* Couleur de fond en attendant le chargement de l'image */
-    width: 400px; /* Largeur de l'image par rapport à la carte */
+    width: 200px; /* Largeur de l'image par rapport à la carte */
+    max-width: 100px;
+    height: 10rem;
     object-fit: cover; /* Garantit que l'image couvre la zone sans perdre ses proportions */
-    max-height: 80%;
-    max-width: 40%;
+    object-position: center;
   }
   
   .resto-card-text {
@@ -41,4 +42,9 @@
     text-align: left;
     font-size: 1rem;
   }
-  
+  .resto-card-prix{
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: left;
+    color: #03081F;
+  }

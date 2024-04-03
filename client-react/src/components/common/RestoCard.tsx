@@ -18,7 +18,7 @@ const RestoCard: React.FC<RestoCardProps> = ({ nom, description, prix, img, onCl
         <div className="resto-card-text">
           <h3 className="resto-card-title">{nom}</h3>
           <p className="resto-card-subtitle">{description}</p>
-          <p className="resto-card-subtitle">{prix}€</p>
+          <p className="resto-card-prix">{prix}€</p>
         </div>
         <img src={img} alt={`${nom}`} className="resto-card-image" />
       </div>

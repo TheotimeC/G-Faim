@@ -24,6 +24,7 @@ interface Article {
   Description: string;
   Prix: number;
   Catégorie: string;
+  img: string;
 }
 
 interface Menu {
@@ -32,6 +33,7 @@ interface Menu {
   Description: string;
   Prix: number;
   Articles: string[]; 
+  img: string;
 }
 
 interface Restaurant {
@@ -45,6 +47,7 @@ interface Restaurant {
   Menus: Menu[];
   Articles: Article[];
 }
+
 
 const API_URL = 'http://localhost:3001/restaurant';
 
@@ -75,7 +78,8 @@ const Restaurant: FunctionComponent = () => {
   if (!restaurant) return <div className='loading'><Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /></div>;
   const categories = Array.from(new Set(restaurant.Articles.map((article) => article.Catégorie)));
   const displayAll = selectedCategory === "Tout";
-  
+
+
   const displayItems = () => {
     if (displayAll) {
       // Si "Tout" est sélectionné, retourne les Menus suivis des Articles
@@ -85,14 +89,14 @@ const Restaurant: FunctionComponent = () => {
           {restaurant.Menus.map((menu) => (
             <div key={menu._id}>
               <h1>Menus</h1>
-              <RestoCard nom={menu.Titre} description={menu.Description} img={restaurant.img} prix={menu.Prix} />
+              <RestoCard nom={menu.Titre} description={menu.Description} img={menu.img} prix={menu.Prix} />
               
               </div>
           ))}
           {restaurant.Articles.map((article) => (
             <div key={article._id}>
               <h1>{article.Catégorie}</h1>
-              <RestoCard nom={article.Titre} description={article.Description} img={restaurant.img} prix={article.Prix} />
+              <RestoCard nom={article.Titre} description={article.Description} img={article.img} prix={article.Prix} />
               
               </div>
           ))}
@@ -108,7 +112,7 @@ const Restaurant: FunctionComponent = () => {
         <div key={menu._id}>
           
           <h1>Menus</h1>
-          <RestoCard nom={menu.Titre} description={menu.Description} img={restaurant.img} prix={menu.Prix} />
+          <RestoCard nom={menu.Titre} description={menu.Description} img={menu.img} prix={menu.Prix} />
         
         </div>
         
@@ -123,7 +127,7 @@ const Restaurant: FunctionComponent = () => {
         <div key={article._id}>
           
           <h1>{article.Catégorie}</h1>
-          <RestoCard nom={article.Titre} description={article.Description} img={restaurant.img} prix={article.Prix} />
+          <RestoCard nom={article.Titre} description={article.Description} img={article.img} prix={article.Prix} />
           
           </div>
       ))}</div></>
