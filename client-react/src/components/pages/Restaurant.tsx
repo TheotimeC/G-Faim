@@ -79,8 +79,6 @@ const Restaurant: FunctionComponent = () => {
   const categories = Array.from(new Set(restaurant.Articles.map((article) => article.Catégorie)));
   const displayAll = selectedCategory === "Tout";
 
-  type AccType = Record<string, Article[]>;
-
 
   const displayItems = () => {
     if (displayAll) {
