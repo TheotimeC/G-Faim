@@ -30,7 +30,7 @@ const Home = () =>{
             <CategoriesDisplay 
             title="Restaurants populaires" 
             data={RestoData} 
-            renderItem={(item) => <Card title={item.title} subtitle={item.subtitle} img={item.img} />}
+            renderItem={(item) => <Card title={item.Nom} subtitle={item.Catégorie} img={item.img} />}
             />
         
             </div>

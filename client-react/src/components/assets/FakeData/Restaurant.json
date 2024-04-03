@@ -1,10 +1,9 @@
-[
-  {
+{
     "Id": "R1",
     "Nom": "Chez Gourmet",
     "Telephone": "0123456789",
     "Email": "contact@chezgourmet.com",
-    "Catégorie": "Cuisine française",
+    "Categorie": "Cuisine française",
     "img": "https://upload.wikimedia.org/wikipedia/fr/thumb/e/ea/Mcdonalds_France_2009_logo.svg/1138px-Mcdonalds_France_2009_logo.svg.png",
     "Horaires d'ouverture": {
       "Lundi": "09:00 - 23:00",
@@ -17,6 +16,7 @@
     },
     "Menus": [
       {
+        "Id": "M1",
         "Titre": "Menu Dégustation",
         "Description": "Un voyage gastronomique à travers nos spécialités.",
         "Prix": 75.00,
@@ -31,6 +31,13 @@
       {
         "Id": "A1",
         "Titre": "Foie Gras",
+        "Description": "Foie gras de canard maison avec compotée d'oignon.",
+        "Prix": 15.00,
+        "Catégorie": "Entrée"
+      },
+      {
+        "Id": "A5",
+        "Titre": "Foie Pas Gras",
         "Description": "Foie gras de canard maison avec compotée d'oignon.",
         "Prix": 15.00,
         "Catégorie": "Entrée"
@@ -51,55 +58,10 @@
       },
       {
         "Id": "A4",
-        "Titre": "Crème Pas Brûlée",
+        "Titre": "Crème Trop Brûlée",
         "Description": "Crème brûlée à la vanille de Madagascar.",
         "Prix": 10.00,
         "Catégorie": "Dessert"
       }
     ]
-  },
-  {
-    "Id": "R2",
-    "Nom": "La Bonne Fourchette",
-    "Telephone": "0987654321",
-    "Email": "info@labonnefourchette.com",
-    "Catégorie": "Cuisine italienne",
-    "img": "https://upload.wikimedia.org/wikipedia/fr/thumb/e/ea/Mcdonalds_France_2009_logo.svg/1138px-Mcdonalds_France_2009_logo.svg.png",
-    "Horaires d'ouverture": {
-      "Lundi": "10:00 - 22:00",
-      "Mardi": "10:00 - 22:00",
-      "Mercredi": "",
-      "Jeudi": "10:00 - 22:00",
-      "Vendredi": "10:00 - 22:00",
-      "Samedi": "10:00 - 24:00",
-      "Dimanche": "10:00 - 22:00"
-    },
-    "Menus": [
-      {
-        "Titre": "Menu Pizza",
-        "Description": "Sélection de nos meilleures pizzas.",
-        "Prix": 20.00,
-        "Articles": [
-          "A4",
-          "A5"
-        ]
-      }
-    ],
-    "Articles": [
-      {
-        "Id": "A4",
-        "Titre": "Pizza Margherita",
-        "Description": "Tomate, mozzarella, basilic frais.",
-        "Prix": 8.50,
-        "Catégorie": "Pizza"
-      },
-      {
-        "Id": "A5",
-        "Titre": "Pizza Quattro Stagioni",
-        "Description": "Tomate, mozzarella, artichauts, champignons, jambon, olives.",
-        "Prix": 11.00,
-        "Catégorie": "Pizza"
-      }
-    ]
   }
-]

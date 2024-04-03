@@ -6,11 +6,12 @@ type CardProps = {
   title: string;
   subtitle: string;
   img: string; 
+  onClick: () => void;
 };
 
-const Card: React.FC<CardProps> = ({ title, subtitle, img }) => {
+const Card: React.FC<CardProps> = ({ title, subtitle, img, onClick  }) => {
   return (
-    <div className="card">
+    <div className="card" onClick={onClick}>
       <div className="card-content">
         <img src={img} alt={`${title}`} className="card-image" />
         <div className="card-text">

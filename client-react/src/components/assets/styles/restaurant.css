@@ -1,0 +1,150 @@
+.fond-de-page {
+    align-self: stretch;
+    height: 3667px;
+    position: relative;
+    background-color: var(--color-gray-200);
+    display: none;
+    z-index: 0;
+  }
+  .frame-parent {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 0 82px;
+    box-sizing: border-box;
+    gap: var(--gap-29xl);
+    max-width: 100%;
+  }
+  .banner-element {
+    align-self: stretch;
+    flex: 1;
+    position: relative;
+    border-radius: 0 var(--br-xs) var(--br-xs) 0;
+    background-color: var(--color-orange-200);
+    z-index: 2;
+  }
+  .badge-tag {
+    height: 62px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-12xs) 0 0;
+    box-sizing: border-box;
+    max-width: 108%;
+    flex-shrink: 0;
+  }
+  .ouvert-jusqu {
+    position: relative;
+    line-height: 66px;
+    font-weight: 600;
+    z-index: 3;
+    margin-left: -231px;
+  }
+  .sidebar-component {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 var(--padding-7xl) 0 0;
+    box-sizing: border-box;
+    max-width: 100%;
+    height: 100%;
+  }
+  .clock-icon {
+    position: absolute;
+    top: 18px;
+    left: 62px;
+    width: 29px;
+    height: 29px;
+    object-fit: cover;
+    z-index: 3;
+  }
+  .menu-bar {
+    width: 335px;
+    height: 66px;
+    position: absolute;
+    margin: 0 !important;
+    top: 646px;
+    left: 100px;
+    max-width: 100%;
+  }
+  .restaurant,
+  .restaurant1 {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .restaurant1 {
+    flex: 1;
+    background-color: var(--color-gray-200);
+    flex-direction: column;
+    gap: var(--gap-18xl);
+    max-width: 100%;
+    text-align: left;
+    font-size: var(--font-size-lg);
+    color: var(--color-white);
+    font-family: var(--font-poppins);
+  }
+  .restaurant {
+    width: 100%;
+    flex-direction: row;
+    letter-spacing: normal;
+  }
+  @media screen and (max-width: 1275px) {
+    .frame-parent {
+      padding-bottom: 34px;
+      box-sizing: border-box;
+    }
+  }
+  @media screen and (max-width: 750px) {
+    .frame-parent {
+      padding-bottom: var(--padding-3xl);
+      box-sizing: border-box;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .frame-parent {
+      gap: 24px 48px;
+    }
+    .restaurant1 {
+      gap: 18px 37px;
+    }
+  }
+
+.rowresto{
+    padding-top: 1%;
+    width: 100%;
+    text-align: center;
+}
+
+.colresto{
+    font-family: Poppins !important;
+    font-weight: bold !important;
+    font-size: 24px !important;
+    color: #03081F !important;
+}
+
+.resto-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Cela mettra de l'espace autour de chaque carte */
+    align-items: flex-start; /* Alignement vertical au début, pour que les cartes soient alignées en haut */
+    padding-left: 10rem;
+    padding-right: 10rem;
+}
+  
+  .resto-card {
+    /* Ajoute une règle pour limiter la largeur de la carte si nécessaire */
+    flex: 0 1 calc(33.333% - 20px); /* Pour 3 cartes par ligne, ajuste le pourcentage et la soustraction pour les marges */
+    margin: 10px; /* Ajuste pour l'espacement souhaité */
+  }
+  

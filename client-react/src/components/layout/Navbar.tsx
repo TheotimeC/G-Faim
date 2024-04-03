@@ -24,7 +24,7 @@ const Navbar = () =>{
                     </li>
 
                     <li>
-                        <NavLink to="/Restaurants" className={({ isActive }) => isActive ? "a activeLink" : "a"}> Restaurants</NavLink>
+                        <NavLink to="/Restaurants" className={({ isActive }) => isActive ? "a activeLink" : "a"}> Parcourir</NavLink>
                     </li>
 
                     <li>

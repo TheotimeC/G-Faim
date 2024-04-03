@@ -1,0 +1,21 @@
+.container-filterbutton{
+    background-color: #298029;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 25px;
+}
+.filterbutton{
+    background-color: #298029;
+    border: none;
+    font-size: 22px;
+    font-family: Poppins;
+    font-weight: bold;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    cursor: pointer;
+    color: #FFFFFF;
+}
+.filterbutton.active {
+    background-color: #03081F; 
+    border-radius: 20px;
+}
