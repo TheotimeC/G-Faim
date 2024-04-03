@@ -5,6 +5,7 @@ import Commandes from './components/pages/Commandes'
 import Profil from './components/pages/Profil'
 import Navbar from "./components/layout/Navbar"
 import Connection from "./components/pages/Connection.tsx";
+import Footer from "./components/common/Footer.tsx";
 
 function App() {
   const userId = '6609c286c8c28a325095f8d1';
@@ -20,6 +21,10 @@ function App() {
           <Route path="/" element={<Home />} />
         </Routes>
       </Router>
+        <footer>
+            <Footer />
+        </footer>
+
     </>
   );
 }
