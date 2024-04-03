@@ -6,9 +6,17 @@ import { mdiCartOutline  } from '@mdi/js';
 import { mdiAccountOutline } from '@mdi/js';
 import { mdiMapMarkerRadius } from '@mdi/js';
 import { mdiChevronDown } from '@mdi/js';
+import Panier from "../pages/Panier.tsx";
+import {useState} from "react";
+import {Button} from "antd";
+
 
 const Navbar = () =>{
-    
+    const [drawerState, setDrawerState] = useState(false);
+    const handleButtonClick = () => {
+        setDrawerState(true); // This calls the setter without returning a value
+    };
+
     return(
         <div className="bar">
             <div className="navbar-top-rectangle">
@@ -32,13 +40,10 @@ const Navbar = () =>{
                     </li>
                      
                     <li>
-                        <NavLink to="/Restaurants" className="icon-link"> 
                             <div className="icon-background">
-                            <Icon path={mdiCartOutline} size={1} color={"white"}/>
+                                <Button onClick={handleButtonClick} style={{backgroundColor: "green", border:"green"}} icon={<Icon path={mdiCartOutline} size={1} color="white"/>}/>
                             </div>
-                        </NavLink>
-                    </li>   
-
+                    </li>
                     <li>
                         <NavLink to="/profil" className="icon-link">
                             <div className="icon-background">
@@ -47,7 +52,8 @@ const Navbar = () =>{
                         </NavLink>
                     </li>
                 </ul>
-            </div>  
+            </div>
+            <Panier drawerState={drawerState} setDrawerState={setDrawerState} />
         </div>
     )
 }
