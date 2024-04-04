@@ -1,0 +1,54 @@
+/* CartItem.css */
+.cart-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.cart-item-image {
+    width: 60px; /* Adjust as needed */
+    height: 60px; /* Adjust as needed */
+    object-fit: cover;
+    margin-right: 15px;
+    background: #158E6A40;
+}
+
+.cart-item-info {
+    flex-grow: 1;
+}
+
+.cart-item-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.cart-quantity-input {
+    width: 40px; /* Or any other width */
+    text-align: center;
+    /* Style it to fit your design */
+}
+.cart-item-price {
+    color: #000; /* Example color for the price */
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+}
+
+.cart-quantity-button {
+    border: none;
+    background-color: #298029;
+    color: white;
+    cursor: pointer;
+    width: 1.2rem;
+    margin: 0 10px;
+    /* Add more styles if needed */
+}
+
+.cart-quantity-value {
+    min-width: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
