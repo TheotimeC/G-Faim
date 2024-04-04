@@ -4,11 +4,14 @@ import { Col, Row } from 'antd';
 import Card from '../common/Card'
 import CateData from '../assets/FakeData/Categories.json';
 import RestoData from '../assets/FakeData/Resto.json';
-import CategoriesDisplay from '../layout/CardDisplay'
+import CategoriesDisplay from '../layout/CardDisplay';
+import CookieConsent from '../common/CookieConsent';
 
 const Home = () =>{
     
     return(
+        <>
+        <CookieConsent />
         <div>
             
             <Row className='SearchBarRow'>
@@ -36,6 +39,8 @@ const Home = () =>{
             </div>
 
         </div>
+        </>
+        
             
     );
 }
