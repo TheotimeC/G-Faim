@@ -3,13 +3,13 @@ import {NavLink} from 'react-router-dom';
 import Card from "../common/Card";
 import CategoriesDisplay from "../layout/CardDisplay";
 import Restaurant from "../pages/Restaurant";
-import axios from 'axios';
+import api from '../common/Api';
 
 const API_URL = 'http://localhost:3001/restaurant';
 
 export const getAllRestaurants = async (): Promise<Restaurant[]> => {
     try {
-      const response = await axios.get<Restaurant[]>(`${API_URL}/getAll`);
+      const response = await api.get<Restaurant[]>(`${API_URL}/getAll`);
       return response.data; // Assurez-vous que ceci est bien un tableau de `Restaurant[]`
     } catch (error) {
       console.error('Erreur lors de la récupération des restaurants:', error);
@@ -29,7 +29,7 @@ const Restaurants = () => {
     const handleCardClick = (id: string) => {
         setSelectedRestId(id); // Définir l'ID du restaurant sélectionné
     };
-
+    const Francerestaurants = restaurants.filter(restaurant => restaurant.Categorie === "Cuisine française");
     // Si un restaurant est sélectionné, affichez le composant Restaurant, sinon le contenu par défaut
     if (selectedRestId) {
         return <Restaurant/>;
@@ -56,8 +56,8 @@ const Restaurants = () => {
                     )}
                 />
                 <CategoriesDisplay
-                    title="Restaurants Italiens"
-                    data={restaurants}
+                    title="Restaurants Français"
+                    data={Francerestaurants}
                     renderItem={(item) => (
                         <NavLink 
                             key={item._id} 

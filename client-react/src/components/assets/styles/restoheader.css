@@ -166,13 +166,12 @@
   min-width: 28.063rem;
 }
 .visual-karsa-y8fs7csn-vw-unspl-icon1 {
-  position: absolute;
+  padding-top: 1.1rem;
   padding-right: 5%;
-  border-radius: var(--br-xl);
+
   width: 36.313rem;
-  height: 22.563rem;
+  height: 90%;
   object-fit: cover;
-  z-index: 2;
 }
 .logic-branch-icon {
   position: absolute;

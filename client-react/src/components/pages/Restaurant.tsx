@@ -6,7 +6,7 @@ import "../assets/styles/restaurant.css";
 import FilterBar from "../layout/FilterBar";
 import RestoCard from "../common/RestoCard";
 import { LoadingOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import api from '../common/Api';
 
 interface HorairesOuverture {
   Lundi: string;
@@ -53,7 +53,7 @@ const API_URL = 'http://localhost:3001/restaurant';
 
 export const getRestaurant = async (id: string) => {
   try {
-    const response = await axios.get<Restaurant>(`${API_URL}/get/`, { params: { id } });
+    const response = await api.get<Restaurant>(`${API_URL}/get/`, { params: { id } });
     return response.data;
   } catch (error) {
     console.error('Erreur lors de la récupération de l\'utilisateur:', error);

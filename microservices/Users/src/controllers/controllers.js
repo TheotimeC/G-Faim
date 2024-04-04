@@ -1,5 +1,8 @@
 const User = require('../models/models');
 const KafkaConfig = require('../Kafka/config-kafka');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
 
 exports.createUtilisateur = async (req, res) => {
     const { nom, prenom, telephone, email, mot_de_passe, adresses_de_livraison, code_parrain, total_personnes_parrainees } = req.body;
@@ -46,6 +49,122 @@ exports.delUtilisateur = async (req, res) => {
             return res.status(404).json({ message: "Utilisateur non trouvé" });
         }
         res.status(200).json({ message: "Utilisateur supprimé avec succès" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.loginUser = async (req, res) => {
+    const { email, mot_de_passe } = req.body;
+    try {
+        const utilisateur = await User.findOne({ email });
+        if (!utilisateur) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+
+        const isValid = await bcrypt.compare(mot_de_passe, utilisateur.mot_de_passe);
+        if (!isValid) {
+            return res.status(400).json({ message: "Mot de passe invalide" });
+        }
+
+        // Générer l'access token avec une expiration courte (par exemple, 15 minutes)
+        const accessToken = jwt.sign(
+            { userId: utilisateur._id, email: utilisateur.email },
+            process.env.JWT,
+            { expiresIn: '15m' }
+        );
+
+        // Générer le refresh token avec une expiration plus longue (par exemple, 7 jours)
+        const refreshToken = jwt.sign(
+            { userId: utilisateur._id },
+            process.env.JWTREFRESH,
+            { expiresIn: '7d' }
+        );
+
+        res.status(200).json({ accessToken, refreshToken });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.refreshTokens = async (req, res) => {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+        return res.status(401).json({ message: "Token de rafraîchissement manquant" });
+    }
+
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.JWTREFRESH);
+        const utilisateur = await User.findById(decoded.userId);
+
+        if (!utilisateur) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+
+        // Générer un nouveau access token
+        const accessToken = jwt.sign(
+            { userId: utilisateur._id, email: utilisateur.email },
+            process.env.JWT,
+            { expiresIn: '15m' }
+        );
+
+        // Générer un nouveau refresh token
+        const newRefreshToken = jwt.sign(
+            { userId: utilisateur._id },
+            process.env.JWTREFRESH,
+            { expiresIn: '7d' }
+        );
+
+        res.status(200).json({ accessToken, newRefreshToken });
+    } catch (error) {
+        // Gérer spécifiquement les erreurs d'expiration et les erreurs de validation du token
+        if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {
+            return res.status(401).json({ message: "Token de rafraîchissement invalide ou expiré" });
+        }
+        // Pour toutes les autres erreurs potentielles
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.protect = async (req, res, next) => {
+    let token;
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+    ) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+
+    if (!token) {
+        return res.status(401).json({ message: "Vous n'êtes pas autorisé à accéder à cette ressource"  });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT);
+        req.user = await User.findById(decoded.userId).select('-mot_de_passe');
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: "Token invalide, veuillez vous reconnecter" });
+    }
+};
+
+exports.getUtilisateursId = async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    try {
+        // Décodez le token pour obtenir les informations
+        const decoded = jwt.verify(token, process.env.JWT);
+
+        // Assurez-vous que l'ID de l'utilisateur est disponible dans les informations décodées
+        if (decoded && decoded.userId) {
+            const utilisateur = await User.findById(decoded.userId);
+            if (!utilisateur) {
+                return res.status(404).json({ message: "Utilisateur non trouvé" });
+            }
+            // Retournez l'ID de l'utilisateur
+            res.status(200).json({ userId: utilisateur._id });
+        } else {
+            return res.status(401).json({ message: "Token invalide, veuillez vous reconnecter" });
+        }
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

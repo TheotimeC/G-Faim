@@ -7,15 +7,19 @@ import Navbar from "./components/layout/Navbar"
 import Connection from "./components/pages/Connection.tsx";
 import Footer from "./components/common/Footer.tsx";
 import Restaurant from './components/pages/Restaurant';
+import { useAuth } from '../src/components/common/Auth.tsx';
+
+
 function App() {
-  const userId = '6609c286c8c28a325095f8d1';
+  const { isAuthenticated } = useAuth();
+  
   return (
     <>
       <Router>
         <Navbar />
         <Routes>
           {/*<Route path="/profil" element={<Profil userId={userId}/>} />*/}
-          <Route path="/profil" element={<Connection />} />
+          <Route path="/profil" element={isAuthenticated ? <Profil/> : <Connection />} />
           <Route path="/restaurants" element={<Parcourir/>} />
           <Route path="/Restaurants/:id" element={<Restaurant />} />
           <Route path="/commandes" element={<Commandes/>} />
