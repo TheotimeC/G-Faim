@@ -14,8 +14,10 @@
     margin-right: 2rem;
     cursor: pointer;
     color: #FFFFFF;
+    transition: box-shadow 0.2s ease;
 }
 .filterbutton.active {
     background-color: #03081F; 
     border-radius: 20px;
+    box-shadow: 0 0 0 5px #03081F;
 }

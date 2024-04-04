@@ -89,14 +89,36 @@ const Restaurant: FunctionComponent = () => {
           {restaurant.Menus.map((menu) => (
             <div key={menu._id}>
               <h1>Menus</h1>
-              <RestoCard nom={menu.Titre} description={menu.Description} img={menu.img} prix={menu.Prix} />
+              <RestoCard
+              Titre={menu.Titre}
+              Description={menu.Description}
+              img={menu.img}
+              propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
+              propGap="0.25rem"
+              propGap1="0.938rem"
+              propWidth="unset"
+              propLineHeight="unset"
+              propHeight="5.625re"
+              propBackgroundImage={menu.img}
+            />
               
               </div>
           ))}
           {restaurant.Articles.map((article) => (
             <div key={article._id}>
               <h1>{article.Catégorie}</h1>
-              <RestoCard nom={article.Titre} description={article.Description} img={article.img} prix={article.Prix} />
+              <RestoCard
+              Titre={article.Titre}
+              Description={article.Description}
+              img={article.img}
+              propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
+              propGap="0.25rem"
+              propGap1="0.938rem"
+              propWidth="unset"
+              propLineHeight="unset"
+              propHeight="5.625re"
+              propBackgroundImage={article.img}
+            />
               
               </div>
           ))}
@@ -112,7 +134,18 @@ const Restaurant: FunctionComponent = () => {
         <div key={menu._id}>
           
           <h1>Menus</h1>
-          <RestoCard nom={menu.Titre} description={menu.Description} img={menu.img} prix={menu.Prix} />
+          <RestoCard
+              Titre={menu.Titre}
+              Description={menu.Description}
+              img={menu.img}
+              propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
+              propGap="0.25rem"
+              propGap1="0.938rem"
+              propWidth="unset"
+              propLineHeight="unset"
+              propHeight="5.625re"
+              propBackgroundImage={menu.img}
+            />
         
         </div>
         
@@ -127,7 +160,18 @@ const Restaurant: FunctionComponent = () => {
         <div key={article._id}>
           
           <h1>{article.Catégorie}</h1>
-          <RestoCard nom={article.Titre} description={article.Description} img={article.img} prix={article.Prix} />
+          <RestoCard
+              Titre={article.Titre}
+              Description={article.Description}
+              img={article.img}
+              propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
+              propGap="0.25rem"
+              propGap1="0.938rem"
+              propWidth="unset"
+              propLineHeight="unset"
+              propHeight="5.625re"
+              propBackgroundImage={article.img}
+            />
           
           </div>
       ))}</div></>

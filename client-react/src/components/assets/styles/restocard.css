@@ -1,50 +1,144 @@
-/* Card.css */
-.resto-card {
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    background: white;
-    width: 25rem; /* Adjust width as needed */
-    height: 10rem;
-    margin: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    
-  }
-  
-  .resto-card-content {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-  }
-  
-  .resto-card-image {
-    background: #c4c4c4; /* Couleur de fond en attendant le chargement de l'image */
-    width: 200px; /* Largeur de l'image par rapport à la carte */
-    max-width: 150px;
-    height: 10rem;
-    object-fit: cover; /* Garantit que l'image couvre la zone sans perdre ses proportions */
-    object-position: center;
-  }
-  
-  .resto-card-text {
-    padding: 10px;
-  }
-  
-  .resto-card-title {
-    margin: 0;
-    text-align: left;
-    color: #333; /* Adjust text color as needed */
-    font-size: 1.25rem;
-  }
-  
-  .resto-card-subtitle {
-    color: #298029; /* Adjust subtitle color as needed */
-    text-align: left;
-    font-size: 1rem;
-  }
-  .resto-card-prix{
-    font-weight: bold;
-    font-size: 1.2rem;
-    text-align: left;
-    color: #03081F;
-  }
+.frame-child75 {
+  height: 15.313rem;
+  width: 31rem;
+  position: relative;
+  border-radius: 12px;
+  background-color: #fdfdfd;
+  box-shadow: 5px 5px 34px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  display: none;
+  max-width: 100%;
+}
+.mcchicken-1-big,
+.royal-cheese-burger {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+.royal-cheese-burger {
+  width: 13.75rem;
+  line-height: 1.438rem;
+  font-weight: 600;
+}
+.mcchicken-1-big {
+  align-self: stretch;
+  height: 3.375rem;
+  font-size: 0.875rem;
+  line-height: 1.563rem;
+  white-space: pre-wrap;
+  flex-shrink: 0;
+}
+.branch-splitter {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1.5rem;
+}
+.b24 {
+  position: relative;
+  font-size: 1.125rem;
+  display: inline-block;
+  color: #03081f;
+  min-width: 3.938rem;
+  white-space: nowrap;
+  z-index: 1;
+}
+.condition-pair,
+.logic-operator {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.logic-operator {
+  align-self: stretch;
+  justify-content: flex-start;
+  gap: 0.938rem;
+}
+.condition-pair {
+  flex: 1;
+  justify-content: flex-end;
+  padding: 0 0 0.875rem;
+  box-sizing: border-box;
+  min-width: 9.25rem;
+}
+.function-begin-child {
+  height: 12.438rem;
+  width: 12.688rem;
+  position: relative;
+  border-radius: 12px;
+  object-fit: cover;
+  display: none;
+}
+.input-queue {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 45px 0 12px 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+.plus-icon1 {
+  position: absolute;
+  top: 1.125rem;
+  left: 1.5rem;
+  width: 3.063rem;
+  height: 3.063rem;
+  object-fit: cover;
+  z-index: 3;
+}
+.function-end {
+  height: 5.063rem;
+  width: 5.5rem;
+  position: relative;
+  cursor: pointer;
+}
+.function-begin,
+.rectangle-parent29 {
+  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  z-index: 1;
+}
+.function-begin {
+  height: 12.438rem;
+  width: 12.688rem;
+  justify-content: flex-end;
+  background-image: url(/public/rectangle-46@2x.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  min-width: 12.688rem;
+}
+.rectangle-parent29 {
+  width: 31rem;
+  background-color: #fdfdfd;
+  box-shadow: 5px 5px 34px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  justify-content: flex-start;
+  padding: 1.5rem 1.5rem 1.375rem 1.813rem;
+  gap: 0.625rem;
+  max-width: 100%;
+  text-align: left;
+  font-size: 1.25rem;
+  color: #000;
+  font-family: Poppins;
+}
+
+
+.data-processor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50px 0 12px 0;
+  background-color: rgba(255, 255, 255, 0.815);
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
