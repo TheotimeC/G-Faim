@@ -20,7 +20,7 @@
   .resto-card-image {
     background: #c4c4c4; /* Couleur de fond en attendant le chargement de l'image */
     width: 200px; /* Largeur de l'image par rapport à la carte */
-    max-width: 100px;
+    max-width: 150px;
     height: 10rem;
     object-fit: cover; /* Garantit que l'image couvre la zone sans perdre ses proportions */
     object-position: center;

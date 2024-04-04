@@ -6,7 +6,7 @@ import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
 import Icon from '@mdi/react';
 import { mdiCheck } from '@mdi/js';
 import Input from '../common/Input';
-import axios from 'axios';
+import api from '../common/Api';
 
 
 //Appel API
@@ -33,7 +33,11 @@ export interface Adresse {
 
 export const getUser = async (id: string) => {
   try {
-    const response = await axios.get<User>(`${API_URL}/get/`, { params: { id } });
+    const token = localStorage.getItem('accessToken');
+    const response = await api.get<User>(`${API_URL}/get/`, {
+      params: { id },
+      headers: { Authorization: `Bearer ${token}` }
+    });
     return response.data;
   } catch (error) {
     console.error('Erreur lors de la récupération de l\'utilisateur:', error);
@@ -43,10 +47,26 @@ export const getUser = async (id: string) => {
 
 export const putUser = async (id: string, data: Partial<User>) => {
   try {
-    const response = await axios.put(`${API_URL}/modify/?id=${id}`, data);
+    const token = localStorage.getItem('accessToken')
+    const response = await api.put(`${API_URL}/modify/?id=${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     return response.data;
   } catch (error) {
     console.error('Erreur lors de la modification de l\'utilisateur:', error);
+    throw error;
+  }
+};
+
+export const getUserId = async () => {
+  try {
+    const token = localStorage.getItem('accessToken')
+    const response = await api.get(`${API_URL}/getId/`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération de luser:', error);
     throw error;
   }
 };
@@ -64,7 +84,8 @@ new Promise((resolve, reject) => {
   reader.onerror = error => reject(error);
 });
 
-const Profil: React.FC<{ userId: string }> = ({ userId }) => {
+const Profil: React.FC = () => {
+  const [userId, setUserId] = useState(null);
   const [user, setUser] = useState<User | null>(null);
   const [nom, setNom] = useState('');
   const [telephone, setTelephone] = useState('');
@@ -73,6 +94,20 @@ const Profil: React.FC<{ userId: string }> = ({ userId }) => {
   const [adresse, setAdresse] = useState('');
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const id = await getUserId();
+        setUserId(id.userId);
+      } catch (error) {
+        console.error("Impossible de récupérer l'identifiant de l'utilisateur", error);
+      }
+    };
+
+    fetchUserId();
+  }, []);
+  
 
   const handleUpdate = async () => {
     if(!userId) return;
@@ -105,10 +140,12 @@ const Profil: React.FC<{ userId: string }> = ({ userId }) => {
       setUser(user); 
     }
   }
+  
   //récuprétaion API
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        if(!userId) return;
         const userData = await getUser(userId);
         setUser(userData);
       } catch (error) {
