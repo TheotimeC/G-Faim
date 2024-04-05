@@ -3,6 +3,7 @@ import Icon from '@mdi/react';
 import { mdiPlusCircle } from '@mdi/js';
 import "../assets/styles/restocard.css"
 import api from "./api.ts";
+import {message} from "antd";
 
 export type GroupComponent2Type = {
   Titre?: string;
@@ -91,6 +92,14 @@ const GroupComponent2: FunctionComponent<GroupComponent2Type> = ({
       return []; // Return empty array on error
     }
   };
+  const [messageApi, contextHolder] = message.useMessage()
+  const success = () => {
+    messageApi.open({
+      type: 'success',
+      content: 'Item added to cart !',
+      duration: 2
+    });
+  };
   const updateCart = async () => {
     // Construct the new item object
     const newItem = {
@@ -100,27 +109,39 @@ const GroupComponent2: FunctionComponent<GroupComponent2Type> = ({
       price: prix || 0,
       quantity: 1, // Default quantity set to 1, adjust as necessary
     };
-
     // Assuming you have a way to get the current user's ID and current cart items
     const userId = "user123"; // Example user ID
     let currentCartItems: any[] = await getCart(); // You would fetch current cart items here
+    // Check if the item already exists in the cart
+    const existingItemIndex = currentCartItems.findIndex((item) => item.name === newItem.name);
+
+    // If it exists, update the quantity, otherwise add as a new item
+    if (existingItemIndex !== -1) {
+      const existingItem = currentCartItems[existingItemIndex];
+      currentCartItems[existingItemIndex] = { ...existingItem, quantity: existingItem.quantity + newItem.quantity };
+    } else {
+      currentCartItems.push(newItem);
+    }
 
     // Add the new item to the current cart items
-    const updatedCartItems = [...currentCartItems, newItem];
 
     try {
       // Make API call to update the cart
       await api.put(`http://localhost:3002/orders/cart`, {
         userId: userId,
-        items: updatedCartItems,
+        items: currentCartItems,
       });
+      success();
       console.log("Item added to cart successfully");
       // Optionally, trigger a state update or refetch cart items to reflect the change in UI
     } catch (error) {
       console.error("Failed to add item to cart:", error);
     }
   };
+
   return (
+      <>
+        {contextHolder}
     <div className="rectangle-parent29" style={groupDivStyle}>
       <div className="frame-child75" />
       <div className="condition-pair">
@@ -150,6 +171,7 @@ const GroupComponent2: FunctionComponent<GroupComponent2Type> = ({
         </div>
       </div>
     </div>
+        </>
   );
 };
 
