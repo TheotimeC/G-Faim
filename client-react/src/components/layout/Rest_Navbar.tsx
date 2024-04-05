@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import Icon from '@mdi/react';
 import { mdiHomeVariantOutline, mdiSilverware, mdiChartBoxOutline, mdiCartOutline, mdiCog } from '@mdi/js';
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from '@ant-design/icons';
+
 import { Layout, Menu, Button, theme } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import RestHome from '../pages/Rest_Home';
@@ -55,11 +49,11 @@ const RestNav = () =>{
           mode="inline"
           defaultSelectedKeys={['1']}
           items={[
-            { key: '1', icon: <Icon path={mdiHomeVariantOutline} size={1} />, label: 'nav 1' },
-            { key: '2', icon: <Icon path={mdiSilverware} size={1} />, label: 'nav 2' },
-            { key: '3', icon: <Icon path={mdiChartBoxOutline} size={1} />, label: 'nav 3' },
-            { key: '4', icon: <Icon path={mdiCartOutline} size={1} />, label: 'nav 3' },
-            { key: '5', icon: <Icon path={mdiCog} size={1} />, label: 'nav 3' },
+            { key: '1', icon: <Icon path={mdiHomeVariantOutline} size={1} /> },
+            { key: '2', icon: <Icon path={mdiSilverware} size={1} />},
+            { key: '3', icon: <Icon path={mdiChartBoxOutline} size={1} />},
+            { key: '4', icon: <Icon path={mdiCartOutline} size={1} />},
+            { key: '5', icon: <Icon path={mdiCog} size={1} /> },
           ]}
           onClick={handleMenuClick}
         />

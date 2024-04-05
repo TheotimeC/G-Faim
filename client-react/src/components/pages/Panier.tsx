@@ -83,7 +83,6 @@ const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
     let deliveryFee = '0';
     let total = '0';
     if (cartItems != null) {
-        console.log("hit");
          subtotal = cartItems.reduce((acc, item) => {
             // const price = parseFloat(item.price.replace(',', '.').replace('€', ''));
             const price = item.price;

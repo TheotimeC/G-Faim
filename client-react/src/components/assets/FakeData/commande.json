@@ -1,0 +1,100 @@
+[
+{
+    "userId": "62b77c4e12cde671f45b8129c2",
+    "userName":"John",
+    "restaurantId": "62b77c8e12cde671f45b89c2",
+    "articles": [
+      {
+        "articleId": "62b77cc812cde671f45b89c3",
+        "Titre": "Pizza Margherita",
+        "Prix": 12.50,
+        "quantite": 2,
+        "img": "https://example.com/images/pizza-margherita.jpg"
+      },
+      {
+        "articleId": "62b77d2e12cde671f45b89c4",
+        "Titre": "Tiramisu",
+        "Prix": 6.00,
+        "quantite": 1,
+        "img": "https://example.com/images/tiramisu.jpg"
+      }
+    ],
+    "status": "à accepter",
+    "deliveryAddress": {
+      "street": "123 rue du Bac",
+      "city": "Paris",
+      "postalCode": "75007",
+      "country": "France"
+    },
+    "LivreurId": "62b77d8512cde671f45b89c5",
+    "LivreurName":"Paul",
+    "isPickedUp": false,
+    "totalPrice": 31.00
+  },
+  {
+    "userId": "62b77c4e12ce67faf1f45b89c2",
+    "userName":"John",
+    "restaurantId": "62b77c8e12cde671f45b89c2",
+    "articles": [
+      {
+        "articleId": "62b77cc812cde671f45b89c3",
+        "Titre": "Pizza Margherita",
+        "Prix": 12.50,
+        "quantite": 2,
+        "img": "https://example.com/images/pizza-margherita.jpg"
+      },
+      {
+        "articleId": "62b77d2e12cde671f45b89c4",
+        "Titre": "Tiramisu",
+        "Prix": 6.00,
+        "quantite": 1,
+        "img": "https://example.com/images/tiramisu.jpg"
+      }
+    ],
+    "status": "en préparation",
+    "deliveryAddress": {
+      "street": "123 rue du Bac",
+      "city": "Paris",
+      "postalCode": "75007",
+      "country": "France"
+    },
+    "LivreurId": "62b77d8512cde671f45b89c5",
+    "LivreurName":"Paul",
+    "isPickedUp": true,
+    "totalPrice": 31.00
+  },
+  {
+    "userId": "62b77c4e12cde671fb89c2",
+    "userName":"John",
+    "restaurantId": "62b77c8e12cde671f45b89c2",
+    "articles": [
+      {
+        "articleId": "62b77cc812cde671f45b89c3",
+        "Titre": "Pizza Margherita",
+        "Prix": 12.50,
+        "quantite": 2,
+        "img": "https://example.com/images/pizza-margherita.jpg"
+      },
+      {
+        "articleId": "62b77d2e12cde671f45b89c4",
+        "Titre": "Tiramisu",
+        "Prix": 6.00,
+        "quantite": 1,
+        "img": "https://example.com/images/tiramisu.jpg"
+      }
+    ],
+    "status": "en livraison",
+    "deliveryAddress": {
+      "street": "123 rue du Bac",
+      "city": "Paris",
+      "postalCode": "75007",
+      "country": "France"
+    },
+    "LivreurId": "62b77d8512cde671f45b89c5",
+    "LivreurName":"Paul",
+    "isPickedUp": false,
+    "totalPrice": 31.00
+  }
+  
+]
+  
