@@ -1,27 +1,39 @@
-// models.ts
 import mongoose, { Document } from 'mongoose';
 
+enum OrderStatus {
+  Cart = "cart",
+  Paid = "paid",
+  Fulfilled = "fulfilled",
+}
+
 interface IOrderItem {
-  itemId: string; // Reference to the item, e.g., a meal or product ID
+  itemId: string;
+  name: string;
+  imgSrc: string;
   quantity: number;
-  price: number; // Price per item at the time of order
+  price: number;
+  description: number;
 }
 
 interface IOrder extends Document {
-  userId: string; // Reference to the User in another microservice
+  userId: string;
   items: IOrderItem[];
-  subtotal: number; // Total price of all items before adding delivery fee
-  deliveryFee: number; // Delivery fee calculated based on certain criteria
-  total: number; // Final total (subtotal + deliveryFee)
+  subtotal: number;
+  deliveryFee: number;
+  total: number;
   orderDate: Date;
-  deliveryDate?: Date; // Optional delivery date
-  deliveryAddress?: string; // Optional delivery address
+  deliveryDate?: Date;
+  deliveryAddress?: string;
+  status: OrderStatus;
 }
 
 const orderItemSchema = new mongoose.Schema({
   itemId: { type: String, required: true },
   quantity: { type: Number, required: true, min: 1 },
   price: { type: Number, required: true },
+  name: { type: String, required: true },
+  imgSrc: { type: String, required: true },
+  description: { type: String, required: true },
 });
 
 const orderSchema = new mongoose.Schema({
@@ -33,6 +45,7 @@ const orderSchema = new mongoose.Schema({
   orderDate: { type: Date, required: true, default: Date.now },
   deliveryDate: Date,
   deliveryAddress: String,
+  status: { type: String, required: true, enum: Object.values(OrderStatus), default: OrderStatus.Cart },
 }, { timestamps: true });
 
 const Order = mongoose.model<IOrder>('Order', orderSchema);

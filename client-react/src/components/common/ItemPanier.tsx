@@ -6,15 +6,16 @@ interface CartItemProps {
     name: string;
     price: string;
     imageSrc: string;
+    initialQuantity: number;
     removeItem: () => void;
     updateQuantity: (quantity: number) => void;
     // If you plan to manage quantity from this component, you should include quantity state here as well
 }
 
-function ItemPanier({ name, price, imageSrc, removeItem, updateQuantity } : CartItemProps) {
+function ItemPanier({ name, price, imageSrc, initialQuantity, removeItem, updateQuantity } : CartItemProps) {
     // This is a static quantity for display purposes
     // You might want to manage the quantity state here or in the parent component
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(initialQuantity);
     const [tempQuantity, setTempQuantity] = useState(1);
     const [isEditable, setIsEditable] = useState<boolean>(false);
     const addQuantity = () => {
@@ -55,7 +56,7 @@ function ItemPanier({ name, price, imageSrc, removeItem, updateQuantity } : Cart
             <img src={imageSrc} alt={name} className="cart-item-image" />
             <div className="cart-item-info">
                 <div className="cart-item-name">{name}</div>
-                <div className="cart-item-price">{price}</div>
+                <div className="cart-item-price">{price}€</div>
             </div>
             <div className="cart-item-quantity">
                 <button className="cart-quantity-button" onClick={substractQuantity}>-</button>

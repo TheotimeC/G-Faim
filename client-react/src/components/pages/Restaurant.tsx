@@ -6,7 +6,7 @@ import "../assets/styles/restaurant.css";
 import FilterBar from "../layout/FilterBar";
 import RestoCard from "../common/RestoCard";
 import { LoadingOutlined } from '@ant-design/icons';
-import api from '../common/Api';
+import api from '../common/api.ts';
 
 interface HorairesOuverture {
   Lundi: string;
@@ -99,6 +99,7 @@ const Restaurant: FunctionComponent = () => {
               propWidth="unset"
               propLineHeight="unset"
               propHeight="5.625re"
+              prix={20}
               propBackgroundImage={menu.img}
             />
               
@@ -117,6 +118,7 @@ const Restaurant: FunctionComponent = () => {
               propWidth="unset"
               propLineHeight="unset"
               propHeight="5.625re"
+              prix={20}
               propBackgroundImage={article.img}
             />
               
@@ -145,6 +147,8 @@ const Restaurant: FunctionComponent = () => {
               propLineHeight="unset"
               propHeight="5.625re"
               propBackgroundImage={menu.img}
+              prix={20}
+              
             />
         
         </div>

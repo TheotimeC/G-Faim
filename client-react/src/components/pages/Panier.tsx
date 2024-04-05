@@ -1,55 +1,112 @@
-import {Drawer} from "antd";
-import "../assets/styles/Panier.css"
+import { Drawer } from "antd";
+import "../assets/styles/Panier.css";
 import ItemPanier from "../common/ItemPanier";
-import Button from "../common/Button.tsx";
-import {useState} from "react";
-type DrawerType ={
+import Button from "../common/Button";
+import { useState, useEffect } from "react";
+import api from "../common/api";
+
+// Define types for your item and response from the API
+type CartItem = {
+    _id: number;
+    name: string;
+    price: string; // Consider converting this to number if your backend sends it as a number
+    quantity: number;
+    imgSrc: string;
+};
+
+type DrawerType = {
     drawerState: boolean;
-    setDrawerState: any;
-}
-const cartData = [
-    { id: 1, name: 'Menu Mcfirst', price: '5,99€', quantity: 1,  imageSrc: 'https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blte345501c8bb2b551/649c47d5dfeeafb870a54af1/BO_MCFIRST.png?auto=webp' },
-    { id: 2, name: 'Menu CBO', price: '10,99€', quantity: 1,  imageSrc: 'https://mltwiersgrjj.i.optimole.com/UjSS7Fo-GBF0YJuC/w:347/h:347/q:90/https://menumcdo.com/wp-content/uploads/2022/03/220307-MCDO-DOCSTORE-CBO-MBO.png' },
-    { id: 3, name: 'Menu Tower', price: '16,99€', quantity: 1, imageSrc: 'https://static.kfc.fr/images/items/lg/TowerBox-S-2Tenders.jpg?v=3xRXv4' },
-];
-export default function Panier({drawerState, setDrawerState}: DrawerType){
-    const [cartItems, setCartItems] = useState(cartData);
+    setDrawerState: (state: boolean) => void;
+};
+
+// Function to fetch cart items
+const getCart = async (): Promise<CartItem[]> => {
+    try {
+        const response = await api.get<{ items: CartItem[] }>(`http://localhost:3002/orders/cart`, {
+            params: {
+                userId: "user123",
+            },
+        });
+        console.log(response.data.items);
+        return response.data.items; // Assuming the response data structure includes an items array
+    } catch (error: any) {
+        console.error('Error fetching cart:', error.response ? error.response.data : error.message);
+        return []; // Return empty array on error
+    }
+};
+
+// Function to update the cart
+const updateCart = async (items: CartItem[]): Promise<CartItem[]> => {
+    try {
+        const response = await api.put<{ items: CartItem[] }>(`http://localhost:3002/orders/cart`, {
+            userId: "user123", // This should match your API's expected request body
+            items,
+        });
+        return response.data.items;
+    } catch (error: any) {
+        console.error('Error updating cart:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+};
+
+const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            const items = await getCart();
+            setCartItems(items);
+        })();
+    }, [drawerState]); // Fetch cart items when drawerState changes
+
     const turnOff = () => {
         setDrawerState(false);
-    }
-    const removeItemFromCart = (itemId: number) => {
-        setCartItems(currentItems => currentItems.filter(item => item.id !== itemId))
-    }
-    const updateItemQuantityFromCart = (itemId: number, quantity: number) => {
-        setCartItems(cartItems.map(item => {
-            if (item.id === itemId)
-                item.quantity = quantity;
-            return item
-        }));
-    }
-    const subtotal = cartItems.reduce((acc, item) => {
-        const price = parseFloat(item.price.replace(',', '.').replace('€', ''));
-        const quantity = item.quantity;
-        return acc + (price * quantity);
-    }, 0).toFixed(2); // Fix to 2 decimal places at the end of calculation
+    };
 
-// Calculate delivery fee as 10% of subtotal
-    const deliveryFee = (parseFloat(subtotal) * 0.1).toFixed(2);
+    const removeItemFromCart = async (itemId: number): Promise<void> => {
+        const updatedItems = cartItems.filter(item => item._id !== itemId);
+        const items = await updateCart(updatedItems);
+        setCartItems(items);
+    };
 
-// Calculate total as sum of subtotal and delivery fee
-    const total = (parseFloat(subtotal) + parseFloat(deliveryFee)).toFixed(2);
+    const updateItemQuantityFromCart = async (itemId: number, quantity: number): Promise<void> => {
+        const updatedItems = cartItems.map(item => {
+            if (item._id === itemId) {
+                return { ...item, quantity };
+            }
+            return item;
+        });
+        const items = await updateCart(updatedItems);
+        setCartItems(items);
+    };
+    let subtotal = '0';
+    let deliveryFee = '0';
+    let total = '0';
+    if (cartItems != null) {
+        console.log("hit");
+         subtotal = cartItems.reduce((acc, item) => {
+            // const price = parseFloat(item.price.replace(',', '.').replace('€', ''));
+            const price = item.price;
+            return acc + (price * item.quantity);
+        }, 0).toFixed(2);
+
+         deliveryFee = (parseFloat(subtotal) * 0.1).toFixed(2);
+         total = (parseFloat(subtotal) + parseFloat(deliveryFee)).toFixed(2);
+    }
+
 
     return (
         <>
-            <Drawer title="Panier" onClose={turnOff} open={drawerState}  className="cart-drawer">
-                {cartItems.map(item => (
+            <Drawer title="Panier" onClose={turnOff} open={drawerState} className="cart-drawer">
+                {cartItems && cartItems.map(item => (
                     <ItemPanier
-                        key={item.id}
+                        key={item._id}
                         name={item.name}
                         price={item.price}
-                        imageSrc={item.imageSrc}
-                        removeItem={() => removeItemFromCart(item.id)}
-                        updateQuantity={(quantity: number) => updateItemQuantityFromCart(item.id, quantity)}
+                        imageSrc={item.imgSrc}
+                        initialQuantity={item.quantity}
+                        removeItem={() => removeItemFromCart(item._id)}
+                        updateQuantity={(quantity: number) => updateItemQuantityFromCart(item._id, quantity)}
                     />
                 ))}
                 <div className="checkout-section">
@@ -65,9 +122,11 @@ export default function Panier({drawerState, setDrawerState}: DrawerType){
                         <span>Total :</span>
                         <span>{total}€</span>
                     </div>
-                    <Button className="checkout-button" text="Paiement" color="FFA500" size="100"/>
+                    <Button className="checkout-button" text="Paiement" color="FFA500" size="100" />
                 </div>
             </Drawer>
         </>
-    )
-}
+    );
+};
+
+export default Panier;

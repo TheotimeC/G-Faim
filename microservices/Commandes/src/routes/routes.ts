@@ -7,6 +7,15 @@ export default async function (fastify: FastifyInstance) {
     fastify.get('/orders/user', {
         handler: orderController.getOrderByUserId,
     });
+    // GET route to retrieve the user's cart
+    fastify.get('/orders/cart', {
+        handler: orderController.getUserCart,
+    });
+
+    // PUT route to update the user's cart
+    fastify.put('/orders/cart', {
+        handler: orderController.updateCart,
+    });
     // POST route to create a new order
     fastify.post('/orders', {
         handler: orderController.createOrder,
