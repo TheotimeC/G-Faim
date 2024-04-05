@@ -1,0 +1,29 @@
+.Rectangle{
+    margin-top: 20px;
+    border-radius: 15px;
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.25);
+    min-width: 9.938rem;
+    width: 95%;
+    padding-left: 10px;
+}
+.Rectangle1{
+    margin-top: 20px;
+    border-radius: 15px;
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.25);
+    min-width: 9.938rem;
+    width: 95%;
+    padding-left: 10px;
+}
+.titre1{
+    font-size: 18px;
+    font-weight: bold;
+}
+.statsnumber{
+    padding-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 20px;
+}

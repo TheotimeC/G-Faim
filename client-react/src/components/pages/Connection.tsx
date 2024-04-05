@@ -1,4 +1,5 @@
 import { Col, Row, Divider, Input, Checkbox } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import Button from "../common/Button.tsx";
 import { useState} from 'react'
 import styles from "../assets/styles/Connection.module.css"
@@ -13,27 +14,29 @@ export default function Connection(){
     const [password, setPassword] = useState(''); 
     const [rememberMe, setRememberMe] = useState(false);
     const { login } = useAuth();
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
-        try {
-          const response = await api.post('http://localhost:3000/auth/login', {
-            email: username,
-            mot_de_passe: password,
-          });
+      try {
+        const response = await api.post('http://localhost:3000/auth/login', {
+          email: username,
+          mot_de_passe: password,
+        });
     
-          console.log('Login réussi:', response.data);
-          const token = response.data
-          login(token);
-          
-          // Optionnel : gérer "Se souvenir de moi"
-          if (rememberMe) {
-            // Stockez des informations pertinentes localement
-          }
-        } catch (error) {
-            console.error('Erreur lors de la connexion de l\'utilisateur:', error);
-          // Gérer l'erreur, par exemple en affichant un message à l'utilisateur
+        console.log('Login réussi:', response.data);
+        const { accessToken, refreshToken, role } = response.data; // Décomposez la réponse pour extraire le rôle
+        login({ accessToken, refreshToken, role }); // Passez le rôle à la fonction login
+        // Note: Pas besoin de localStorage.setItem('role', role); ici car cela sera géré dans `login`
+        if (role === 'restaurateur') {
+          navigate('/dashboard'); // Redirigez vers le tableau de bord du restaurateur
+        } else {
+          navigate('/profil'); // Redirigez les clients vers leur profil ou toute autre page pertinente
         }
-      };
+      } catch (error) {
+        console.error('Erreur lors de la connexion de l\'utilisateur:', error);
+        // Gérer l'erreur, par exemple en affichant un message à l'utilisateur
+      }
+    };
 
     return (
         <>

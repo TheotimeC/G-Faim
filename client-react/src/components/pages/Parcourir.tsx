@@ -8,14 +8,23 @@ import api from '../common/Api';
 const API_URL = 'http://localhost:3001/restaurant';
 
 export const getAllRestaurants = async (): Promise<Restaurant[]> => {
-    try {
-      const response = await api.get<Restaurant[]>(`${API_URL}/getAll`);
-      return response.data; // Assurez-vous que ceci est bien un tableau de `Restaurant[]`
-    } catch (error) {
-      console.error('Erreur lors de la récupération des restaurants:', error);
-      throw error;
-    }
-  };
+    const cacheKey = 'restaurantsCache';
+  // Essayez de récupérer les données mises en cache
+  const cachedData = localStorage.getItem(cacheKey);
+  if (cachedData) {
+    return JSON.parse(cachedData); // Parse et retourne les données mises en cache si disponibles
+  }
+
+  try {
+    const response = await api.get<Restaurant[]>(`${API_URL}/getAll`);
+    // Assurez-vous que ceci est bien un tableau de `Restaurant[]`
+    localStorage.setItem(cacheKey, JSON.stringify(response.data)); // Mettre en cache les nouvelles données
+    return response.data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des restaurants:', error);
+    throw error;
+  }
+};
 
 const Restaurants = () => {
     const [selectedRestId, setSelectedRestId] = useState<string | null>(null); // Initialise à null

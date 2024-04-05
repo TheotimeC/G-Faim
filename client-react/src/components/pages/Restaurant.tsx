@@ -7,6 +7,7 @@ import FilterBar from "../layout/FilterBar";
 import RestoCard from "../common/RestoCard";
 import { LoadingOutlined } from '@ant-design/icons';
 import api from '../common/Api';
+import { useCart } from '../common/CartContext.tsx';
 
 interface HorairesOuverture {
   Lundi: string;
@@ -52,6 +53,7 @@ interface Restaurant {
 const API_URL = 'http://localhost:3001/restaurant';
 
 export const getRestaurant = async (id: string) => {
+  
   try {
     const response = await api.get<Restaurant>(`${API_URL}/get/`, { params: { id } });
     return response.data;
@@ -65,7 +67,28 @@ const Restaurant: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>(); // Assurez-vous que les types correspondent
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("Tout");
-  console.log(id);
+  const { addItemToCart } = useCart();
+
+  const addMenuToCart = (menu: Menu) => {
+    addItemToCart({
+      id: menu._id,
+      name: menu.Titre,
+      price: menu.Prix.toString(),
+      quantity: 1,
+      imageSrc: menu.img,
+    });
+  };
+
+  const addArticleToCart = (article: Article) => {
+    addItemToCart({
+      id: article._id,
+      name: article.Titre,
+      price: article.Prix.toString(),
+      quantity: 1,
+      imageSrc: article.img,
+    });
+  };
+  
   useEffect(() => {
     if (id) {
       getRestaurant(id).then(setRestaurant).catch(console.error);
@@ -79,7 +102,6 @@ const Restaurant: FunctionComponent = () => {
   const categories = Array.from(new Set(restaurant.Articles.map((article) => article.Catégorie)));
   const displayAll = selectedCategory === "Tout";
 
-
   const displayItems = () => {
     if (displayAll) {
       // Si "Tout" est sélectionné, retourne les Menus suivis des Articles
@@ -88,29 +110,30 @@ const Restaurant: FunctionComponent = () => {
         <div className="resto-cards-container">
           {restaurant.Menus.map((menu) => (
             <div key={menu._id}>
-              <h1>Menus</h1>
               <RestoCard
               Titre={menu.Titre}
               Description={menu.Description}
               img={menu.img}
-              propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
+              prix={menu.Prix}
+              propPadding="1.5rem 1.5rem 1.5rem 1.5rem"
               propGap="0.25rem"
               propGap1="0.938rem"
               propWidth="unset"
               propLineHeight="unset"
               propHeight="5.625re"
               propBackgroundImage={menu.img}
+              onAddToCart={() => addMenuToCart(menu)}
             />
               
               </div>
           ))}
           {restaurant.Articles.map((article) => (
             <div key={article._id}>
-              <h1>{article.Catégorie}</h1>
               <RestoCard
               Titre={article.Titre}
               Description={article.Description}
               img={article.img}
+              prix={article.Prix}
               propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
               propGap="0.25rem"
               propGap1="0.938rem"
@@ -118,6 +141,7 @@ const Restaurant: FunctionComponent = () => {
               propLineHeight="unset"
               propHeight="5.625re"
               propBackgroundImage={article.img}
+              onAddToCart={() => addArticleToCart(article)}
             />
               
               </div>
@@ -133,11 +157,12 @@ const Restaurant: FunctionComponent = () => {
         {restaurant.Menus.map((menu) => (
         <div key={menu._id}>
           
-          <h1>Menus</h1>
+
           <RestoCard
               Titre={menu.Titre}
               Description={menu.Description}
               img={menu.img}
+              prix={menu.Prix}
               propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
               propGap="0.25rem"
               propGap1="0.938rem"
@@ -145,6 +170,7 @@ const Restaurant: FunctionComponent = () => {
               propLineHeight="unset"
               propHeight="5.625re"
               propBackgroundImage={menu.img}
+              onAddToCart={() => addMenuToCart(menu)}
             />
         
         </div>
@@ -159,11 +185,11 @@ const Restaurant: FunctionComponent = () => {
         {restaurant.Articles.filter((article) => article.Catégorie === selectedCategory).map((article) => (
         <div key={article._id}>
           
-          <h1>{article.Catégorie}</h1>
           <RestoCard
               Titre={article.Titre}
               Description={article.Description}
               img={article.img}
+              prix={article.Prix}
               propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
               propGap="0.25rem"
               propGap1="0.938rem"
@@ -171,6 +197,7 @@ const Restaurant: FunctionComponent = () => {
               propLineHeight="unset"
               propHeight="5.625re"
               propBackgroundImage={article.img}
+              onAddToCart={() => addArticleToCart(article)}
             />
           
           </div>

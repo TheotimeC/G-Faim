@@ -5,9 +5,9 @@ const bcrypt = require('bcryptjs');
 
 
 exports.createUtilisateur = async (req, res) => {
-    const { nom, prenom, telephone, email, mot_de_passe, adresses_de_livraison, code_parrain, total_personnes_parrainees } = req.body;
+    const { role, nom, prenom, telephone, email, mot_de_passe, adresses_de_livraison, code_parrain, total_personnes_parrainees } = req.body;
     try {
-        const nouvelUtilisateur = new User({ nom, prenom, telephone, email, mot_de_passe, adresses_de_livraison, code_parrain, total_personnes_parrainees });
+        const nouvelUtilisateur = new User({ role, nom, prenom, telephone, email, mot_de_passe, adresses_de_livraison, code_parrain, total_personnes_parrainees });
         await nouvelUtilisateur.save();
         res.status(201).json(nouvelUtilisateur);
     } catch (error) {
@@ -15,18 +15,6 @@ exports.createUtilisateur = async (req, res) => {
     }
 };
 
-exports.getUtilisateurs = async (req, res) => {
-    const { id } = req.query;
-    try {
-        const utilisateur = await User.findById(id);
-        if (!utilisateur) {
-            return res.status(404).json({ message: "Utilisateur non trouvé" });
-        }
-        res.status(200).json(utilisateur);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
 
 exports.majUtilisateur = async (req, res) => {
     const { id } = req.query; 
@@ -66,7 +54,7 @@ exports.loginUser = async (req, res) => {
         if (!isValid) {
             return res.status(400).json({ message: "Mot de passe invalide" });
         }
-
+        const role = utilisateur.role;
         // Générer l'access token avec une expiration courte (par exemple, 15 minutes)
         const accessToken = jwt.sign(
             { userId: utilisateur._id, email: utilisateur.email },
@@ -81,7 +69,7 @@ exports.loginUser = async (req, res) => {
             { expiresIn: '7d' }
         );
 
-        res.status(200).json({ accessToken, refreshToken });
+        res.status(200).json({ accessToken, refreshToken, role  });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -161,7 +149,7 @@ exports.getUtilisateursId = async (req, res) => {
                 return res.status(404).json({ message: "Utilisateur non trouvé" });
             }
             // Retournez l'ID de l'utilisateur
-            res.status(200).json({ userId: utilisateur._id });
+            res.status(200).json(utilisateur);
         } else {
             return res.status(401).json({ message: "Token invalide, veuillez vous reconnecter" });
         }

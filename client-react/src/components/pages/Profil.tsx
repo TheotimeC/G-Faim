@@ -31,26 +31,14 @@ export interface Adresse {
   pays: string;
 }
 
-export const getUser = async (id: string) => {
-  try {
-    const token = localStorage.getItem('accessToken');
-    const response = await api.get<User>(`${API_URL}/get/`, {
-      params: { id },
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Erreur lors de la récupération de l\'utilisateur:', error);
-    throw error;
-  }
-};
-
 export const putUser = async (id: string, data: Partial<User>) => {
+  const cacheKey = 'userCache';
   try {
     const token = localStorage.getItem('accessToken')
     const response = await api.put(`${API_URL}/modify/?id=${id}`, data, {
       headers: { Authorization: `Bearer ${token}` }
     });
+    localStorage.setItem(cacheKey, JSON.stringify(response.data));
     return response.data;
   } catch (error) {
     console.error('Erreur lors de la modification de l\'utilisateur:', error);
@@ -59,11 +47,18 @@ export const putUser = async (id: string, data: Partial<User>) => {
 };
 
 export const getUserId = async () => {
+  const cacheKey = 'userCache';
+  // Essayez de récupérer les données mises en cache
+  const cachedData = localStorage.getItem(cacheKey);
+  if (cachedData) {
+    return JSON.parse(cachedData); // Parse et retourne les données mises en cache si disponibles
+  }
   try {
     const token = localStorage.getItem('accessToken')
     const response = await api.get(`${API_URL}/getId/`, {
       headers: { Authorization: `Bearer ${token}` }
     });
+    localStorage.setItem(cacheKey, JSON.stringify(response.data));
     return response.data;
   } catch (error) {
     console.error('Erreur lors de la récupération de luser:', error);
@@ -98,18 +93,26 @@ const Profil: React.FC = () => {
   useEffect(() => {
     const fetchUserId = async () => {
       try {
-        const id = await getUserId();
-        setUserId(id.userId);
+        const userData = await getUserId();
+        setUserId(userData._id);
+        setUser(userData);
+        setNom(userData.nom);
+        setTelephone(userData.telephone);
+        setEmail(userData.email);
+        setMdp(userData.mot_de_passe);
+        if (userData.adresses_de_livraison && userData.adresses_de_livraison.length > 0) {
+          setAdresse(userData.adresses_de_livraison[0].adresse);
+        }
       } catch (error) {
         console.error("Impossible de récupérer l'identifiant de l'utilisateur", error);
       }
     };
 
     fetchUserId();
-  }, []);
-  
+  }, [userId]);
 
   const handleUpdate = async () => {
+    
     if(!userId) return;
 
     const adresseDeLivraison: Adresse = {
@@ -135,18 +138,14 @@ const Profil: React.FC = () => {
     }
   };
 
-  const cancelChange = async()=>{
-    if (user) {
-      setUser(user); 
-    }
-  }
-  
+
+  /*
   //récuprétaion API
   useEffect(() => {
     const fetchUser = async () => {
       try {
         if(!userId) return;
-        const userData = await getUser(userId);
+        const userData = await getUserId();
         setUser(userData);
       } catch (error) {
         console.error("Erreur lors de la récupération de l'utilisateur", error);
@@ -155,7 +154,7 @@ const Profil: React.FC = () => {
 
     fetchUser();
   }, [userId]);
-
+*/
   
   //preview pp
   const handlePreview = async (file: UploadFile) => {
