@@ -1,7 +1,7 @@
 // CartItem.jsx
 import React, {useState} from 'react';
 import '../assets/styles/ItemPanier.css';
-import {InputNumber} from "antd"; // Make sure to create a separate CSS file for the CartItem
+import {InputNumber, Modal} from "antd"; // Make sure to create a separate CSS file for the CartItem
 interface CartItemProps {
     name: string;
     price: string;
@@ -24,6 +24,22 @@ function ItemPanier({ name, price, imageSrc, initialQuantity, removeItem, update
         updateQuantity(newQuantity);
 
     }
+    const showDeleteConfirm = () => {
+        Modal.confirm({
+            title: 'Are you sure you want to delete this item?',
+            content: 'This action cannot be undone.',
+            okText: 'Yes, delete it',
+            okType: 'danger',
+            cancelText: 'No, cancel',
+            onOk() {
+                console.log('OK, item will be deleted');
+                removeItem();
+            },
+            onCancel() {
+                console.log('Cancellation confirmed');
+            },
+        });
+    };
     const substractQuantity = () => {
         if (quantity > 1) {
             const newQuantity = quantity - 1;
@@ -32,7 +48,7 @@ function ItemPanier({ name, price, imageSrc, initialQuantity, removeItem, update
         }
 
         else
-            removeItem();
+            showDeleteConfirm();
 
     }
     const toggleEditable = () => {
@@ -44,9 +60,6 @@ function ItemPanier({ name, price, imageSrc, initialQuantity, removeItem, update
         if (value > 0) {
             setQuantity(value);
             setTempQuantity(value);
-        }
-        else if (value  === 0) {
-            removeItem();
         }
         else
             return;
