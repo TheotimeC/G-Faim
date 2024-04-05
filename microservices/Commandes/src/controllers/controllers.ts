@@ -14,6 +14,60 @@ export const createOrder = async (request: any, reply: any) => {
         reply.code(500).send(error);
     }
 };
+// Retrieve or create a cart for a user
+export const getUserCart = async (request: any, reply: any) => {
+    try {
+        let cart = await Order.findOne({ userId: request.query.userId, status: 'cart' });
+        if (!cart) {
+            // Optionally create a new cart if one doesn't exist
+            cart = new Order({
+                userId: request.query.userId,
+                items: [],
+                subtotal: 0,
+                deliveryFee: 0, // Adjust as necessary
+                total: 0,
+                status: 'cart',
+            });
+            await cart.save();
+        }
+        reply.code(200).send(cart);
+    } catch (error) {
+        reply.code(500).send(error);
+    }
+};
+// Update the cart for a user, and delete if empty
+export const updateCart = async (request: any, reply: any) => {
+    try {
+        const { userId, items } = request.body;
+
+        // If items array is empty, delete the cart
+        if (items.length === 0) {
+            const deletedCart = await Order.findOneAndDelete({ userId: userId, status: 'cart' });
+            if (!deletedCart) {
+                reply.code(404).send({ message: 'Cart not found' });
+                return;
+            }
+            reply.code(200).send({ message: 'Cart deleted successfully' });
+            return;
+        }
+
+        // Calculate subtotal and total based on items
+        let subtotal = items.reduce((acc: any, item: any) => acc + (item.quantity * item.price), 0);
+        let deliveryFee = 5; // Example delivery fee, adjust as necessary
+        let total = subtotal + deliveryFee;
+
+        let updatedCart = await Order.findOneAndUpdate(
+            { userId: userId, status: 'cart' },
+            { $set: { items: items, subtotal: subtotal, total: total, deliveryFee: deliveryFee } },
+            { new: true, upsert: true } // Upsert option creates a new document if no cart exists
+        );
+
+        reply.code(200).send(updatedCart);
+    } catch (error) {
+        reply.code(500).send(error);
+    }
+};
+
 
 // Get all orders
 export const getAllOrders = async (request: any, reply: any) => {
@@ -40,7 +94,7 @@ export const getOrderById = async (request: any, reply: any) => {
 };
 export const getOrderByUserId = async (request: any, reply: any) => {
     try {
-        const order = await Order.findOne({ userId: request.query.userId });
+        const order = await Order.find({ userId: request.query.userId });
         if (!order) {
             reply.code(404).send({ message: 'Order not found' });
             return;
