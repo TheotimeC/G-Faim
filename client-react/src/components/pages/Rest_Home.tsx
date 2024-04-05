@@ -1,4 +1,4 @@
-import api from '../common/Api';
+import api from '../common/api';
 import '../assets/styles/resthome.css'
 import { Col, Row  } from 'antd';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
