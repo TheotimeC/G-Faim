@@ -8,6 +8,7 @@
     "prod": "tsc && node dist/index.js"
   },
   "dependencies": {
+    "@fastify/cors": "^9.0.1",
     "@types/node": "^20.12.4",
     "@types/typescript": "^2.0.0",
     "dotenv": "^16.4.5",
