@@ -2,7 +2,7 @@ import { Col, Row, Divider, Input, Checkbox } from 'antd';
 import Button from "../common/Button.tsx";
 import { useState} from 'react'
 import styles from "../assets/styles/Connection.module.css"
-import api from '../common/Api';
+import api from '../common/api.ts';
 import { useAuth } from '../common/Auth.tsx'; // Importez le hook d'authentification
 
 // Dans votre fonction de connexion :

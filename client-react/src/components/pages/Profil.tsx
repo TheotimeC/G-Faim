@@ -6,7 +6,7 @@ import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
 import Icon from '@mdi/react';
 import { mdiCheck } from '@mdi/js';
 import Input from '../common/Input';
-import api from '../common/Api';
+import api from '../common/api.ts';
 
 
 //Appel API

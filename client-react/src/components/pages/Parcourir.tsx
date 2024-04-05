@@ -3,7 +3,7 @@ import {NavLink} from 'react-router-dom';
 import Card from "../common/Card";
 import CategoriesDisplay from "../layout/CardDisplay";
 import Restaurant from "../pages/Restaurant";
-import api from '../common/Api';
+import api from '../common/api.ts';
 
 const API_URL = 'http://localhost:3001/restaurant';
 
