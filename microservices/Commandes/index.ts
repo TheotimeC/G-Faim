@@ -1,5 +1,6 @@
 import Fastify from 'fastify';
 import dotenv from 'dotenv'
+import cors from '@fastify/cors'
 import * as mongoose from "mongoose";
 import * as process from "process";
 import routes from "./src/routes/routes";
@@ -18,6 +19,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 })
     .then(async () => {
         console.log('Connecté a MongoDB');
+        fastify.register(cors);
         fastify.register(routes);
         await fastify.listen({port: 3002});
         console.log(`Server running at http://localhost:${PORT}`);
