@@ -1,67 +1,84 @@
 {
-    "Id": "R1",
-    "Nom": "Chez Gourmet",
-    "Telephone": "0123456789",
-    "Email": "contact@chezgourmet.com",
-    "Categorie": "Cuisine française",
-    "img": "https://upload.wikimedia.org/wikipedia/fr/thumb/e/ea/Mcdonalds_France_2009_logo.svg/1138px-Mcdonalds_France_2009_logo.svg.png",
-    "Horaires d'ouverture": {
-      "Lundi": "09:00 - 23:00",
-      "Mardi": "09:00 - 23:00",
-      "Mercredi": "09:00 - 23:00",
-      "Jeudi": "09:00 - 23:00",
-      "Vendredi": "09:00 - 23:00",
-      "Samedi": "10:00 - 24:00",
-      "Dimanche": ""
+  "Nom": "Auberge du Terroir",
+  "Telephone": "0987654321",
+  "Email": "contact@aubergeduterroir.com",
+  "Categorie": "Gastronomie régionale",
+  "img": "https://images.unsplash.com/photo-1599313354145-2329b2dd172e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF1YmVyZ2V8ZW58MHx8MHx8fDA%3D",
+  "Horaires d'ouverture": {
+    "Lundi": "12:00 - 23:00",
+    "Mardi": "12:00 - 23:00",
+    "Mercredi": "Fermé",
+    "Jeudi": "12:00 - 23:00",
+    "Vendredi": "12:00 - 00:00",
+    "Samedi": "11:00 - 00:00",
+    "Dimanche": "11:00 - 22:00"
+  },
+  "Menus": [
+    {
+      "Titre": "Menu Terroir",
+      "Description": "Sélection de plats régionaux pour une immersion locale.",
+      "Prix": 60.00,
+      "Articles": [
+        "Terrine de Campagne",
+        "Coq au Vin",
+        "Tarte aux Myrtilles"
+      ],
+      "img": "https://images.unsplash.com/photo-1611601184963-9d1de9b79ff3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8Nzd8MjUzMzk2OXx8ZW58MHx8fHx8"
     },
-    "Menus": [
-      {
-        "Id": "M1",
-        "Titre": "Menu Dégustation",
-        "Description": "Un voyage gastronomique à travers nos spécialités.",
-        "Prix": 75.00,
-        "Articles": [
-          "A1",
-          "A2",
-          "A3"
-        ]
-      }
-    ],
-    "Articles": [
-      {
-        "Id": "A1",
-        "Titre": "Foie Gras",
-        "Description": "Foie gras de canard maison avec compotée d'oignon.",
-        "Prix": 15.00,
-        "Catégorie": "Entrée"
-      },
-      {
-        "Id": "A5",
-        "Titre": "Foie Pas Gras",
-        "Description": "Foie gras de canard maison avec compotée d'oignon.",
-        "Prix": 15.00,
-        "Catégorie": "Entrée"
-      },
-      {
-        "Id": "A2",
-        "Titre": "Magret de Canard",
-        "Description": "Magret de canard aux fruits rouges.",
-        "Prix": 35.00,
-        "Catégorie": "Plat principal"
-      },
-      {
-        "Id": "A3",
-        "Titre": "Crème Brûlée",
-        "Description": "Crème brûlée à la vanille de Madagascar.",
-        "Prix": 10.00,
-        "Catégorie": "Dessert"
-      },
-      {
-        "Id": "A4",
-        "Titre": "Crème Trop Brûlée",
-        "Description": "Crème brûlée à la vanille de Madagascar.",
-        "Prix": 10.00,
-        "Catégorie": "Dessert"
-      }
-    ]
-  }
+    {
+      "Titre": "Menu du Chef",
+      "Description": "Créations originales du chef pour une expérience unique.",
+      "Prix": 80.00,
+      "Articles": [
+        "Foie Gras Poêlé",
+        "Filet de Bar Sauvage",
+        "Soufflé au Grand Marnier"
+      ],
+      "img": "https://images.unsplash.com/photo-1608500218919-0df503673764?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8ODh8MjUzMzk2OXx8ZW58MHx8fHx8"
+    }
+  ],
+  "Articles": [
+    {
+      "Titre": "Terrine de Campagne",
+      "Description": "Terrine maison avec pickles de légumes.",
+      "Prix": 14.00,
+      "Catégorie": "Entrée",
+      "img": "https://images.unsplash.com/photo-1577593955246-5da0e8c441d9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8ODd8MjUzMzk2OXx8ZW58MHx8fHx8"
+    },
+    {
+      "Titre": "Coq au Vin",
+      "Description": "Coq mijoté dans un vin rouge riche avec champignons et petits oignons.",
+      "Prix": 22.00,
+      "Catégorie": "Plat principal",
+      "img": "https://images.unsplash.com/photo-1621866908051-6bd6e44d6573?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8Mzd8MjUzMzk2OXx8ZW58MHx8fHx8"
+    },
+    {
+      "Titre": "Tarte aux Myrtilles",
+      "Description": "Tarte aux myrtilles sauvages sur pâte sablée.",
+      "Prix": 9.00,
+      "Catégorie": "Dessert",
+      "img": "https://images.unsplash.com/photo-1618216724394-f053be6b6f53?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8NTF8MjUzMzk2OXx8ZW58MHx8fHx8"
+    },
+    {
+      "Titre": "Foie Gras Poêlé",
+      "Description": "Foie gras de canard poêlé, compote de figues et brioche toastée.",
+      "Prix": 18.00,
+      "Catégorie": "Entrée",
+      "img": "https://images.unsplash.com/photo-1593854990469-2ef1a1eac6b2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8Mjl8MjUzMzk2OXx8ZW58MHx8fHx8"
+    },
+    {
+      "Titre": "Filet de Bar Sauvage",
+      "Description": "Filet de bar sauvage, légumes de saison et beurre blanc.",
+      "Prix": 28.00,
+      "Catégorie": "Plat principal",
+      "img": "https://images.unsplash.com/photo-1611599537845-1c7aca0091c0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8NzJ8MjUzMzk2OXx8ZW58MHx8fHx8"
+    },
+    {
+      "Titre": "Soufflé au Grand Marnier",
+      "Description": "Soufflé chaud parfumé au Grand Marnier, avec sauce anglaise.",
+      "Prix": 11.00,
+      "Catégorie": "Dessert",
+      "img": "https://images.unsplash.com/photo-1548808939-68da54c972a1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MTAzfDI1MzM5Njl8fGVufDB8fHx8fA%3D%3D"
+    }
+  ]
+}

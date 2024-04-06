@@ -1,0 +1,34 @@
+/* restnavbar.css */
+
+/* Personnaliser l'arrière-plan du Sider */
+.menu{
+    padding-top:60%;
+    background-color: #FFFFFF !important; /* Couleur de fond personnalisée */
+  }
+.ant-layout-sider {
+    background-color: #FFFFFF !important; /* Couleur de fond personnalisée */
+    margin-left: 1%;
+  }
+  
+  /* Personnaliser les éléments du menu dans le Sider */
+  .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #29802956 !important; /* Couleur de fond pour l'élément sélectionné */
+  }
+  
+  /* Espacer les icônes dans le menu */
+  .ant-menu-item-icon {
+    margin-right: 16px; /* Ajuster selon les besoins */
+  }
+  
+  :where(.css-dev-only-do-not-override-42nv3w).ant-menu-inline-collapsed >.ant-menu-item, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-inline-collapsed >.ant-menu-item-group>.ant-menu-item-group-list>.ant-menu-item, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-inline-collapsed >.ant-menu-item-group>.ant-menu-item-group-list>.ant-menu-submenu>.ant-menu-submenu-title, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-inline-collapsed >.ant-menu-submenu>.ant-menu-submenu-title{
+    padding-inline: calc(50% - 12px - 4px) !important;
+  }
+
+  :where(.css-dev-only-do-not-override-42nv3w).ant-menu-inline >.ant-menu-item, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-vertical >.ant-menu-item, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-inline >.ant-menu-submenu>.ant-menu-submenu-title, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-vertical >.ant-menu-submenu>.ant-menu-submenu-title{
+    margin-top: 50px;
+    height: 60px;
+    line-height: 55px;
+  }
+  :where(.css-dev-only-do-not-override-42nv3w).ant-layout {
+    background: #FFFFFF;
+  }

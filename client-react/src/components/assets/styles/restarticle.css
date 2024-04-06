@@ -1,0 +1,8 @@
+/* Pour le switch activé */
+.ant-switch-checked {
+  background-color: #298029 !important;
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-switch {
+    background-color: red ;
+}
