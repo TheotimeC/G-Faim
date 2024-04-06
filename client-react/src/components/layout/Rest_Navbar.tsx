@@ -29,13 +29,13 @@ const RestNav = () =>{
         return <RestArticles/>;
       case '3':
         // return <VotreComposantPourNav3 />;
-        return <div>Contenu pour Nav 3</div>;
+        return <div><h1>Statistiques</h1></div>;
         case '4':
         // return <VotreComposantPourNav3 />;
-        return <div>Contenu pour Nav 4</div>;
+        return <div><h1>Historique</h1></div>;
         case '5':
         // return <VotreComposantPourNav3 />;
-        return <div>Contenu pour Nav 5</div>;
+        return <div><h1>Paramètres</h1></div>;
       default:
         return <RestHome />;
     }

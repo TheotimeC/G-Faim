@@ -38,16 +38,15 @@ const RestArticles = () => {
         },
       ];
 
-      
   return (
     <div>
         <h1>Menus & Articles</h1>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Menus" key="1">
-            <Table columns={columns} dataSource={restdata.Menus} rowKey="Titre" pagination={false}/>
+            <Table columns={columns} dataSource={restdata.Menus} rowKey="Titre" />
         </TabPane>
         <TabPane tab="Articles" key="2">
-            <Table columns={columns} dataSource={restdata.Articles} rowKey="Titre" pagination={false}/>
+            <Table columns={columns} dataSource={restdata.Articles} rowKey="Titre"/>
         </TabPane>
       </Tabs>
     </div>
