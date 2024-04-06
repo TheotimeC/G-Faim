@@ -3,6 +3,41 @@
   background-color: #298029 !important;
 }
 
-:where(.css-dev-only-do-not-override-42nv3w).ant-switch {
-    background-color: red ;
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.left-content {
+  flex: 1;
+  padding-right: 20px; /* Espacement entre le contenu et le tableau */
+}
+
+.right-content {
+  flex: 1;
+  padding-left: 20px; /* Espacement entre le tableau et le contenu */
+  border-left: 1px solid #ccc; /* Ligne de division verticale */
+}
+
+/* Style pour la table */
+.ant-table {
+  width: 100%;
+}
+
+/* Style pour la table lorsque la taille est petite */
+.ant-table-small .ant-table-thead > tr > th, 
+.ant-table-small .ant-table-tbody > tr > td {
+  padding: 8px 4px;
+}
+
+/* Style pour la table lorsque la taille est petite - Ligne d'en-tête */
+.ant-table-small .ant-table-thead > tr > th {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* Style pour la table lorsque la taille est petite - Ligne de corps */
+.ant-table-small .ant-table-tbody > tr > td {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }

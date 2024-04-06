@@ -6,6 +6,7 @@ import { Layout, Menu, Button, theme } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import RestHome from '../pages/Rest_Home';
 import RestArticles from '../pages/Rest_article';
+import RestParam from '../pages/Rest_param';
 
 const { Header, Sider, Content } = Layout;
 
@@ -35,7 +36,7 @@ const RestNav = () =>{
         return <div><h1>Historique</h1></div>;
         case '5':
         // return <VotreComposantPourNav3 />;
-        return <div><h1>Paramètres</h1></div>;
+        return <div><RestParam/></div>;
       default:
         return <RestHome />;
     }

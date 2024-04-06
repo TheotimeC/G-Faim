@@ -1,8 +1,9 @@
 const User = require('../models/models');
+const Restaurant = require('../models/models')
 const KafkaConfig = require('../Kafka/config-kafka');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-
+const axios = require('axios');
 
 exports.createUtilisateur = async (req, res) => {
     const { role, nom, prenom, telephone, email, mot_de_passe, adresses_de_livraison, code_parrain, total_personnes_parrainees } = req.body;
@@ -68,6 +69,17 @@ exports.loginUser = async (req, res) => {
             process.env.JWTREFRESH,
             { expiresIn: '7d' }
         );
+        const API_URL = 'http://localhost:3001/restaurant';
+
+        if (utilisateur.role === 'restaurateur') {
+            const response = await axios.get(`${API_URL}/getUser/`, {params: { id: utilisateur._id }});
+            const restaurant = response.data;
+            const restaurantId = restaurant._id;
+            if (restaurant) {
+                // Générez votre token ici
+                return res.json({ accessToken, refreshToken, role, restaurantId });
+            }
+        }
 
         res.status(200).json({ accessToken, refreshToken, role  });
     } catch (error) {

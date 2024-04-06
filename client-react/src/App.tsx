@@ -24,7 +24,7 @@ function App() {
     <>
       <Router>
         {/* Affichez la Navbar appropriée en fonction du rôle */}
-        {!isAuthenticated || !isRestaurateur && <Navbar />}
+        {!isAuthenticated && !isRestaurateur && <Navbar />}
         {isAuthenticated && isRestaurateur && <RestNav />}
         
         <Routes>
@@ -46,7 +46,7 @@ function App() {
           {isRestaurateur && (
             <>
               {/* Ajoutez ici d'autres routes spécifiques aux restaurateurs */}
-              <Route path="*" element={<Navigate replace to="/dashboard" />} />
+              <Route path="*" element={<Navigate replace to="/dashboard/" />} />
             </>
           )}
 

@@ -1,11 +1,11 @@
 const KafkaConfig = require('../Kafka/config-kafka');
-const Restaurant = require('../models/models'); // Assurez-vous que le chemin d'accès est correct
-// KafkaConfig peut rester tel quel si vous l'utilisez dans ce contexte
+const Restaurant = require('../models/models'); 
+const jwt = require('jsonwebtoken');
 
 exports.createRestaurant = async (req, res) => {
-    const { Nom, Telephone, Email, Categorie, img, Horairesouverture, Menus, Articles } = req.body;
+    const { userId, Nom, Telephone, Email, Categorie, img, Horairesouverture, Menus, Articles } = req.body;
     try {
-        const nouveauRestaurant = new Restaurant({ Nom, Telephone, Email, Categorie, img, Horairesouverture, Menus, Articles });
+        const nouveauRestaurant = new Restaurant({ userId, Nom, Telephone, Email, Categorie, img, Horairesouverture, Menus, Articles });
         await nouveauRestaurant.save();
         res.status(201).json(nouveauRestaurant);
     } catch (error) {
@@ -17,6 +17,19 @@ exports.getRestaurant = async (req, res) => {
     const { id } = req.query;
     try {
         const restaurant = await Restaurant.findById(id);
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurant non trouvé" });
+        }
+        res.status(200).json(restaurant);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.getRestaurantUser = async (req, res) => {
+    const { id } = req.query;
+    try {
+        const restaurant = await Restaurant.findOne({userId: id});
         if (!restaurant) {
             return res.status(404).json({ message: "Restaurant non trouvé" });
         }
@@ -49,6 +62,35 @@ exports.majRestaurant = async (req, res) => {
     }
 };
 
+exports.majMenuDansRestaurant = async (req, res) => {
+    const { id } = req.query; // Supposons que vous passiez ces deux ID
+    const { menuId } = req.params;
+    try {
+        // Trouver le restaurant par son ID
+        const restaurant = await Restaurant.findById(id);
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurant non trouvé" });
+        }
+
+        // Trouver le menu spécifique dans le restaurant
+        const menuIndex = restaurant.Menus.findIndex(menu => menu._id.toString() === menuId);
+        if (menuIndex === -1) {
+            return res.status(404).json({ message: "Menu non trouvé" });
+        }
+
+        // Mise à jour du menu spécifique
+        restaurant.Menus[menuIndex] = {...restaurant.Menus[menuIndex], ...req.body};
+
+        // Sauvegarder les modifications sur le restaurant
+        const updatedRestaurant = await restaurant.save();
+        
+        res.status(200).json(updatedRestaurant);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+
 exports.delRestaurant = async (req, res) => {
     const { id } = req.query; 
     try {
@@ -62,6 +104,41 @@ exports.delRestaurant = async (req, res) => {
     }
 };
 
+exports.protect = async (req, res, next) => {
+    let token;
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+    ) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+
+    if (!token) {
+        return res.status(401).json({ message: "Vous n'êtes pas autorisé à accéder à cette ressource"  });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT);
+        const restaurantIdReq = req.query.id
+
+        const restaurantUser = await Restaurant.findOne({ userId: decoded.userId });
+
+        const restaurantIdUser = restaurantUser._id;
+
+        const restaurantReq = await Restaurant.findById(restaurantIdReq);
+
+
+    
+            if (restaurantReq.userId.toString() !== decoded.userId) {
+                return res.status(401).json({ message: "Accès non autorisé à ce restaurant" });
+            }
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: "Token invalide, veuillez vous reconnecter" });
+    }
+};
+
+        
 
 exports.sendMessageToKafka = async (req, res) => {
     try {

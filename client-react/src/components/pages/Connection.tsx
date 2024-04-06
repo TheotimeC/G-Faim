@@ -22,16 +22,20 @@ export default function Connection(){
           email: username,
           mot_de_passe: password,
         });
+        console.log(response.data)
     
-        console.log('Login réussi:', response.data);
-        const { accessToken, refreshToken, role } = response.data; // Décomposez la réponse pour extraire le rôle
+        
+        const { accessToken, refreshToken, role, restaurantId  } = response.data; // Décomposez la réponse pour extraire le rôle
         login({ accessToken, refreshToken, role }); // Passez le rôle à la fonction login
         // Note: Pas besoin de localStorage.setItem('role', role); ici car cela sera géré dans `login`
-        if (role === 'restaurateur') {
-          navigate('/dashboard'); // Redirigez vers le tableau de bord du restaurateur
-        } else {
-          navigate('/profil'); // Redirigez les clients vers leur profil ou toute autre page pertinente
-        }
+        console.log('Login réussi:', response.data, restaurantId);
+        if (restaurantId) {
+          localStorage.setItem('restaurantId', restaurantId);
+          navigate('/dashboard');
+      } else {
+          navigate('/profil');
+      }
+
       } catch (error) {
         console.error('Erreur lors de la connexion de l\'utilisateur:', error);
         // Gérer l'erreur, par exemple en affichant un message à l'utilisateur

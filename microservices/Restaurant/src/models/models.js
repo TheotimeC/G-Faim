@@ -45,7 +45,7 @@ const menuSchema = new mongoose.Schema({
     required: true
   },
   Articles: [{
-    type: String, // Supposant que ce sont les IDs des articles référencés
+    type: mongoose.Schema.Types.ObjectId, // Supposant que ce sont les IDs des articles référencés
     required: true
   }],
   img: {
@@ -68,6 +68,10 @@ const restaurantSchema = new mongoose.Schema({
   id:{
   type: mongoose.Schema.Types.ObjectId,
   required:false
+  },
+  userId:{
+    type:mongoose.Schema.Types.ObjectId,
+    required:true
   },
   Nom: {
     type: String,
