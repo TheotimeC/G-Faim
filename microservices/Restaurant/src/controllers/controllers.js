@@ -1,6 +1,7 @@
 const KafkaConfig = require('../Kafka/config-kafka');
 const Restaurant = require('../models/models'); 
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 exports.createRestaurant = async (req, res) => {
     const { userId, Nom, Telephone, Email, Categorie, img, Horairesouverture, Menus, Articles } = req.body;
@@ -251,8 +252,65 @@ exports.protect = async (req, res, next) => {
     }
 };
 
-        
+exports.verifyApiKeyWithUserService = async (req, res, next) => {
+    const apiKey = req.headers['x-api-key'];
+  
+    if (!apiKey) {
+      return res.status(401).json({ message: "API Key is missing" });
+    }
+  
+    try {
+      // Remplacez cette URL par l'URL réelle de votre service utilisateur
+      const verifyApiKeyUrl = 'http://localhost:3000/auth/verify';
+  
+      // Envoyez une requête au service utilisateur pour valider la clé API
+      await axios.get(verifyApiKeyUrl, {
+        headers: { 'x-api-key': apiKey }
+      });
+  
+      // Si la clé API est valide (c'est-à-dire que le service utilisateur ne renvoie pas d'erreur),
+      // le middleware passe au middleware/route suivant
+      next();
+    } catch (error) {
+      if (error.response) {
+        // Si le service utilisateur renvoie une erreur, la relayer avec le même code de statut et message
+        return res.status(error.response.status).json({ message: error.response.data.message });
+      } else {
+        // En cas d'erreur de réseau ou autre, renvoyer une erreur 500
+        return res.status(500).json({ message: "Error contacting the User Service for API key validation" });
+      }
+    }
+  };        
 
+  exports.verifyJwtWithUserService = async (req, res, next) => {
+    const authToken = req.headers.authorization;
+  
+    if (!authToken) {
+      return res.status(401).json({ message: "Access token is missing" });
+    }
+  
+    try {
+      // Remplacez cette URL par l'URL réelle de votre service utilisateur pour la vérification du token
+      const verifyTokenUrl = 'http://localhost:3000/auth/protect';
+      console.log("token",authToken)
+      // Envoyez une requête au service utilisateur pour valider le token JWT
+      await axios.post(verifyTokenUrl, {}, {
+        headers: { 'Authorization': authToken }
+      });
+  
+      // Si le token est valide (c'est-à-dire que le service utilisateur ne renvoie pas d'erreur),
+      // le middleware passe au middleware/route suivant
+      next();
+    } catch (error) {
+      if (error.response) {
+        // Si le service utilisateur renvoie une erreur, la relayer avec le même code de statut et message
+        return res.status(error.response.status).json({ message: error.response.data.message });
+      } else {
+        // En cas d'erreur de réseau ou autre, renvoyer une erreur 500
+        return res.status(500).json({ message: "Error contacting the User Service for JWT validation" });
+      }
+    }
+  };
 exports.sendMessageToKafka = async (req, res) => {
     try {
       const { message } = req.body;

@@ -3,8 +3,8 @@ const router = express.Router();
 const taskController = require('../controllers/controllers');
 
 router.post('/restaurant/create', taskController.createRestaurant);
-router.post('/restaurant/create/article',taskController.protect, taskController.ajouterArticleAuRestaurant);
-router.post('/restaurant/create/menu',taskController.protect, taskController.ajouterMenuAuRestaurant);
+router.post('/restaurant/create/article',taskController.verifyJwtWithUserService, taskController.ajouterArticleAuRestaurant);
+router.post('/restaurant/create/menu',taskController.verifyJwtWithUserService, taskController.ajouterMenuAuRestaurant);
 
 router.put('/restaurant/modify',taskController.protect, taskController.majRestaurant);
 router.put('/restaurant/modify/menu/:menuId',taskController.protect, taskController.majMenuDansRestaurant);
@@ -17,5 +17,7 @@ router.delete('/restaurant/delete/menu/:menuId',taskController.protect, taskCont
 router.get('/restaurant/get', taskController.getRestaurant);
 router.get('/restaurant/getAll', taskController.getAllRestaurants);
 router.get('/restaurant/getUser', taskController.getRestaurantUser);
+
+router.get('/dev/restaurant/getAll',[taskController.verifyApiKeyWithUserService, taskController.verifyJwtWithUserService], taskController.getAllRestaurants);
 
 module.exports = router;

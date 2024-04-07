@@ -56,6 +56,9 @@ exports.loginUser = async (req, res) => {
             return res.status(400).json({ message: "Mot de passe invalide" });
         }
         const role = utilisateur.role;
+        const apiKey = utilisateur.apiKey;
+        console.log("utilisateur: ",utilisateur);
+        console.log("utilisateur.apiKey: ",utilisateur.apiKey);
         // Générer l'access token avec une expiration courte (par exemple, 15 minutes)
         const accessToken = jwt.sign(
             { userId: utilisateur._id, email: utilisateur.email },
@@ -77,13 +80,32 @@ exports.loginUser = async (req, res) => {
             const restaurantId = restaurant._id;
             if (restaurant) {
                 // Générez votre token ici
-                return res.json({ accessToken, refreshToken, role, restaurantId });
+                return res.json({ accessToken, refreshToken, role, restaurantId, apiKey });
             }
         }
 
-        res.status(200).json({ accessToken, refreshToken, role  });
+        res.status(200).json({ accessToken, refreshToken, role, apiKey  });
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+};
+
+exports.verifyApiKey = async (req, res, next) => {
+    const apiKey = req.headers['x-api-key'];
+    if (!apiKey) {
+        return res.status(401).json({ message: "API Key is missing" });
+    }
+
+    try {
+        const user = await User.findOne({ apiKey: apiKey });
+        if (!user) {
+            return res.status(401).json({ message: "Invalid API Key" });
+        }
+
+        req.user = user;
+        res.status(200).json({ message: "Token vérifié avec succès", user: req.user });
+    } catch (error) {
+        return res.status(500).json({ message: "Server error during API key validation" });
     }
 };
 
@@ -134,7 +156,7 @@ exports.protect = async (req, res, next) => {
     ) {
         token = req.headers.authorization.split(' ')[1];
     }
-
+    console.log("token",token)
     if (!token) {
         return res.status(401).json({ message: "Vous n'êtes pas autorisé à accéder à cette ressource"  });
     }
@@ -142,7 +164,7 @@ exports.protect = async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT);
         req.user = await User.findById(decoded.userId).select('-mot_de_passe');
-        next();
+        res.status(200).json(req.user);
     } catch (error) {
         return res.status(401).json({ message: "Token invalide, veuillez vous reconnecter" });
     }
@@ -161,7 +183,7 @@ exports.getUtilisateursId = async (req, res) => {
                 return res.status(404).json({ message: "Utilisateur non trouvé" });
             }
             // Retournez l'ID de l'utilisateur
-            res.status(200).json(utilisateur);
+            res.status(200).json(utilisateur.email);
         } else {
             return res.status(401).json({ message: "Token invalide, veuillez vous reconnecter" });
         }
