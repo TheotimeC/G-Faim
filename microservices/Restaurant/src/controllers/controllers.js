@@ -90,6 +90,75 @@ exports.majMenuDansRestaurant = async (req, res) => {
     }
 };
 
+exports.majArticleDansRestaurant = async (req, res) => {
+    const { id } = req.query; // L'ID du restaurant
+    const { articleId } = req.params; // L'ID de l'article à mettre à jour
+
+    try {
+        const restaurant = await Restaurant.findById(id); // Trouver le restaurant par son ID
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurant non trouvé" });
+        }
+
+        // Trouver l'index de l'article dans le tableau des articles du restaurant
+        const articleIndex = restaurant.Articles.findIndex(article => article._id.toString() === articleId);
+
+        if (articleIndex === -1) {
+            return res.status(404).json({ message: "Article non trouvé" });
+        }
+        restaurant.Articles[articleIndex] = {...restaurant.Articles[articleIndex].toObject(), ...req.body};
+
+        // Sauvegarder les modifications apportées au restaurant
+        const updatedRestaurant = await restaurant.save();
+
+        res.status(200).json(updatedRestaurant);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+exports.ajouterMenuAuRestaurant = async (req, res) => {
+    const { id } = req.query; // L'ID du restaurant
+    try {
+        const restaurant = await Restaurant.findById(id); // Trouver le restaurant par son ID
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurant non trouvé" });
+        }
+
+        // Ajouter le nouveau menu au tableau des menus du restaurant
+        const nouveauMenu = req.body; // Assurez-vous que le corps de la requête contient les détails du menu
+        restaurant.Menus.push(nouveauMenu);
+
+        // Sauvegarder les modifications apportées au restaurant
+        const updatedRestaurant = await restaurant.save();
+
+        res.status(201).json(updatedRestaurant);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+exports.ajouterArticleAuRestaurant = async (req, res) => {
+    const { id } = req.query; // L'ID du restaurant
+    try {
+        const restaurant = await Restaurant.findById(id); // Trouver le restaurant par son ID
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurant non trouvé" });
+        }
+
+        // Ajouter le nouvel article au tableau des articles du restaurant
+        const nouvelArticle = req.body; // Assurez-vous que le corps de la requête contient les détails de l'article
+        restaurant.Articles.push(nouvelArticle);
+
+        // Sauvegarder les modifications apportées au restaurant
+        const updatedRestaurant = await restaurant.save();
+
+        res.status(201).json(updatedRestaurant);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 
 exports.delRestaurant = async (req, res) => {
     const { id } = req.query; 
@@ -103,6 +172,50 @@ exports.delRestaurant = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+exports.supprimerMenuDuRestaurant = async (req, res) => {
+    const { id } = req.query; // L'ID du restaurant
+    const { menuId } = req.params; // L'ID du menu à supprimer
+
+    try {
+        const restaurant = await Restaurant.findById(id);
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurant non trouvé" });
+        }
+
+        // Retirer le menu du tableau des menus du restaurant
+        restaurant.Menus = restaurant.Menus.filter(menu => menu._id.toString() !== menuId);
+
+        await restaurant.save();
+        
+        res.status(200).json({ message: "Menu supprimé avec succès" });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+exports.supprimerArticleDuRestaurant = async (req, res) => {
+    const { id } = req.query; // L'ID du restaurant
+    const { articleId } = req.params; // L'ID de l'article à supprimer
+
+    try {
+        const restaurant = await Restaurant.findById(id);
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurant non trouvé" });
+        }
+
+        // Retirer l'article du tableau des articles du restaurant
+        restaurant.Articles = restaurant.Articles.filter(article => article._id.toString() !== articleId);
+
+        await restaurant.save();
+        
+        res.status(200).json({ message: "Article supprimé avec succès" });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+
 
 exports.protect = async (req, res, next) => {
     let token;

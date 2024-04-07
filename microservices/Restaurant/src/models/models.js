@@ -23,7 +23,7 @@ const articleSchema = new mongoose.Schema({
   },
   img: {
     type: String,
-    required: true
+    required: false
   }
 });
 
@@ -50,7 +50,7 @@ const menuSchema = new mongoose.Schema({
   }],
   img: {
     type: String,
-    required: true
+    required: false
   }
 });
 

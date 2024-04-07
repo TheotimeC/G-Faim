@@ -5,17 +5,18 @@
 
 .container {
   display: flex;
-  align-items: center;
+  flex-direction: row; /* Assurez-vous que les enfants sont en ligne */
+  align-items: start; /* Alignez les enfants en haut */
+  flex-wrap: wrap; /* Permet aux enfants de passer à la ligne suivante si l'espace est insuffisant */
 }
 
-.left-content {
-  flex: 1;
-  padding-right: 20px; /* Espacement entre le contenu et le tableau */
+.left-content, .right-content {
+  flex: 1; /* Les enfants prennent un espace égal */
+  min-width: 0; /* Empêche le débordement */
 }
 
 .right-content {
-  flex: 1;
-  padding-left: 20px; /* Espacement entre le tableau et le contenu */
+  padding-left: 20px; /* Espacement entre le contenu de gauche et de droite */
   border-left: 1px solid #ccc; /* Ligne de division verticale */
 }
 

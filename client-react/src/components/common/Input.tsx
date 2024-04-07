@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../assets/styles/input.css';
 import Icon from '@mdi/react';
 import { mdiPencilOutline, mdiCheck } from '@mdi/js';
@@ -17,6 +17,10 @@ const Input: React.FC<ButtonProps> = ({ titre, text, placeholder, size, marginto
     const [isEditable, setIsEditable] = useState(false); 
     const [inputValue, setInputValue] = useState(text);
     const [inputStyle, setInputStyle] = useState({});
+
+    useEffect(() => {
+      setInputValue(text);
+    }, [text]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);

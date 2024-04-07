@@ -24,7 +24,7 @@ function App() {
     <>
       <Router>
         {/* Affichez la Navbar appropriée en fonction du rôle */}
-        {!isAuthenticated && !isRestaurateur && <Navbar />}
+        { !isRestaurateur && <Navbar />}
         {isAuthenticated && isRestaurateur && <RestNav />}
         
         <Routes>
