@@ -238,6 +238,7 @@ export const getOrderByUserId = async (request: any, reply: any) => {
 export const getOrderByRestaurantId = async (request: any, reply: any) => {
     try {
         const order = await Order.find({ restaurantId: request.query.restaurantId });
+        console.log("request.query.restaurantId:",request.query.restaurantId)
         if (!order) {
             reply.code(404).send({ message: 'Order not found' });
             return;
