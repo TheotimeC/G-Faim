@@ -73,7 +73,7 @@ exports.loginUser = async (req, res) => {
             { expiresIn: '7d' }
         );
         const API_URL = 'http://localhost:3001/restaurant';
-
+            console.log("utilisateur.role:",utilisateur.role)
         if (utilisateur.role === 'restaurateur') {
             const response = await axios.get(`${API_URL}/getUser/`, {params: { id: utilisateur._id }});
             const restaurant = response.data;

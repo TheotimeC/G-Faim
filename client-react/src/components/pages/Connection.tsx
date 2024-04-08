@@ -32,7 +32,10 @@ export default function Connection(){
         if (restaurantId) {
           localStorage.setItem('restaurantId', restaurantId);
           navigate('/dashboard');
-      } else {
+      } else if(role=='livreur'){
+        navigate('/livraison');
+      }
+      else {
           navigate('/profil');
       }
 

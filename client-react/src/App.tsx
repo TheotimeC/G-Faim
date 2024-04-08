@@ -19,13 +19,17 @@ import Footer from "./components/common/Footer";
 function App() {
   const { isAuthenticated, role } = useAuth();
   const isRestaurateur = isAuthenticated && role === 'restaurateur';
+  const isLivreur = isAuthenticated && role === 'livreur';
 
   return (
     <>
       <Router>
         {/* Affichez la Navbar appropriée en fonction du rôle */}
-        { !isRestaurateur && <Navbar />}
+        { !isRestaurateur && !isLivreur && <Navbar />}
         {isAuthenticated && isRestaurateur && <RestNav />}
+
+        
+        {isAuthenticated && isLivreur && <RestNav />}
         
         <Routes>
           {/* Routes accessibles à tous */}
@@ -50,13 +54,20 @@ function App() {
             </>
           )}
 
+          {isLivreur && (
+            <>
+              {/* Ajoutez ici d'autres routes spécifiques aux restaurateurs */}
+              <Route path="*" element={<Navigate replace to="/livraison/" />} />
+            </>
+          )}
+
           {/* Redirections basées sur l'authentification et le rôle */}
           <Route path="*" element={!isAuthenticated ? <Navigate replace to="/connexion" /> : <Navigate replace to="/" />} />
         </Routes>
       </Router>
       
       <footer>
-        {!isAuthenticated || !isRestaurateur && <Footer />}
+        {!isAuthenticated || !isRestaurateur && !isLivreur &&  <Footer />}
       </footer>
     </>
   );
