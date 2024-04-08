@@ -63,42 +63,66 @@ api.interceptors.request.use(async (config) => {
   return Promise.reject(error);
 });
 
+// Gestion des erreurs de réponse
 api.interceptors.response.use(response => {
   console.log(`Réponse reçue de ${response.config.url} avec le statut ${response.status} à ${new Date().toISOString()}`);
   return response;
 }, async error => {
-      if (error.response) {
-        const logMessage = `Erreur dans la réponse de ${error.response.config.url} - Status: ${error.response.status} - Date/Time: ${new Date().toISOString()}`;
-        await sendLog(logMessage);
-      } else if (error.request) {
-        await sendLog(`Aucune réponse reçue pour la requête à ${error.request.url} - Date/Time: ${new Date().toISOString()}`);
-      } else {
-        await sendLog(`Erreur de configuration de la requête - ${error.message}`);
-      }
-    if (error.response?.status === 401 && !error.config._retry) {
-      error.config._retry = true;
-      try {
-        const refreshToken = localStorage.getItem('refreshToken');
-        if (!refreshToken) {
-          // S'il n'y a pas de refreshToken, on déclenche directement l'événement de déconnexion
-          const event = new CustomEvent('logout-event');
-          window.dispatchEvent(event);
-          return Promise.reject(new Error('No refresh token available'));
-        }
-        const { data } = await axios.post('http://localhost:3000/auth/refresh', { refreshToken });
-        localStorage.setItem('accessToken', data.accessToken);
-        api.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
-        return api(error.config);
-      } catch (refreshError) {
-        console.error('Erreur lors du rafraîchissement du token:', refreshError);
-        // Émettre l'événement de déconnexion après l'échec du rafraîchissement du token
+  if (error.response) {
+    // Récupération de l'ID utilisateur depuis le token stocké
+    const userId = await getUserIdFromToken();
+    const logData = {
+      entityType: 'ResponseError',
+      entityId: error.config.url,
+      action: `${error.response.status}`,
+      userId: userId, // Utiliser l'ID utilisateur récupéré
+      description: `Erreur dans la réponse de ${error.config.url} - Status: ${error.response.status} - Message: ${error.message}`,
+      timestamp: new Date(),
+      // additionalData: {...} données supplémentaires sur l'erreur
+    };
+    await sendLog(logData);
+  } else if (error.request) {
+    // Si aucune réponse n'a été reçue pour la requête
+    const userId = await getUserIdFromToken();
+    const logData = {
+      entityType: 'RequestError',
+      entityId: error.request.url,
+      action: 'NoResponse',
+      userId: userId,
+      description: `Aucune réponse reçue pour la requête à ${error.request.url}`,
+      timestamp: new Date(),
+      // additionalData: {...}
+    };
+    await sendLog(logData);
+  } else {
+    // Autres erreurs de configuration de la requête
+    console.error(`Erreur de configuration de la requête - ${error.message}`);
+  }
+
+  // Gestion de la reconnexion automatique si le token est expiré
+  if (error.response?.status === 401 && !error.config._retry) {
+    error.config._retry = true;
+    try {
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!refreshToken) {
         const event = new CustomEvent('logout-event');
         window.dispatchEvent(event);
-        return Promise.reject(refreshError);
+        return Promise.reject(new Error('No refresh token available'));
       }
+      const { data } = await axios.post('http://localhost:3000/auth/refresh', { refreshToken });
+      localStorage.setItem('accessToken', data.accessToken);
+      api.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
+      error.config.headers['Authorization'] = `Bearer ${data.accessToken}`;
+      return api(error.config);
+    } catch (refreshError) {
+      console.error('Erreur lors du rafraîchissement du token:', refreshError);
+      const event = new CustomEvent('logout-event');
+      window.dispatchEvent(event);
+      return Promise.reject(refreshError);
     }
-    return Promise.reject(error);
   }
-);
+  return Promise.reject(error);
+});
+
 
 export default api;
