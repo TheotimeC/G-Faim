@@ -4,6 +4,7 @@ import ItemPanier from "../common/ItemPanier";
 import Button from "../common/Button";
 import { useState, useEffect } from "react";
 import api from "../assets/api";
+import orderApi from "../common/order-api.ts";
 
 // Define types for your item and response from the API
 type CartItem = {
@@ -18,16 +19,12 @@ type DrawerType = {
     drawerState: boolean;
     setDrawerState: (state: boolean) => void;
 };
+const userId = "user123"
 
 // Function to fetch cart items
 const getCart = async (): Promise<CartItem[]> => {
     try {
-        const response = await api.get<{ items: CartItem[] }>(`http://localhost:3002/orders/cart`, {
-            params: {
-                userId: "user123",
-            },
-        });
-        console.log(response.data.items);
+        const response = await orderApi.getUserCart(userId);
         return response.data.items; // Assuming the response data structure includes an items array
     } catch (error: any) {
         console.error('Error fetching cart:', error.response ? error.response.data : error.message);
@@ -38,10 +35,10 @@ const getCart = async (): Promise<CartItem[]> => {
 // Function to update the cart
 const updateCart = async (items: CartItem[]): Promise<CartItem[]> => {
     try {
-        const response = await api.put<{ items: CartItem[] }>(`http://localhost:3002/orders/cart`, {
-            userId: "user123", // This should match your API's expected request body
-            items,
-        });
+        const payload = {
+            items: items
+        };
+        const response = await orderApi.updateCart(userId, payload);
         return response.data.items;
     } catch (error: any) {
         console.error('Error updating cart:', error.response ? error.response.data : error.message);
@@ -64,9 +61,10 @@ const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
     };
 
     const removeItemFromCart = async (itemId: number): Promise<void> => {
+        await orderApi.deleteCartItem(userId, itemId);
         const updatedItems = cartItems.filter(item => item._id !== itemId);
-        const items = await updateCart(updatedItems);
-        setCartItems(items);
+        // const items = await updateCart(updatedItems);
+        setCartItems(updatedItems);
     };
 
     const updateItemQuantityFromCart = async (itemId: number, quantity: number): Promise<void> => {

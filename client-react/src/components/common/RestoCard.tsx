@@ -4,12 +4,16 @@ import { mdiPlusCircle } from '@mdi/js';
 import "../assets/styles/restocard.css"
 import api from "../assets/api.ts";
 import {message} from "antd";
+import orderApi from "./order-api";
+const userId = "user123"; // Example user ID
 
 export type GroupComponent2Type = {
   Titre?: string;
   Description?: string;
   img?: string;
   prix?: number;
+  restaurantId: string;
+  itemId: string;
 
   /** Style props */
   propPadding?: CSSProperties["padding"];
@@ -27,6 +31,8 @@ const GroupComponent2: FunctionComponent<GroupComponent2Type> = ({
   Description,
   img,
   prix,
+  itemId,
+  restaurantId,
   propPadding,
   propGap,
   propGap1,
@@ -80,12 +86,7 @@ const GroupComponent2: FunctionComponent<GroupComponent2Type> = ({
   };
   const getCart = async (): Promise<CartItem[]> => {
     try {
-      const response = await api.get<{ items: CartItem[] }>(`http://localhost:3002/orders/cart`, {
-        params: {
-          userId: "user123",
-        },
-      });
-      console.log(response.data.items);
+      const response = await orderApi.getUserCart(userId);
       return response.data.items; // Assuming the response data structure includes an items array
     } catch (error: any) {
       console.error('Error fetching cart:', error.response ? error.response.data : error.message);
@@ -100,44 +101,40 @@ const GroupComponent2: FunctionComponent<GroupComponent2Type> = ({
       duration: 2
     });
   };
-  const updateCart = async () => {
-    // Construct the new item object
-    const newItem = {
-      name: Titre,
-      description: Description,
-      imgSrc: img,
-      price: prix || 0,
-      quantity: 1, // Default quantity set to 1, adjust as necessary
-    };
-    // Assuming you have a way to get the current user's ID and current cart items
-    const userId = "user123"; // Example user ID
-    let currentCartItems: any[] = await getCart(); // You would fetch current cart items here
-    // Check if the item already exists in the cart
-    const existingItemIndex = currentCartItems.findIndex((item) => item.name === newItem.name);
 
-    // If it exists, update the quantity, otherwise add as a new item
-    if (existingItemIndex !== -1) {
-      const existingItem = currentCartItems[existingItemIndex];
-      currentCartItems[existingItemIndex] = { ...existingItem, quantity: existingItem.quantity + newItem.quantity };
-    } else {
-      currentCartItems.push(newItem);
-    }
-
-    // Add the new item to the current cart items
-
+  const addItemToCart = async (userId: string, item: any) => {
+      await orderApi.addItemToCart(userId, item);
+  };
+  const createCart = async (userId: string, restaurantId: string, item: any) => {
+      await orderApi.itemId(userId, restaurantId, item);
+  };
+  const handleAddItemToCart = async () => {
     try {
-      // Make API call to update the cart
-      await api.put(`http://localhost:3002/orders/cart`, {
-        userId: userId,
-        items: currentCartItems,
-      });
-      success();
-      console.log("Item added to cart successfully");
-      // Optionally, trigger a state update or refetch cart items to reflect the change in UI
-    } catch (error) {
-      console.error("Failed to add item to cart:", error);
+      // Attempt to fetch the user's cart
+      const response = await orderApi.getUserCart(userId);
+      const cartExists = response.data && Object.keys(response.data).length > 0;
+      const newItem = {
+        name: Titre,
+        description: Description,
+        imgSrc: img,
+        price: prix || 0,
+        quantity: 1, // Default quantity set to 1
+        itemId: itemId
+      };
+
+      if (cartExists)
+        await addItemToCart(userId, newItem);
+       else
+        await createCart(userId, restaurantId, newItem);
+
+    } catch (error: any) {
+      // This catch block will handle errors from both fetching the cart,
+      // adding an item to the cart, and creating a new cart
+      console.error("Error handling cart operation:", error.message);
+      // Handle the error appropriately (e.g., show a message to the user)
     }
   };
+
 
   return (
       <>
@@ -165,7 +162,7 @@ const GroupComponent2: FunctionComponent<GroupComponent2Type> = ({
         }}
       >
         <img className="function-begin-child" alt="" src={img} />
-        <div className="function-end" onClick={updateCart}>
+        <div className="function-end" onClick={handleAddItemToCart}>
           <div className="data-processor" />
           <Icon className="plus-icon1" path={mdiPlusCircle} size={2} />
         </div>
