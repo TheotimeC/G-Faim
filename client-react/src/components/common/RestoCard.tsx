@@ -2,7 +2,6 @@ import { FunctionComponent, useMemo, type CSSProperties } from "react";
 import Icon from '@mdi/react';
 import { mdiPlusCircle } from '@mdi/js';
 import "../assets/styles/restocard.css"
-import api from "../assets/api.ts";
 import {message} from "antd";
 import orderApi from "../assets/order-api.ts";
 const userId = "user123"; // Example user ID
@@ -104,6 +103,7 @@ const GroupComponent2: FunctionComponent<GroupComponent2Type> = ({
 
   const addItemToCart = async (userId: string, item: any) => {
       await orderApi.addItemToCart(userId, item);
+      success();
   };
   const createCart = async (userId: string, restaurantId: string, item: any) => {
       await orderApi.itemId(userId, restaurantId, item);

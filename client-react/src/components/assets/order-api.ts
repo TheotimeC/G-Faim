@@ -2,6 +2,11 @@ import api from "./api.ts"
 import axios from "axios";
 
 const baseRoute = "http://localhost:3002/api"
+export enum RestaurantStatus {
+    TO_ACCEPT = "to accept",
+    IN_PREPARATION = "in preparation",
+    READY = "ready",
+}
 // Define the API interface for communicating with the backend
 const orderApi = {
     // User Routes
@@ -15,7 +20,7 @@ const orderApi = {
     // Restaurant Routes
     getOrdersByRestaurantId: (restaurantId: string) => api.get(baseRoute + `/restaurants?restaurantId=${restaurantId}`),
     getCurrentOrdersByRestaurantId: (restaurantId: string) => api.get(baseRoute + `/restaurants/current?restaurantId=${restaurantId}`),
-    setRestaurantStatus: (restaurantId: string, status: any) => api.put(baseRoute + `/restaurants/status?restaurantId=${restaurantId}`, { status }),
+    setRestaurantStatus: (orderId: string, restaurantStatus: any) => api.put(`${baseRoute}/restaurants/status?id=${orderId}`, { restaurantStatus }),
 
     // Basic Routes
     createOrder: (orderData: any) => api.post(baseRoute + '/orders', orderData),

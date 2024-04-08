@@ -262,18 +262,34 @@ export const getCurrentOrderByRestaurantId = async (request: any, reply: any) =>
         reply.code(500).send(error);
     }
 };
-export const setRestaurantStatus = async (request: any, reply: any) => {
+
+export const setOrderRestaurantStatus = async (request: any, reply: any) => {
     try {
-        const updateOrder = await Order.findByIdAndUpdate(request.params.id, { restaurantStatus: request.query.restaurantStatus }, {new: true});
+        // Validate the restaurantStatus from the request body
+        const restaurantStatus = request.body.restaurantStatus;
+        if (!Object.values(RestaurantStatus).includes(restaurantStatus)) {
+            reply.code(400).send({ message: 'Invalid restaurant status' });
+            return;
+        }
+
+        // Proceed with the update since the status is valid
+        const updateOrder = await Order.findByIdAndUpdate(
+            request.query.id,
+            { restaurantStatus: restaurantStatus },
+            { new: true }
+        );
+
         if (!updateOrder) {
             reply.code(404).send({ message: 'Order not found' });
             return;
         }
+
         reply.code(200).send(updateOrder);
     } catch (error: any) {
         reply.code(500).send(error);
     }
 };
+
 
 // Update an order by ID
 export const updateOrderById = async (request: any  , reply: any) => {
