@@ -56,7 +56,7 @@ const userSchema = new mongoose.Schema({
   },
   apiKey:{
     type: String,
-    required:true
+    required:false
   }
 }, { collection: 'Users' });
 
