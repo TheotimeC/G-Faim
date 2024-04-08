@@ -2,7 +2,7 @@ import { FunctionComponent, useMemo, type CSSProperties } from "react";
 import Icon from '@mdi/react';
 import { mdiPlusCircle } from '@mdi/js';
 import "../assets/styles/restocard.css"
-import api from "./api.ts";
+import api from "../assets/api.ts";
 import {message} from "antd";
 
 export type GroupComponent2Type = {

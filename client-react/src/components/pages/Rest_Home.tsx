@@ -1,4 +1,4 @@
-import api from '../common/api';
+import api from '../assets/api';
 import {useState} from 'react';
 import commandeData from '../assets/FakeData/commande.json'
 import '../assets/styles/resthome.css'

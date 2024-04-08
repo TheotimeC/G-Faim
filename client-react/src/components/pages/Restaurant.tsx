@@ -6,7 +6,7 @@ import "../assets/styles/restaurant.css";
 import FilterBar from "../layout/FilterBar";
 import RestoCard from "../common/RestoCard";
 import { LoadingOutlined } from '@ant-design/icons';
-import api from '../common/api.ts';
+import api from '../assets/api.ts';
 
 interface HorairesOuverture {
   Lundi: string;

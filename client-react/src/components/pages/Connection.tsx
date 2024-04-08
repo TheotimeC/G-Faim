@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Button from "../common/Button.tsx";
 import { useState} from 'react'
 import styles from "../assets/styles/Connection.module.css"
-import api from '../common/api.ts';
-import { useAuth } from '../common/Auth.tsx'; // Importez le hook d'authentification
+import api from '../assets/api.ts';
+import { useAuth } from '../assets/Auth.tsx'; // Importez le hook d'authentification
 
 // Dans votre fonction de connexion :
 // Après une connexion réussie :
@@ -34,6 +34,8 @@ export default function Connection(){
           navigate('/dashboard');
       } else if(role=='livreur'){
         navigate('/livraison');
+      }else if(role=='admin'){
+        navigate('/admin');
       }
       else {
           navigate('/profil');

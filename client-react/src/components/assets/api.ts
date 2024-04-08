@@ -13,7 +13,7 @@ const getUserIdFromToken = async() =>{
     const response = await axios.get(ID_API_URL, {
       headers: { Authorization: `Bearer ${token}` }
     }); 
-    console.log("REP:",response.data._id)
+    console.log("response.data._id",response.data._id)
     return response.data._id;
   } catch (error) {
     console.error("Erreur lors de l'envoi du log au serveur:", error);
@@ -31,22 +31,19 @@ const sendLog = async (logData:any) => {
 
 // Intercepteur de requêtes pour les logs
 api.interceptors.request.use(async (config) => {
-  var userid;
-  getUserIdFromToken().then(userId => {
-      userid = userId 
-  });
+  var userId = await getUserIdFromToken();
   const logData = {
     entityType: 'Request', // ou un autre identifiant selon le contexte
     entityId: config.url, // exemple simplifié, ajustez selon vos besoins
     action: `${config.method ? `${config.method.toUpperCase()}` : ''}`,
-    description: `Requête envoyée à ${config.url}`,
+    description: `${config.url}`,
     timestamp: new Date(), // sera généré par défaut dans MongoDB, mais peut être inclus ici
-    userId: userid,
+    userId: userId,
     // additionalData: {...} Vous pouvez ajouter des données supplémentaires si nécessaire
   };
   console.log("logData :",logData)
   
-  await sendLog(logData);
+  sendLog(logData);
   return config;
 }, async (error) => {
   // Créer un objet logData pour l'erreur
@@ -54,12 +51,11 @@ api.interceptors.request.use(async (config) => {
     entityType: 'RequestError',
     entityId: error.config.url, // Utiliser url depuis error.config
     action: 'Error',
-    description: `Erreur lors de l'envoi d'une requête à ${error.config.url}: ${error.message}`,
+    description: `${error.config.url}: ${error.message}`,
     timestamp: new Date(), // comme ci-dessus
-    // additionalData: {...} données supplémentaires sur l'erreur
   };
   
-  await sendLog(logData);
+  sendLog(logData);
   return Promise.reject(error);
 });
 
@@ -69,11 +65,11 @@ api.interceptors.response.use(response => {
 }, async error => {
       if (error.response) {
         const logMessage = `Erreur dans la réponse de ${error.response.config.url} - Status: ${error.response.status} - Date/Time: ${new Date().toISOString()}`;
-        await sendLog(logMessage);
+        sendLog(logMessage);
       } else if (error.request) {
-        await sendLog(`Aucune réponse reçue pour la requête à ${error.request.url} - Date/Time: ${new Date().toISOString()}`);
+        sendLog(`Aucune réponse reçue pour la requête à ${error.request.url} - Date/Time: ${new Date().toISOString()}`);
       } else {
-        await sendLog(`Erreur de configuration de la requête - ${error.message}`);
+        sendLog(`Erreur de configuration de la requête - ${error.message}`);
       }
     if (error.response?.status === 401 && !error.config._retry) {
       error.config._retry = true;

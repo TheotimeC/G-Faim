@@ -3,7 +3,7 @@ import "../assets/styles/Panier.css";
 import ItemPanier from "../common/ItemPanier";
 import Button from "../common/Button";
 import { useState, useEffect } from "react";
-import api from "../common/api";
+import api from "../assets/api";
 
 // Define types for your item and response from the API
 type CartItem = {

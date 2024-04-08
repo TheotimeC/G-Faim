@@ -1,5 +1,5 @@
 import '../assets/styles/navbar.css'; 
-import api from '../common/Api';
+import api from '../assets/api';
 
 const Commandes = () =>{
     return(

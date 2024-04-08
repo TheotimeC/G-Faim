@@ -192,6 +192,16 @@ exports.getUtilisateursId = async (req, res) => {
     }
 };
 
+exports.getUtilisateurs = async (req, res) => {
+    try {
+            const getUtilisateurss = await User.find({});
+            res.status(200).json(utilisateur);
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 exports.sendMessageToKafka = async (req, res) => {
     try {
       const { message } = req.body;
