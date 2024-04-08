@@ -104,6 +104,7 @@ const GroupComponent2: FunctionComponent<GroupComponent2Type> = ({
 
   const addItemToCart = async (userId: string, item: any) => {
       await orderApi.addItemToCart(userId, item);
+      success();
   };
   const createCart = async (userId: string, restaurantId: string, item: any) => {
       await orderApi.itemId(userId, restaurantId, item);
