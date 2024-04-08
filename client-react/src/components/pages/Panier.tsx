@@ -4,7 +4,7 @@ import ItemPanier from "../common/ItemPanier";
 import Button from "../common/Button";
 import { useState, useEffect } from "react";
 import api from "../assets/api";
-import orderApi from "../common/order-api.ts";
+import orderApi from "../assets/order-api.ts";
 
 // Define types for your item and response from the API
 type CartItem = {

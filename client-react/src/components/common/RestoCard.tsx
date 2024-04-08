@@ -4,7 +4,7 @@ import { mdiPlusCircle } from '@mdi/js';
 import "../assets/styles/restocard.css"
 import api from "../assets/api.ts";
 import {message} from "antd";
-import orderApi from "./order-api";
+import orderApi from "../assets/order-api.ts";
 const userId = "user123"; // Example user ID
 
 export type GroupComponent2Type = {
