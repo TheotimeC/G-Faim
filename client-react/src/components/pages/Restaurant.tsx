@@ -91,6 +91,8 @@ const Restaurant: FunctionComponent = () => {
               <h1>Menus</h1>
               <RestoCard
               Titre={menu.Titre}
+              restaurantId={restaurant._id}
+              itemId={menu._id}
               Description={menu.Description}
               img={menu.img}
               propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
@@ -110,6 +112,8 @@ const Restaurant: FunctionComponent = () => {
               <h1>{article.Catégorie}</h1>
               <RestoCard
               Titre={article.Titre}
+              itemId={article._id}
+              restaurantId={restaurant._id}
               Description={article.Description}
               img={article.img}
               propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
@@ -139,6 +143,8 @@ const Restaurant: FunctionComponent = () => {
           <RestoCard
               Titre={menu.Titre}
               Description={menu.Description}
+              restaurantId={restaurant._id}
+              itemId={menu._id}
               img={menu.img}
               propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
               propGap="0.25rem"
@@ -167,6 +173,7 @@ const Restaurant: FunctionComponent = () => {
           <RestoCard
               Titre={article.Titre}
               Description={article.Description}
+              itemId={article._id}
               img={article.img}
               propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
               propGap="0.25rem"
