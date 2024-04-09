@@ -61,6 +61,7 @@ const Historique = () =>{
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState<Commande | null>(null);
     const [orders, setOrders] = useState<Commande[]>([]);
+
     useEffect(() => {
         const restId = localStorage.getItem('restaurantId');
         if (!restId) {
@@ -164,7 +165,7 @@ const Historique = () =>{
           sorter: (a, b) => a.subtotal - b.subtotal,
         },
         {
-          title: 'Actions',
+          title: 'Voir +',
           key: 'actions',
           render: (_, record) => (
             <>

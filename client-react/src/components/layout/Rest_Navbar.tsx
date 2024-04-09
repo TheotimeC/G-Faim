@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Icon from '@mdi/react';
-import { mdiHomeVariantOutline, mdiSilverware, mdiChartBoxOutline, mdiCartOutline, mdiCog } from '@mdi/js';
+import { mdiHomeVariantOutline, mdiSilverware, mdiChartBoxOutline, mdiCartOutline, mdiCog, mdiHistory  } from '@mdi/js';
 import '../assets/styles/restnavbar.css'
 import { Layout, Menu, Button, theme } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
@@ -8,6 +8,7 @@ import RestHome from '../pages/Rest_Home';
 import RestArticles from '../pages/Rest_article';
 import RestParam from '../pages/Rest_param';
 import Historique from '../pages/Rest_historique';
+import Stats from '../pages/Rest_Stats';
 
 const { Header, Sider, Content } = Layout;
 
@@ -32,7 +33,7 @@ const RestNav = () =>{
         return <RestArticles/>;
       case '3':
         // return <VotreComposantPourNav3 />;
-        return <div><h1>Statistiques</h1></div>;
+        return <Stats/>;
         case '4':
         // return <VotreComposantPourNav3 />;
         return <Historique/>;
@@ -47,7 +48,7 @@ const RestNav = () =>{
     { key: '1', icon: mdiHomeVariantOutline },
     { key: '2', icon: mdiSilverware },
     { key: '3', icon: mdiChartBoxOutline },
-    { key: '4', icon: mdiCartOutline },
+    { key: '4', icon: mdiHistory  },
     { key: '5', icon: mdiCog },
 ];
     return(

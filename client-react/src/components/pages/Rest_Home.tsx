@@ -46,23 +46,32 @@ interface Commande {
   updatedAt?: string;
   __v?: number;
 }
-  
-  
-
-const data = [
-    { name: 'Lundi', nb: 55 },
-    { name: 'Mardi', nb: 43 },
-    { name: 'Mercredi', nb: 22 },
-    { name: 'Jeudi', nb: 36 },
-    { name: 'Vendredi', nb: 68 },
-    { name: 'Samedi', nb: 41 },
-  ];
 
 const RestHome = () =>{
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState<Commande | null>(null);
     const [orders, setOrders] = useState<Commande[]>([]);
 
+    // Transformer les données
+    const transformOrdersToChartData = (orders: Commande[]) => {
+      // Étape 1: Récupérer les dates des commandes et les comptabiliser
+      const countsByDate = orders.reduce((acc, { orderDate }) => {
+        const date = new Date(orderDate).toISOString().split('T')[0]; // Convertit en format YYYY-MM-DD
+        acc[date] = (acc[date] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+
+      // Étape 2: Transformer l'objet des comptages en tableau pour le graphique
+      const chartData = Object.entries(countsByDate).map(([date, count]) => ({
+        date,
+        count
+      }));
+
+      return chartData;
+    };
+
+    // Utiliser cette fonction pour obtenir le nombre de commandes par date
+    const chartData = transformOrdersToChartData(orders);
     
     const handleStatusUpdate = async(record)=>{
       const originalStatus = record.restaurantStatus;
@@ -91,6 +100,28 @@ const RestHome = () =>{
         console.error('Erreur lors du changement de statut:', error);
       }
     }
+
+    const countNonReadyOrders = (orders: Commande[]): number => {
+      return orders.reduce((count, order) => {
+        if (order.restaurantStatus !== 'ready') {
+          count += 1;
+        }
+        return count;
+      }, 0);
+    };
+
+    const calculateTodaysOrdersTotal = (orders: Commande[]): number => {
+      const today = new Date();
+      const todayStr = today.toISOString().split('T')[0];
+    
+      return orders.reduce((total, order) => {
+        const orderDateStr = new Date(order.orderDate).toISOString().split('T')[0];
+        if (orderDateStr === todayStr) {
+          total += order.total;
+        }
+        return total;
+      }, 0);
+    };
 
     useEffect(() => {
       const restId = localStorage.getItem('restaurantId');
@@ -149,6 +180,10 @@ const RestHome = () =>{
             ),
           },
       ];
+      const getNonReadyOrders = (orders: Commande[]) => {
+        return orders.filter(order => order.restaurantStatus !== "ready");
+      };
+
     const showModal = (record) => {
         setSelectedRecord(record);
         setIsModalVisible(true);
@@ -171,23 +206,23 @@ const RestHome = () =>{
 
                     <Col span={12} className='Rectangle2'>
                         <div className='titre1'>Commandes en cours</div>
-                        <div className='statsnumber'>8</div>
+                        <div className='statsnumber'>{countNonReadyOrders(orders)}</div>
                     
                     </Col>
 
                     <Col span={12} className='Rectangle3'>
-                        <div className='titre1'>Commandes livrées</div>
-                        <div className='statsnumber'>17</div>
+                        <div className='titre1'>CA journalier</div>
+                        <div className='statsnumber'>{calculateTodaysOrdersTotal(orders)}€</div>
                     </Col>
 
                     </Row>
 
                     <Row className='Rectangle'>
                         <div className='titre1'>Total commandes</div>
-                        <LineChart width={600} height={300} data={data} margin={{ top: 20, right: 30, left: 5, bottom: 5 }}>
-                        <XAxis dataKey="name" />
+                        <LineChart width={600} height={300} data={chartData} margin={{ top: 20, right: 30, left: 5, bottom: 5 }}>
+                        <XAxis dataKey="date" />
                         <YAxis />
-                        <Line type="monotone" dataKey="nb"  stroke="#298029" activeDot={{ r: 8 }} strokeWidth={3}/>
+                        <Line type="monotone" dataKey="count"  stroke="#298029" activeDot={{ r: 8 }} strokeWidth={3}/>
                         </LineChart>
                     </Row>
                     
@@ -196,7 +231,7 @@ const RestHome = () =>{
                 <Col span={12} className='Rectangle1'>
                 <div>
       <div className='titre1'>Commandes en cours</div>
-      <Table columns={columns} dataSource={orders} rowKey="userId" pagination={false} size='middle'/>
+      <Table columns={columns} dataSource={getNonReadyOrders(orders)} rowKey="userId" pagination={false} size='middle'/>
       <Modal
         open={isModalVisible}
         onOk={handleOk}
