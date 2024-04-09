@@ -15,7 +15,9 @@ import RestNav from './components/layout/Rest_Navbar.tsx';
 // Composants Layout
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/common/Footer";
-
+//Composants livreur
+import LivNav from './components/layout/Liv_NavBar.tsx';
+import Liv_Accueil from './components/pages/Liv_Accueil';
 //composants admin
 import Admin from './components/pages/Admin.tsx';
 function App() {
@@ -32,7 +34,7 @@ function App() {
         { !isRestaurateur && !isLivreur && !isAdmin && <Navbar />}
         {isAuthenticated && isRestaurateur && <RestNav />}
         {isAuthenticated && isAdmin && <Admin />}
-        {isAuthenticated && isLivreur && <RestNav />}
+        {isAuthenticated && isLivreur && <LivNav />}
 
         <Routes>
           {/* Routes accessibles à tous les utilisateurs y compris les clients déconnectés */}
