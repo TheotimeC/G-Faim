@@ -119,6 +119,44 @@ async function getAllRestaurantsAction() {
     }
   };
 
+  async function listComponents() {
+    try {
+        const response = await api.get('http://localhost:3004/api/components/list');
+        const components = response.data; // Supposons que cela renvoie un tableau d'objets de composants
+        const choices = components.map(comp => {
+            return { name: comp.name, value: comp.downloadPath }; // Ajustez en fonction de la structure de votre réponse
+        });
+
+        const { selectedComponent } = await inquirer.prompt([
+            {
+                type: 'list',
+                name: 'selectedComponent',
+                message: 'Choisissez un composant à télécharger:',
+                choices
+            }
+        ]);
+        console.log("selectedComponent :", selectedComponent)
+        await downloadComponent(selectedComponent);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des composants:', error);
+    }
+}
+
+async function downloadComponent(fileName) {
+  const fullname = fileName.split('/').pop();
+    try {
+        const response = await api.get(`http://localhost:3004/api/components/download/${fullname}`, {
+            responseType: 'arraybuffer'
+        });
+
+        const downloadPath = path.join(__dirname,'downloads', fullname);
+        fs.writeFileSync(downloadPath, response.data);
+        console.log(`Composant téléchargé avec succès : ${downloadPath}`);
+    } catch (error) {
+        console.error('Erreur lors du téléchargement du composant:', error);
+    }
+}
+
 program
   .version('0.0.1')
 
@@ -127,6 +165,17 @@ program
     horizontalLayout: 'default',
     verticalLayout: 'default'
   }));
+
+  program
+  .command('listComponents')
+  .description('Liste tous les composants JSX disponibles')
+  .action(listComponents);
+
+program
+  .command('downloadComponent <fileName>')
+  .description('Télécharge un composant JSX spécifié par son nom')
+  .action(downloadComponent);
+
   
 program
   .command('login')

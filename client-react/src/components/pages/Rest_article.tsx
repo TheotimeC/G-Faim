@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Tabs, Table, Switch, Button, Modal, Row, Col, Checkbox, notification, Radio, Input, Select  } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import api from '../common/api.ts';
+import api from '../assets/api.ts';
 import InputC from '../common/Input.tsx';
 import '../assets/styles/restarticle.css'; 
 import { log } from 'console';

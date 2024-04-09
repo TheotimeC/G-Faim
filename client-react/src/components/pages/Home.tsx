@@ -7,7 +7,7 @@ import Card from '../common/Card'
 import RestoData from '../assets/FakeData/Resto.json';
 import CategoriesDisplay from '../layout/CardDisplay';
 import CookieConsent from '../common/CookieConsent';
-import api from '../common/api';
+import api from '../assets/api';
 import Restaurant from "../pages/Restaurant";
 
 const API_URL = 'http://localhost:3001/restaurant';

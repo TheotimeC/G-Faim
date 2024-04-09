@@ -6,7 +6,8 @@ import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
 import Icon from '@mdi/react';
 import { mdiCheck } from '@mdi/js';
 import Input from '../common/Input';
-import api from '../common/api.ts';
+import api from '../assets/api.ts';
+import { useAuth } from '../assets/Auth.tsx';
 
 
 //Appel API
@@ -175,6 +176,10 @@ const RestParam: React.FC = () => {
       setFileList([file]);
   };
 
+  const { logout } = useAuth();
+  const handleLogout = async()=>{
+    logout();
+  }
   // L'affichage de l'image ou du bouton d'upload si aucune image n'est présente
   const uploadButton = (
     <div>
@@ -251,8 +256,8 @@ const RestParam: React.FC = () => {
                             
                         </Row> 
                         <div className='button-container'>
-                      
-                            <DefaultButton text="Mettre à jour" textColor="FFFFFF" bgColor="298029" textSize="1rem" width="15%" marginLeft="0" marginRight="0" onClick={() => handleUpdate()}/>
+                        <DefaultButton text="Se deconnecter" textColor="FFFFFF" bgColor="FF3A44" textSize="0.9rem" width="15%" marginLeft="0" marginRight="3%" onClick={() => handleLogout()}/>
+                            <DefaultButton text="Mettre à jour" textColor="FFFFFF" bgColor="298029" textSize="0.9rem" width="15%" marginLeft="0" marginRight="0" onClick={() => handleUpdate()}/>
                         </div>
                            
 

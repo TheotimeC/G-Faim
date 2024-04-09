@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import Icon from '@mdi/react';
-import { mdiHomeVariantOutline, mdiSilverware, mdiChartBoxOutline, mdiCartOutline, mdiCog, mdiHistory  } from '@mdi/js';
+import { mdiHomeVariantOutline, mdiSilverware, mdiChartBoxOutline, mdiCartOutline, mdiCog, mdiAccountCogOutline } from '@mdi/js';
 import '../assets/styles/restnavbar.css'
 import { Layout, Menu, Button, theme } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
-import RestHome from '../pages/Rest_Home';
-import RestArticles from '../pages/Rest_article';
-import RestParam from '../pages/Rest_param';
-import Historique from '../pages/Rest_historique';
-import Stats from '../pages/Rest_Stats';
+import AdminLogs from './Admin_Logs';
+import AdminManage from './Admin_Manage';
 
 const { Header, Sider, Content } = Layout;
 
-
-const RestNav = () =>{
+const Admin = () =>{
     const [collapsed, setCollapsed] = useState(true);
     const [selectedMenu, setSelectedMenu] = useState('1');
   const {
@@ -27,29 +23,28 @@ const RestNav = () =>{
   const renderContent = () => {
     switch (selectedMenu) {
       case '1':
-        return <RestHome />;
+        return <div>1</div>;
       case '2':
         // return <VotreComposantPourNav2 />;
-        return <RestArticles/>;
+        return <AdminLogs/>;
       case '3':
         // return <VotreComposantPourNav3 />;
-        return <Stats/>;
+        return <AdminManage/>;
         case '4':
         // return <VotreComposantPourNav3 />;
-        return <Historique/>;
+        return <div><h1>Historique</h1></div>;
         case '5':
         // return <VotreComposantPourNav3 />;
-        return <div><RestParam/></div>;
+        return <div>1</div>;
       default:
-        return <div></div>;
+        return <div>1</div>;
     }
   };
   const menuItems = [
     { key: '1', icon: mdiHomeVariantOutline },
-    { key: '2', icon: mdiSilverware },
-    { key: '3', icon: mdiChartBoxOutline },
-    { key: '4', icon: mdiHistory  },
-    { key: '5', icon: mdiCog },
+    { key: '2', icon: mdiChartBoxOutline },
+    { key: '3', icon: mdiAccountCogOutline },
+
 ];
     return(
         <Layout >
@@ -85,4 +80,4 @@ const RestNav = () =>{
     );
 }
 
-export default RestNav
+export default Admin

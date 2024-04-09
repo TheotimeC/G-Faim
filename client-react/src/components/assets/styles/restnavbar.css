@@ -1,5 +1,13 @@
 /* restnavbar.css */
-
+:where(.css-dev-only-do-not-override-42nv3w).ant-layout .ant-layout-sider-children {
+  height: 100%;
+  margin-top: -0.1px;
+  padding-top: 0.1px;
+  position: fixed;
+}
+:where(.css-dev-only-do-not-override-42nv3w).ant-layout .ant-layout-sider-children .ant-menu.ant-menu-inline-collapsed {
+  width: 80px;
+}
 /* Personnaliser l'arrière-plan du Sider */
 .menu{
     padding-top:60%;
@@ -8,6 +16,7 @@
 .ant-layout-sider {
     background-color: #FFFFFF !important; /* Couleur de fond personnalisée */
     margin-left: 1%;
+    
   }
   
   /* Personnaliser les éléments du menu dans le Sider */

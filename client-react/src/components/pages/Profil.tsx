@@ -6,8 +6,8 @@ import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
 import Icon from '@mdi/react';
 import { mdiCheck } from '@mdi/js';
 import Input from '../common/Input';
-import api from '../common/api.ts';
-
+import api from '../assets/api.ts';
+import { useAuth } from '../assets/Auth.tsx';
 
 //Appel API
 const API_URL = 'http://localhost:3000/user';
@@ -111,6 +111,10 @@ const Profil: React.FC = () => {
     fetchUserId();
   }, [userId]);
 
+  const { logout } = useAuth();
+  const handleLogout = async()=>{
+    logout();
+  }
   const handleUpdate = async () => {
     
     if(!userId) return;
@@ -251,7 +255,7 @@ const Profil: React.FC = () => {
                             
                         </Row> 
                         <div className='button-container'>
-                      
+                            <DefaultButton text="Se deconnecter" textColor="FFFFFF" bgColor="FF3A44" textSize="1rem" width="15%" marginLeft="0" marginRight="3%" onClick={() => handleLogout()}/>
                             <DefaultButton text="Mettre à jour" textColor="FFFFFF" bgColor="298029" textSize="1rem" width="15%" marginLeft="0" marginRight="0" onClick={() => handleUpdate()}/>
                         </div>
                            

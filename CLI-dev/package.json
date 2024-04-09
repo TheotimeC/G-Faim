@@ -1,6 +1,6 @@
 {
   "bin": {
-    "mon-cli": "./index.js"
+    "gfaim": "./index.js"
   },
   "name": "cli-dev",
   "version": "1.0.0",
