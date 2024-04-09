@@ -7,6 +7,7 @@ import { MenuInfo } from 'rc-menu/lib/interface';
 import RestHome from '../pages/Rest_Home';
 import RestArticles from '../pages/Rest_article';
 import RestParam from '../pages/Rest_param';
+import Historique from '../pages/Rest_historique';
 
 const { Header, Sider, Content } = Layout;
 
@@ -34,7 +35,7 @@ const RestNav = () =>{
         return <div><h1>Statistiques</h1></div>;
         case '4':
         // return <VotreComposantPourNav3 />;
-        return <div><h1>Historique</h1></div>;
+        return <Historique/>;
         case '5':
         // return <VotreComposantPourNav3 />;
         return <div><RestParam/></div>;

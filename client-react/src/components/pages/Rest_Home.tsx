@@ -7,6 +7,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'r
 import { CheckCircleOutlined , DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 
 const API_URL_USER = 'http://localhost:3000/user';
+const API_URL_ORDER = 'http://localhost:3000/api';
 
 export const getUserId = async (id:any) => {
   try {
@@ -62,6 +63,35 @@ const RestHome = () =>{
     const [selectedRecord, setSelectedRecord] = useState<Commande | null>(null);
     const [orders, setOrders] = useState<Commande[]>([]);
 
+    
+    const handleStatusUpdate = async(record)=>{
+      const originalStatus = record.restaurantStatus;
+      var updatedStatus;
+      switch(originalStatus){
+        case 'to accept':
+           updatedStatus = 'in preparation'
+          break;
+
+        case 'in preparation':
+           updatedStatus = 'ready'
+          break;
+      }
+
+      try{
+        const response = await orderApi.setRestaurantStatus(record._id, updatedStatus);
+        const updatedOrder = response.data; // Supposons que cela soit l'objet de commande mis à jour
+        const updatedOrders = orders.map(order =>
+          order._id === record._id
+            ? { ...response.data, userName: order.userName } // Conserve le userName de l'état précédent
+            : order
+        );
+        setOrders(updatedOrders);
+
+      }catch(error){
+        console.error('Erreur lors du changement de statut:', error);
+      }
+    }
+
     useEffect(() => {
       const restId = localStorage.getItem('restaurantId');
       if (!restId) {
@@ -104,7 +134,7 @@ const RestHome = () =>{
           },
         {
           title: 'Statut',
-          dataIndex: 'status',
+          dataIndex: 'restaurantStatus',
           key: '_id',
         },
         {
@@ -113,7 +143,7 @@ const RestHome = () =>{
             render: (_, record) => (
               <>
                 <Button icon={<EyeOutlined />} onClick={() => showModal(record)} />
-                <Button icon={<CheckCircleOutlined />} onClick={() => console.log('Valider', record)} />
+                <Button icon={<CheckCircleOutlined />}  onClick={() => handleStatusUpdate(record)} />
                 <Button icon={<DeleteOutlined />} onClick={() => console.log('Supprimer', record)} />
               </>
             ),
@@ -213,7 +243,7 @@ const RestHome = () =>{
       </div>
       <div className="statut-parent">
         <b className="statut1">Statut</b>
-        <b className="a-accepter1">{selectedRecord.status}</b>
+        <b className="a-accepter1">{selectedRecord.restaurantStatus}</b>
       </div>
         <div className="frame-wrapper20">
           <div className="rectangle-parent23">

@@ -41,7 +41,6 @@ api.interceptors.request.use(async (config) => {
     userId: userId,
     // additionalData: {...} Vous pouvez ajouter des données supplémentaires si nécessaire
   };
-  console.log("logData :",logData)
   
   sendLog(logData);
   return config;
@@ -60,17 +59,9 @@ api.interceptors.request.use(async (config) => {
 });
 
 api.interceptors.response.use(response => {
-  console.log(`Réponse reçue de ${response.config.url} avec le statut ${response.status} à ${new Date().toISOString()}`);
   return response;
 }, async error => {
-      if (error.response) {
-        const logMessage = `Erreur dans la réponse de ${error.response.config.url} - Status: ${error.response.status} - Date/Time: ${new Date().toISOString()}`;
-        sendLog(logMessage);
-      } else if (error.request) {
-        sendLog(`Aucune réponse reçue pour la requête à ${error.request.url} - Date/Time: ${new Date().toISOString()}`);
-      } else {
-        sendLog(`Erreur de configuration de la requête - ${error.message}`);
-      }
+
     if (error.response?.status === 401 && !error.config._retry) {
       error.config._retry = true;
       try {
