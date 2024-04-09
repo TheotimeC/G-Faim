@@ -18,6 +18,7 @@ interface Article {
   Prix: number;
   Catégorie: string;
   img: string;
+  activ:boolean;
 }
 
 interface Menu {
@@ -27,6 +28,7 @@ interface Menu {
   Prix: number;
   Articles: string[]; 
   img: string;
+  activ:boolean;
 }
 
 interface Categorie {
@@ -158,6 +160,78 @@ const RestArticles = () => {
   const [Description, setdescri] = useState('');
   const [Prix, setPrix] = useState<number | undefined>(undefined);
   const [Img, setImg] = useState('');
+
+  const disableMenusWithArticle = async (articleId, menus) => {
+    const affectedMenus = menus.filter(menu => menu.Articles.includes(articleId) && menu.activ);
+  
+    if (affectedMenus.length > 0) {
+      for (const menu of affectedMenus) {
+        // Ici, assurez-vous d'inclure toutes les données nécessaires pour la mise à jour
+        const updatedMenuData = { ...menu, activ: false };
+        await putMenuData(menu._id, updatedMenuData);
+  
+        // Mettre à jour l'état local pour refléter le changement
+        setRestData(prev => ({
+          ...prev,
+          Menus: prev.Menus.map(m => m._id === menu._id ? updatedMenuData : m)
+        }));
+      }
+  
+      notification.info({
+        message: 'Des menus ont été désactivés',
+        description: `La désactivation de l'article a entraîné la désactivation de certains menus.`,
+      });
+    }
+  };
+  
+  
+
+  const handleSwitchChange = async (checked, record) => {
+    // Détermine si nous travaillons avec un article ou un menu basé sur le TabPane actif
+    const isArticle = activeTab === "2"; // Adaptez selon les valeurs de vos clés TabPane
+  
+    try {
+      if (isArticle) {
+        // Mise à jour d'un article
+        await putArticleData(record._id, { activ: checked });
+        
+        // Mettre à jour l'état local pour refléter le changement d'article immédiatement
+        setRestData(prev => ({
+          ...prev, 
+          Articles: prev.Articles.map(item => item._id === record._id ? { ...item, activ: checked } : item)
+        }));
+  
+        // Désactivation des menus si l'article est désactivé
+        if (!checked) {
+          disableMenusWithArticle(record._id, restData.Menus);
+        }
+      } else {
+        // Mise à jour d'un menu nécessitant toutes les données existantes plus le changement d'état 'activ'
+        const updatedMenuData = { ...record, activ: checked }; // Ici, vous pouvez inclure toutes les données du menu
+  
+        await putMenuData(record._id, updatedMenuData);
+  
+        // Mettre à jour l'état local pour refléter le changement de menu immédiatement
+        setRestData(prev => ({
+          ...prev, 
+          Menus: prev.Menus.map(menu => menu._id === record._id ? updatedMenuData : menu)
+        }));
+      }
+  
+      notification.success({
+        message: `${isArticle ? 'L\'article' : 'Le menu'} a été ${checked ? 'activé' : 'désactivé'} avec succès.`,
+      });
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour:', error);
+      notification.error({
+        message: 'Erreur lors de la mise à jour',
+        description: 'Une erreur est survenue lors de la mise à jour.',
+      });
+    }
+  };
+  
+  
+  
 
   const onSelectChange = (selectedRowKeys:any) => {
     setSelectedArticleIds(selectedRowKeys);
@@ -470,7 +544,12 @@ const handleModalContent = () => {
           key: 'actions',
           render: (_, record) => (
             <>
-              <Switch defaultChecked />
+              <Switch
+                  checkedChildren="Activé"
+                  unCheckedChildren="Désactivé"
+                  checked={record.activ}
+                  onChange={(checked) => handleSwitchChange(checked, record)}
+                />
               <Button icon={<EditOutlined />} onClick={() => handleOpenModal(record._id)} style={{ margin: '0 8px' }} />
               <Button icon={<DeleteOutlined />} onClick={() => handleDelete(record._id)} />
             </>

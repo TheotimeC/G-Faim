@@ -24,6 +24,10 @@ const articleSchema = new mongoose.Schema({
   img: {
     type: String,
     required: false
+  },
+  activ: {
+    type: Boolean,
+    required: false
   }
 });
 
@@ -50,6 +54,10 @@ const menuSchema = new mongoose.Schema({
   }],
   img: {
     type: String,
+    required: false
+  },
+  activ: {
+    type: Boolean,
     required: false
   }
 });

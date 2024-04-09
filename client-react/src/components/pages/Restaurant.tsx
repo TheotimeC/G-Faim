@@ -25,6 +25,7 @@ interface Article {
   Prix: number;
   Catégorie: string;
   img: string;
+  activ:boolean;
 }
 
 interface Menu {
@@ -34,6 +35,7 @@ interface Menu {
   Prix: number;
   Articles: string[]; 
   img: string;
+  activ:boolean;
 }
 
 interface Restaurant {
@@ -86,7 +88,7 @@ const Restaurant: FunctionComponent = () => {
       return (
         <>
         <div className="resto-cards-container">
-          {restaurant.Menus.map((menu) => (
+        {restaurant.Menus.filter((menu) => menu.activ).map((menu) => (
             <div key={menu._id}>
               <h1>Menus</h1>
               <RestoCard
@@ -107,7 +109,7 @@ const Restaurant: FunctionComponent = () => {
               
               </div>
           ))}
-          {restaurant.Articles.map((article) => (
+           {restaurant.Articles.filter((article) => article.activ).map((article) => (
             <div key={article._id}>
               <h1>{article.Catégorie}</h1>
               <RestoCard
@@ -136,7 +138,7 @@ const Restaurant: FunctionComponent = () => {
       return (
         <>
         <div className="resto-cards-container">
-        {restaurant.Menus.map((menu) => (
+        {restaurant.Menus.filter((menu) => menu.activ).map((menu) => (
         <div key={menu._id}>
           
           <h1>Menus</h1>
@@ -166,12 +168,13 @@ const Restaurant: FunctionComponent = () => {
       return (
         <>
         <div className="resto-cards-container">
-        {restaurant.Articles.filter((article) => article.Catégorie === selectedCategory).map((article) => (
+        {restaurant.Articles.filter((article) => article.Catégorie === selectedCategory && article.activ).map((article) => (
         <div key={article._id}>
           
           <h1>{article.Catégorie}</h1>
           <RestoCard
               Titre={article.Titre}
+              restaurantId={restaurant._id}
               Description={article.Description}
               itemId={article._id}
               img={article.img}
