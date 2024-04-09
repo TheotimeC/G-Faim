@@ -39,8 +39,6 @@ interface Commande {
   deliveryFee: number;
   total: number;
   orderDate: string;
-  restaurantStatus: "to accept" | "in preparation" | "ready";
-  deliveryStatus: "awaiting pickup" | "in transit" | "delivered";
   status: "cart" | "paid" | "fulfilled";
   createdAt?: string;
   updatedAt?: string;
@@ -74,7 +72,7 @@ const RestHome = () =>{
     const chartData = transformOrdersToChartData(orders);
     
     const handleStatusUpdate = async(record)=>{
-      const originalStatus = record.restaurantStatus;
+      const originalStatus = record.status;
       var updatedStatus;
       switch(originalStatus){
         case 'to accept':
@@ -103,7 +101,7 @@ const RestHome = () =>{
 
     const countNonReadyOrders = (orders: Commande[]): number => {
       return orders.reduce((count, order) => {
-        if (order.restaurantStatus !== 'ready') {
+        if (order.status !== 'ready') {
           count += 1;
         }
         return count;
@@ -165,7 +163,7 @@ const RestHome = () =>{
           },
         {
           title: 'Statut',
-          dataIndex: 'restaurantStatus',
+          dataIndex: 'status',
           key: '_id',
         },
         {
@@ -194,7 +192,7 @@ const RestHome = () =>{
           },
         {
           title: 'Statut',
-          dataIndex: 'restaurantStatus',
+          dataIndex: 'status',
           key: '_id',
         },
         {
@@ -210,11 +208,11 @@ const RestHome = () =>{
           },
       ];
       const getPrepOrders = (orders: Commande[]) => {
-        return orders.filter(order => order.restaurantStatus == "in preparation");
+        return orders.filter(order => order.status == "in preparation");
       };
 
       const getToAcceptOrders = (orders: Commande[]) => {
-        return orders.filter(order => order.restaurantStatus == "to accept");
+        return orders.filter(order => order.status == "to accept");
       };
 
     const showModal = (record) => {
@@ -311,7 +309,7 @@ const RestHome = () =>{
       </div>
       <div className="statut-parent">
         <b className="statut1">Statut</b>
-        <b className="a-accepter1">{selectedRecord.restaurantStatus}</b>
+        <b className="a-accepter1">{selectedRecord.status}</b>
       </div>
         <div className="frame-wrapper20">
           <div className="rectangle-parent23">
@@ -375,7 +373,7 @@ const RestHome = () =>{
       </div>
       <div className="statut-parent">
         <b className="statut1">Statut</b>
-        <b className="a-accepter1">{selectedRecord.restaurantStatus}</b>
+        <b className="a-accepter1">{selectedRecord.status}</b>
       </div>
         <div className="frame-wrapper20">
           <div className="rectangle-parent23">
