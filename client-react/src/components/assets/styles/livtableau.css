@@ -1,0 +1,33 @@
+/* livtableau.css */
+.liv-tableau {
+    border: 1px solid #ddd; /* Adapt to your styling */
+    border-radius: 15px; /* Adapt to your styling */
+    overflow: hidden;
+    background-color: #ffffff;
+    margin: 5px;
+  }
+  
+  .liv-tableau table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .liv-tableau th, .liv-tableau td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .liv-tableau th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  .table-eye-icon{
+    cursor: pointer;
+    color: #03081F;
+  }
+
+  .table-eye-icon:hover {
+    color: #298029;
+  }
