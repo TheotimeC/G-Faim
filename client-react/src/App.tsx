@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '../src/components/common/Auth.tsx';
+import { useAuth } from './components/assets/Auth.tsx';
 
 // Composants Client
 import Home from './components/pages/Home';
@@ -15,69 +15,60 @@ import RestNav from './components/layout/Rest_Navbar.tsx';
 // Composants Layout
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/common/Footer";
-//Composants livreur
-import LivNav from './components/layout/Liv_NavBar.tsx';
-import Liv_Accueil from './components/pages/Liv_Accueil';
-//import Liv_Livraison from './components/pages/Liv_Livraison';
-//import Liv_Profil from './components/pages/Liv_Profil';
 
+//composants admin
+import Admin from './components/pages/Admin.tsx';
 function App() {
   const { isAuthenticated, role } = useAuth();
   const isRestaurateur = isAuthenticated && role === 'restaurateur';
   const isLivreur = isAuthenticated && role === 'livreur';
+  const isAdmin = isAuthenticated && role === 'admin';
+  const isClient = isAuthenticated && role === 'client';
 
   return (
     <>
       <Router>
-        {/* Affichez la Navbar appropriée en fonction du rôle */}
-        { !isRestaurateur && !isLivreur && <Navbar />}
+        {/* Affiche la Navbar appropriée en fonction du rôle */}
+        { !isRestaurateur && !isLivreur && !isAdmin && <Navbar />}
         {isAuthenticated && isRestaurateur && <RestNav />}
+        {isAuthenticated && isAdmin && <Admin />}
+        {isAuthenticated && isLivreur && <RestNav />}
 
-        
-        {isAuthenticated && isLivreur && <LivNav />}
-        
         <Routes>
-          {/* Routes accessibles à tous */}
-          <Route path="/connexion" element={<Connection />} />
-          
-          {/* Routes pour les clients */}
-          {!isRestaurateur && !isLivreur && (
-            <>
-              <Route path="/" element={<Home />} />
-              <Route path="/restaurants" element={<Parcourir />} />
-              <Route path="/Restaurants/:id" element={<Restaurant />} />
-              <Route path="/commandes" element={<Commandes />} />
-              <Route path="/profil" element={isAuthenticated ? <Profil /> : <Navigate replace to="/connexion" />} />
-            </>
-          )}
-          
+          {/* Routes accessibles à tous les utilisateurs y compris les clients déconnectés */}
+          {!isRestaurateur && !isLivreur && !isAdmin && (
+              <>
+                <Route path="/" element={<Home />} />
+                <Route path="/restaurants" element={<Parcourir />} />
+                <Route path="/restaurants/:id" element={<Restaurant />} />
+                <Route path="/commandes" element={<Commandes />} />
+                <Route path="/connexion" element={!isAuthenticated ? <Connection /> : <Navigate replace to="/" />} />
+                <Route path="/profil" element={isAuthenticated ? <Profil /> : <Navigate replace to="/connexion" />} />
+              </>
+            )}
           {/* Routes spécifiques pour les restaurateurs */}
           {isRestaurateur && (
-            <>
-              {/* Ajoutez ici d'autres routes spécifiques aux restaurateurs */}
-              <Route path="*" element={<Navigate replace to="/dashboard/" />} />
-            </>
+            <Route path="/dashboard" element={<Navigate replace to="/dashboard" />} />
           )}
 
+          {/* Routes spécifiques pour les livreurs */}
           {isLivreur && (
-            <>
-              {/* Ajoutez ici d'autres routes spécifiques aux livreurs */}
-              <Route path="*" element={<Navigate replace to="/livraison/" />} />
-              {/*<Route path="/livreur" element={<Liv_Accueil />} />*/}
-              {/*<Route path="/livreur/livraisons" element={<Liv_Livraison />} />*/}
-              {/*<Route path="/livreur/profil" element={<Liv_Profil />} />*/}
-              {/*<Route path="/livraison/*" element={<Navigate replace to="/livraison/accueil" />} />*/}
-            </>
+            <Route path="/livraison" element={<Navigate replace to="/livraison" />} />
           )}
 
-          {/* Redirections basées sur l'authentification et le rôle */}
-          <Route path="*" element={!isAuthenticated ? <Navigate replace to="/connexion" /> : <Navigate replace to="/" />} />
+          {/* Routes spécifiques pour les admins */}
+          {isAdmin && (
+            <Route path="/admin" element={<Navigate replace to="/admin" />} />
+          )}
+
+          {/* Redirection par défaut pour sécuriser les routes non autorisées */}
+          <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </Router>
-      
-      <footer>
-        {!isAuthenticated || !isRestaurateur && !isLivreur &&  <Footer />}
-      </footer>
+      {!isRestaurateur && !isLivreur && !isAdmin && (
+               <Footer />
+            )}
+     
     </>
   );
 }

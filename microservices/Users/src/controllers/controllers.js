@@ -195,7 +195,7 @@ exports.getUtilisateursId = async (req, res) => {
 exports.getUtilisateurs = async (req, res) => {
     try {
             const getUtilisateurss = await User.find({});
-            res.status(200).json(utilisateur);
+            res.status(200).json(getUtilisateurss);
         
     } catch (error) {
         res.status(500).json({ message: error.message });

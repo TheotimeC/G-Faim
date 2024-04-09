@@ -8,7 +8,8 @@
     box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.25);
     min-width: 9.938rem;
 
-    padding-left: 10px;
+    padding-top: 10px;
+    padding-left: 15px;
 }
 .Rectangle1{
     margin-top: 20px;
@@ -16,8 +17,8 @@
     background-color: #f5f5f5;
     box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.25);
     min-width: 9.938rem;
-
-    padding-left: 10px;
+    padding-top: 10px;
+    padding-left: 15px;
 }
 .Rectangle2{
     margin-top: 20px;
@@ -27,7 +28,8 @@
     box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.25);
     min-width: 9.938rem;
     
-    padding-left: 10px;
+    padding-top: 10px;
+    padding-left: 15px;
 }
 .Rectangle3{
     margin-top: 20px;
@@ -37,11 +39,17 @@
     box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.25);
     min-width: 9.938rem;
 
-    padding-left: 10px;
+    padding-top: 10px;
+    padding-left: 15px;
 }
 .titre1{
     font-size: 18px;
     font-weight: bold;
+}
+.titre11{
+  font-size: 18px;
+  font-weight: bold;
+  padding-top: 15px;
 }
 .statsnumber{
     padding-top: 20px;
@@ -621,3 +629,13 @@
     box-sizing: border-box;
   }
 }
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-btn-default.ok {
+  background: #298029;
+  color: #fff;
+}
+:where(.css-dev-only-do-not-override-42nv3w).ant-btn-default.no {
+  background: #FF3A44;
+  color: #fff;
+}
+

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import '../assets/styles/resthome.css'
 import { Col, Row, Table, Button, Modal, Divider    } from 'antd';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { CheckCircleOutlined , DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined , DeleteOutlined, EyeOutlined, StopOutlined } from '@ant-design/icons';
 
 const API_URL_USER = 'http://localhost:3000/user';
 const API_URL_ORDER = 'http://localhost:3000/api';
@@ -174,14 +174,47 @@ const RestHome = () =>{
             render: (_, record) => (
               <>
                 <Button icon={<EyeOutlined />} onClick={() => showModal(record)} />
-                <Button icon={<CheckCircleOutlined />}  onClick={() => handleStatusUpdate(record)} />
-                <Button icon={<DeleteOutlined />} onClick={() => console.log('Supprimer', record)} />
+                <Button className="ok" icon={<CheckCircleOutlined />}  onClick={() => handleStatusUpdate(record)}>Accepter </Button>
+                <Button className="no" icon={<StopOutlined />} onClick={() => console.log('Supprimer', record)} >Refuser </Button>
               </>
             ),
           },
       ];
-      const getNonReadyOrders = (orders: Commande[]) => {
-        return orders.filter(order => order.restaurantStatus !== "ready");
+
+      const columns2 = [
+        {
+            title: 'Client',
+            dataIndex: 'userName', // Assurez-vous que cela correspond à ce que vous voulez montrer comme ID de commande
+            key: 'userName',
+        },
+        {
+            title: 'Livreur',
+            dataIndex: 'status',
+            key: '_id',
+          },
+        {
+          title: 'Statut',
+          dataIndex: 'restaurantStatus',
+          key: '_id',
+        },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (_, record) => (
+              <>
+                <Button icon={<EyeOutlined />} onClick={() => showModal(record)} />
+                <Button className="ok" icon={<CheckCircleOutlined />}  onClick={() => handleStatusUpdate(record)}>Prête </Button>
+                <Button className="no" icon={<DeleteOutlined />} onClick={() => console.log('Supprimer', record)} >Annuler </Button>
+              </>
+            ),
+          },
+      ];
+      const getPrepOrders = (orders: Commande[]) => {
+        return orders.filter(order => order.restaurantStatus == "in preparation");
+      };
+
+      const getToAcceptOrders = (orders: Commande[]) => {
+        return orders.filter(order => order.restaurantStatus == "to accept");
       };
 
     const showModal = (record) => {
@@ -230,8 +263,72 @@ const RestHome = () =>{
 
                 <Col span={12} className='Rectangle1'>
                 <div>
-      <div className='titre1'>Commandes en cours</div>
-      <Table columns={columns} dataSource={getNonReadyOrders(orders)} rowKey="userId" pagination={false} size='middle'/>
+      <div className='titre1'>Commandes à accepter</div>
+      <Table columns={columns} dataSource={getToAcceptOrders(orders)} rowKey="userId" pagination={false} size='middle'/>
+      <Modal
+        open={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={800}
+        >
+        {selectedRecord && (
+  <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+    <div className="frame-wrapper19">
+      {selectedRecord.items.map((article, index) => (
+        <div key={index} className="frame-parent48">
+          <div className="parent6">
+            <b className="b21">{`${article.price} €`}</b>
+            <div className="menu-maxi-best-of-parent">
+              <b className="menu-maxi-best-of2">{article.name}</b>
+              <b className="b22">{article.quantity}</b>
+            </div>
+          </div>
+          {index < selectedRecord.items.length - 1 && (
+            <div className="line-wrapper8">
+              <div className="frame-child63" />
+            </div>
+          )}
+        </div>
+      ))}
+      <div className="line-wrapper8">
+              <div className="frame-child63" />
+            </div>
+      <div className="prix-total-parent">
+        <b className="prix-total1">Prix Total : </b>
+        <b className="b27">{`${selectedRecord.subtotal} €`}</b>
+      </div>
+    </div>
+    
+    <div className="frame-parent50">
+      
+      <div className="client-parent">
+        <b className="client1">Client</b>
+        <b className="barnab1">{selectedRecord.userName}</b>
+      </div>
+      <div className="livreur-parent">
+        <b className="livreur1">Livreur</b>
+        <b className="samy3"> {selectedRecord.userName}</b>
+      </div>
+      <div className="statut-parent">
+        <b className="statut1">Statut</b>
+        <b className="a-accepter1">{selectedRecord.restaurantStatus}</b>
+      </div>
+        <div className="frame-wrapper20">
+          <div className="rectangle-parent23">
+            <div className="frame-child65" />
+            <b className="demande">Demande :</b>
+            <div className="sans-tomates-chef">
+              {selectedRecord.status}
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+)}
+    </Modal>
+
+    <div className='titre11'>Commandes en cours</div>
+      <Table columns={columns2} dataSource={getPrepOrders(orders)} rowKey="userId" pagination={false} size='middle'/>
       <Modal
         open={isModalVisible}
         onOk={handleOk}
