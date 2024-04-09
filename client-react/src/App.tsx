@@ -15,6 +15,11 @@ import RestNav from './components/layout/Rest_Navbar.tsx';
 // Composants Layout
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/common/Footer";
+//Composants livreur
+import LivNav from './components/layout/Liv_NavBar.tsx';
+import Liv_Accueil from './components/pages/Liv_Accueil';
+//import Liv_Livraison from './components/pages/Liv_Livraison';
+//import Liv_Profil from './components/pages/Liv_Profil';
 
 function App() {
   const { isAuthenticated, role } = useAuth();
@@ -29,14 +34,14 @@ function App() {
         {isAuthenticated && isRestaurateur && <RestNav />}
 
         
-        {isAuthenticated && isLivreur && <RestNav />}
+        {isAuthenticated && isLivreur && <LivNav />}
         
         <Routes>
           {/* Routes accessibles à tous */}
           <Route path="/connexion" element={<Connection />} />
           
           {/* Routes pour les clients */}
-          {!isRestaurateur && (
+          {!isRestaurateur && !isLivreur && (
             <>
               <Route path="/" element={<Home />} />
               <Route path="/restaurants" element={<Parcourir />} />
@@ -56,8 +61,12 @@ function App() {
 
           {isLivreur && (
             <>
-              {/* Ajoutez ici d'autres routes spécifiques aux restaurateurs */}
+              {/* Ajoutez ici d'autres routes spécifiques aux livreurs */}
               <Route path="*" element={<Navigate replace to="/livraison/" />} />
+              {/*<Route path="/livreur" element={<Liv_Accueil />} />*/}
+              {/*<Route path="/livreur/livraisons" element={<Liv_Livraison />} />*/}
+              {/*<Route path="/livreur/profil" element={<Liv_Profil />} />*/}
+              {/*<Route path="/livraison/*" element={<Navigate replace to="/livraison/accueil" />} />*/}
             </>
           )}
 
