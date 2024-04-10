@@ -195,7 +195,19 @@ exports.getUtilisateursId = async (req, res) => {
 exports.getUtilisateurs = async (req, res) => {
     try {
             const getUtilisateurss = await User.find({});
-            res.status(200).json(utilisateur);
+            res.status(200).json(getUtilisateurss);
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.getUtilisateursfromid = async (req, res) => {
+    const { id } = req.query; 
+    console.log("id:",id)
+    try {
+            const getUtilisateurs = await User.find({_id:id});
+            res.status(200).json(getUtilisateurs);
         
     } catch (error) {
         res.status(500).json({ message: error.message });

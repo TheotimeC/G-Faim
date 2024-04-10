@@ -1,0 +1,69 @@
+/*.liv-nav-bar {
+    border-bottom: 2px solid #f0f0f0;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
+    background-color: #FFFFFF;
+    justify-content: space-around;
+  }
+
+
+  .liv-nav-bar .ant-menu-item-selected .anticon,
+  .liv-nav-bar .ant-menu-item-selected span {
+    color: #298029;
+  }
+
+  .liv-nav-bar .ant-menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    margin: 0 !important;
+    padding: 0 !important; 
+  }
+
+
+
+  :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal >.ant-menu-item-selected::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-item-selected::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-selected::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-submenu-selected::after{
+    border-bottom-color: #f0f0f0 !important;
+  }
+
+  :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal >.ant-menu-item:hover::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-item:hover::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu:hover::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-submenu:hover::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal >.ant-menu-item-active::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-item-active::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-active::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-submenu-active::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal >.ant-menu-item-open::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-item-open::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-open::after, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-submenu-open::after {
+    border-bottom-color: #f0f0f0 !important;
+}
+
+  :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal >.ant-menu-item-selected, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-item-selected, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-selected, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-submenu-selected {
+    color:#298029 !important;
+  }*/
+
+  .menu-bottom {
+    flex-grow: 1;
+    width: 100%; 
+    justify-content: center; 
+  }
+  
+  
+  /* Si vous avez un pied de page fixe */
+  .footer-fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    z-index: 10; 
+  }
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-dark.ant-menu-horizontal >.ant-menu-item-selected, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-dark>.ant-menu.ant-menu-horizontal >.ant-menu-item-selected, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-dark.ant-menu-horizontal >.ant-menu-submenu-selected, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-dark>.ant-menu.ant-menu-horizontal >.ant-menu-submenu-selected {
+  border-radius: 12px;
+  background-color: #29802956 !important;
+  color: #29802956 !important;
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-dark, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-dark>.ant-menu {
+  background: #FFFFFF !important;
+}
+  :where(.css-dev-only-do-not-override-42nv3w).ant-menu-dark .ant-menu-item, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-dark>.ant-menu .ant-menu-item, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-dark .ant-menu-submenu-title, :where(.css-dev-only-do-not-override-42nv3w).ant-menu-dark>.ant-menu .ant-menu-submenu-title {
+    color: #03081F !important;
+}
+
+
+

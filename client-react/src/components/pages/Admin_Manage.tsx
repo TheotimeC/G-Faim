@@ -82,9 +82,9 @@ const AdminManage = () =>{
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button icon={<EyeOutlined />} onClick={() => viewDetails(record)}>Voir</Button>
-                    <Button icon={<EditOutlined />} onClick={() => editUser(record)}>Modifier</Button>
-                    <Button icon={<DeleteOutlined />} onClick={() => deleteUser(record)}>Supprimer</Button>
+                    <Button icon={<EyeOutlined />} onClick={() => viewDetails(record)}></Button>
+                    <Button icon={<EditOutlined />} onClick={() => editUser(record)}></Button>
+                    <Button icon={<DeleteOutlined />} onClick={() => deleteUser(record)}></Button>
                 </Space>
             ),
         },
