@@ -53,7 +53,7 @@ const RestHome = () =>{
 
     useEffect(() => {
       // Connexion au serveur WebSocket
-      const ws = new WebSocket('ws://localhost:17875');
+      const ws = new WebSocket('ws://localhost:42220');
   
       ws.onmessage = (event) => {
         // Lors de la réception d'un message, mettez à jour l'état avec le nouveau message

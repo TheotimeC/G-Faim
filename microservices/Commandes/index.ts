@@ -21,6 +21,7 @@ mongoose.connect(process.env.MONGODB_URI, {
     .then(async () => {
         console.log('Connecté a MongoDB');
         const kafkaConfig = new KafkaConfig();
+        kafkaConfig.startWebSocketServer();
         registerRoutes(fastify);
         await fastify.listen({port: 3002});
         console.log(`Server running at http://localhost:${PORT}`);
