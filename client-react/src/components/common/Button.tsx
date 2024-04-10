@@ -5,7 +5,7 @@ interface ButtonProps {
   text: string;
   color: 'FFA500' | '298029';
   size: string;
-  onClick: () => void;
+  onClick?: () => void;
   className?: string
 }
 

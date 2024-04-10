@@ -87,6 +87,7 @@ export const getLogs = async () => {
                 { text: 'GET', value: 'GET' },
                 { text: 'DELETE', value: 'DELETE' },
                 { text: 'POST', value: 'POST' },
+                { text: 'LOGIN', value: 'LOGIN' },
             ],
             onFilter: (value:any, record:any) => record.action.indexOf(value) === 0,
             sorter: (a:any, b:any) => a.action.localeCompare(b.action),

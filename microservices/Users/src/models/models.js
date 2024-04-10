@@ -90,6 +90,11 @@ const articleSchema = new mongoose.Schema({
   img: {
     type: String,
     required: true
+  },
+  activ: {
+    type: Boolean,
+    required: false,
+    default:true
   }
 });
 
@@ -117,6 +122,11 @@ const menuSchema = new mongoose.Schema({
   img: {
     type: String,
     required: true
+  },
+  activ: {
+    type: Boolean,
+    required: false,
+    default:true
   }
 });
 

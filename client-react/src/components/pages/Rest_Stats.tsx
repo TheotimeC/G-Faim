@@ -154,7 +154,7 @@ const Stats = () =>{
                 <Col span={12} className='stats-col'><div className='stats-card-background'>
                 <h3>Panier Moyen</h3>
 
-                <LineChart width={400} height={200} data={extractAverageBasketData(orders)} margin={{ top: 5, right: 30, left: 5, bottom: 5 }}>
+                <LineChart width={600} height={250} data={extractAverageBasketData(orders)} margin={{ top: 5, right: 30, left: 5, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="day" />
                     <YAxis />
@@ -166,7 +166,7 @@ const Stats = () =>{
                     </div></Col>
                 <Col span={12} className='stats-col'><div className='stats-card-background'>
                 <h3>Commande par Heure</h3>
-                <BarChart width={400} height={200} data={extractOrdersPerHourData(orders)}>
+                <BarChart width={600} height={250} data={extractOrdersPerHourData(orders)}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="hour" />
                     <YAxis />
@@ -176,21 +176,19 @@ const Stats = () =>{
             
             </Row>
             <Row>
-                <Col span={24} className='stats-col'><div className='stats-card-background'>
+                <Col span={12} className='stats-col'><div className='stats-card-background'>
                 <h3>Les populaires</h3>
-                <BarChart width={600} height={300} data={extractPopularItemsData(orders)} margin={{ top: 20, right: 30, left: 5, bottom: 5 }}>
+                <BarChart width={600} height={250} data={extractPopularItemsData(orders)} margin={{ top: 20, right: 30, left: 5, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" angle={-30} textAnchor="end" height={100}/>
                     <YAxis />
                     <Bar dataKey="count" fill="#298029" />
                 </BarChart>
                     </div></Col>
-                
-            </Row>
-            <Row>
-                <Col span={12} className='stats-col' push={5}><div className='stats-card-background'>
+
+                    <Col span={12} className='stats-col'><div className='stats-card-background'>
                     <h3>Ventes Total</h3>
-                        <LineChart width={400} height={200} data={extractSalesTotalData(orders)} margin={{ top: 20, right: 30, left: 5, bottom: 5 }}>
+                        <LineChart width={600} height={250} data={extractSalesTotalData(orders)} margin={{ top: 20, right: 30, left: 5, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="period" />
                         <YAxis />
@@ -200,8 +198,9 @@ const Stats = () =>{
                         </LineChart>
 
                     </div></Col>
-                    
+                
             </Row>
+
             
         </div>
     );

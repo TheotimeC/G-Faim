@@ -2,7 +2,7 @@ import {FastifyReply} from "fastify";
 
 import { KafkaConfig } from "../Kafka/config-kafka";
 // Import the Order model
-import Order, {RestaurantStatus} from "../models/models";
+import Order, {OrderStatus} from "../models/models";
 
 // Type definition for request with body
 export const createOrder = async (request: any, reply: any) => {
@@ -17,7 +17,7 @@ export const createOrder = async (request: any, reply: any) => {
 // Retrieve or create a cart for a user
 export const getUserCart = async (request: any, reply: any) => {
     try {
-        let cart = await Order.findOne({ userId: request.query.userId, status: 'cart' });
+        let cart = await Order.findOne({ userId: request.query.userId, status: OrderStatus.CART });
         if (cart)
             reply.code(200).send(cart);
         else
@@ -28,7 +28,7 @@ export const getUserCart = async (request: any, reply: any) => {
 };
 export const setUserCartRestaurantId = async (request: any, reply: any) => {
     try {
-        let cart = await Order.findOne({ userId: request.query.userId, status: 'cart' });
+        let cart = await Order.findOne({ userId: request.query.userId, status: OrderStatus.CART });
         if (!cart) {
             // Optionally create a new cart if one doesn't exist
             cart = new Order({
@@ -38,7 +38,7 @@ export const setUserCartRestaurantId = async (request: any, reply: any) => {
                 subtotal: 0,
                 deliveryFee: 0, // Adjust as necessary
                 total: 0,
-                status: 'cart',
+                status: OrderStatus.CART,
             });
             await cart.save();
         }
@@ -68,7 +68,7 @@ export const createCart = async (req: any, res: any) => {
             subtotal,
             deliveryFee,
             total,
-            status: 'cart', // Ensure the status is set to 'cart'
+            status: OrderStatus.CART, // Ensure the status is set to 'cart'
             orderDate: new Date(), // Set the order date to now
         });
 
@@ -91,7 +91,7 @@ export const addItemToCart = async (request: any, reply: any) => {
         const newItem  = request.body; // Extract the item and restaurantId from the request body
 console.log(newItem)
         // Attempt to find an existing cart for the user
-        let cart = await Order.findOne({ userId: userId, status: 'cart' });
+        let cart = await Order.findOne({ userId: userId, status: OrderStatus.CART });
         if (cart) {
             const existingItemIndex = cart.items.findIndex((item) => item.name === newItem.name);
             if (existingItemIndex !== -1) {
@@ -121,7 +121,7 @@ export const deleteCart = async (request: any, reply: any) => {
         const userId = request.params.userId; // Assuming userId is passed as a URL parameter
 
         // Attempt to find and delete the cart
-        const deletedCart = await Order.findOneAndDelete({ userId: userId, status: 'cart' });
+        const deletedCart = await Order.findOneAndDelete({ userId: userId, status: OrderStatus.CART });
 
         if (!deletedCart) {
             // If no cart was found to delete
@@ -144,7 +144,7 @@ export const updateCart = async (request: any, reply: any) => {
 
         // You might still want to check if the items array is empty to handle cart deletion
         if (request.body.items && request.body.items.length === 0) {
-            const deletedCart = await Order.findOneAndDelete({ userId: userId, status: 'cart' });
+            const deletedCart = await Order.findOneAndDelete({ userId: userId, status: OrderStatus.CART });
             if (!deletedCart) {
                 reply.code(404).send({ message: 'Cart not found' });
                 return;
@@ -155,7 +155,7 @@ export const updateCart = async (request: any, reply: any) => {
 
         // Directly using the body with $set, assuming it's properly structured and sanitized
         let updatedCart = await Order.findOneAndUpdate(
-            { userId: userId, status: 'cart' },
+            { userId: userId, status: OrderStatus.CART },
             { $set: request.body }, // Directly using the request body
             { new: true, upsert: true }
         );
@@ -172,7 +172,7 @@ export const deleteCartItem = async (req: any, res: any) => {
 
         // Find the user's cart and update it by removing the item with the specified _id
         const updatedCart = await Order.findOneAndUpdate(
-            { userId: userId, status: 'cart' },
+            { userId: userId, status: OrderStatus.CART },
             { $pull: { items: { _id: itemId } } }, // Remove the item from the items array
             { new: true } // Option to return the updated document
         );
@@ -256,7 +256,8 @@ export const getCurrentOrderByRestaurantId = async (request: any, reply: any) =>
             reply.code(404).send({ message: 'Order not found' });
             return;
         }
-        order.filter((order) => order.restaurantStatus !== RestaurantStatus.READY)
+        // TODO make it above PAID and under IN DELIVERY
+        order.filter((order) => order.status !== OrderStatus.AWAITING_PICKUP)
         reply.code(200).send(order);
     } catch (error: any) {
         reply.code(500).send(error);
@@ -267,7 +268,7 @@ export const setOrderRestaurantStatus = async (request: any, reply: any) => {
     try {
         // Validate the restaurantStatus from the request body
         const restaurantStatus = request.body.restaurantStatus;
-        if (!Object.values(RestaurantStatus).includes(restaurantStatus)) {
+        if (!Object.values(OrderStatus).includes(restaurantStatus)) {
             reply.code(400).send({ message: 'Invalid restaurant status' });
             return;
         }
@@ -275,7 +276,7 @@ export const setOrderRestaurantStatus = async (request: any, reply: any) => {
         // Proceed with the update since the status is valid
         const updateOrder = await Order.findByIdAndUpdate(
             request.query.id,
-            { restaurantStatus: restaurantStatus },
+            { status: restaurantStatus },
             { new: true }
         );
 

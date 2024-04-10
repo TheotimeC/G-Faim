@@ -3,12 +3,12 @@ import "../assets/styles/Panier.css";
 import ItemPanier from "../common/ItemPanier";
 import Button from "../common/Button";
 import { useState, useEffect } from "react";
-import api from "../assets/api";
 import orderApi from "../assets/order-api.ts";
+import {getUserId} from "../assets/user-api.ts";
 
 // Define types for your item and response from the API
 type CartItem = {
-    _id: number;
+    _id: string;
     name: string;
     price: string; // Consider converting this to number if your backend sends it as a number
     quantity: number;
@@ -19,7 +19,8 @@ type DrawerType = {
     drawerState: boolean;
     setDrawerState: (state: boolean) => void;
 };
-const userId = "user123"
+
+const userId = await getUserId();
 
 // Function to fetch cart items
 const getCart = async (): Promise<CartItem[]> => {
@@ -60,14 +61,14 @@ const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
         setDrawerState(false);
     };
 
-    const removeItemFromCart = async (itemId: number): Promise<void> => {
+    const removeItemFromCart = async (itemId: string): Promise<void> => {
         await orderApi.deleteCartItem(userId, itemId);
         const updatedItems = cartItems.filter(item => item._id !== itemId);
         // const items = await updateCart(updatedItems);
         setCartItems(updatedItems);
     };
 
-    const updateItemQuantityFromCart = async (itemId: number, quantity: number): Promise<void> => {
+    const updateItemQuantityFromCart = async (itemId: string, quantity: number): Promise<void> => {
         const updatedItems = cartItems.map(item => {
             if (item._id === itemId) {
                 return { ...item, quantity };
@@ -83,7 +84,7 @@ const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
     if (cartItems != null) {
          subtotal = cartItems.reduce((acc, item) => {
             // const price = parseFloat(item.price.replace(',', '.').replace('€', ''));
-            const price = item.price;
+            const price = Number(item.price);
             return acc + (price * item.quantity);
         }, 0).toFixed(2);
 

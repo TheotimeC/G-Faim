@@ -39,9 +39,7 @@ interface Commande {
   deliveryFee: number;
   total: number;
   orderDate: string;
-  restaurantStatus: "to accept" | "in preparation" | "ready";
-  deliveryStatus: "awaiting pickup" | "in transit" | "delivered";
-  status: "cart" | "paid" | "fulfilled";
+  status: "Panier" | "A accepter" | "En preparation" |"En attente de retrait" |"En cours de livraison"|"Livrée";
   createdAt?: string;
   updatedAt?: string;
   __v?: number;
@@ -74,15 +72,15 @@ const RestHome = () =>{
     const chartData = transformOrdersToChartData(orders);
     
     const handleStatusUpdate = async(record)=>{
-      const originalStatus = record.restaurantStatus;
+      const originalStatus = record.status;
       var updatedStatus;
       switch(originalStatus){
-        case 'to accept':
-           updatedStatus = 'in preparation'
+        case 'A accepter':
+           updatedStatus = 'En preparation'
           break;
 
-        case 'in preparation':
-           updatedStatus = 'ready'
+        case 'En preparation':
+           updatedStatus = 'En attente de retrait'
           break;
       }
 
@@ -103,7 +101,7 @@ const RestHome = () =>{
 
     const countNonReadyOrders = (orders: Commande[]): number => {
       return orders.reduce((count, order) => {
-        if (order.restaurantStatus !== 'ready') {
+        if (order.status !== 'En attente de retrait') {
           count += 1;
         }
         return count;
@@ -165,7 +163,7 @@ const RestHome = () =>{
           },
         {
           title: 'Statut',
-          dataIndex: 'restaurantStatus',
+          dataIndex: 'status',
           key: '_id',
         },
         {
@@ -194,7 +192,7 @@ const RestHome = () =>{
           },
         {
           title: 'Statut',
-          dataIndex: 'restaurantStatus',
+          dataIndex: 'status',
           key: '_id',
         },
         {
@@ -210,11 +208,11 @@ const RestHome = () =>{
           },
       ];
       const getPrepOrders = (orders: Commande[]) => {
-        return orders.filter(order => order.restaurantStatus == "in preparation");
+        return orders.filter(order => order.status == "En preparation");
       };
 
       const getToAcceptOrders = (orders: Commande[]) => {
-        return orders.filter(order => order.restaurantStatus == "to accept");
+        return orders.filter(order => order.status == "A accepter");
       };
 
     const showModal = (record) => {
@@ -311,7 +309,7 @@ const RestHome = () =>{
       </div>
       <div className="statut-parent">
         <b className="statut1">Statut</b>
-        <b className="a-accepter1">{selectedRecord.restaurantStatus}</b>
+        <b className="a-accepter1">{selectedRecord.status}</b>
       </div>
         <div className="frame-wrapper20">
           <div className="rectangle-parent23">
@@ -375,7 +373,7 @@ const RestHome = () =>{
       </div>
       <div className="statut-parent">
         <b className="statut1">Statut</b>
-        <b className="a-accepter1">{selectedRecord.restaurantStatus}</b>
+        <b className="a-accepter1">{selectedRecord.status}</b>
       </div>
         <div className="frame-wrapper20">
           <div className="rectangle-parent23">

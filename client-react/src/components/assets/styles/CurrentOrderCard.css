@@ -1,0 +1,74 @@
+/* CurrentOrderCard.css */
+
+.current-order-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    position: relative; /* For positioning elements absolutely inside the card if needed */
+}
+
+.current-order-header *{
+ margin: 0;
+ padding: 0;
+}
+
+.current-order-header {
+    display: flex;
+    flex-direction: column; /* Stack the children vertically */
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    height: 100%; /* Take full height of the parent */
+    font-size: large;
+
+}
+
+
+.current-order-image-container {
+    text-align: end; /* Center the image inside the column */
+
+}
+.custom-card .ant-card-body {
+    padding: 5px; /* Set this to the desired padding */
+}
+
+.current-order-footer {
+    margin-top: 1rem;
+
+}
+.current-order-footer .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.current-order-footer .delivery-time {
+    margin-left: 1rem; /* Adjust the value to your preference */
+    flex-grow: 1; /* This will push the button to the end */
+    font-weight: bold;
+    font-size: medium;
+}
+.current-order-footer .default-button {
+    margin-right: 1rem; /* Adjust the value to your preference */
+}
+
+.current-order-image {
+    margin-right: 1rem;
+    max-width: 100%; /* Ensure the image is responsive and does not overflow */
+    height: 8rem;
+    width: 12rem;
+    border-radius: 12px; /* Optional: if you want the image to have rounded corners */
+}
+
+.current-order-delivery-time p {
+    background-color: #28a745; /* Green background as seen in the image */
+    color: #FFF;
+    text-align: center;
+    border-radius: 20px; /* Rounded pill shape */
+    padding: 8px 0; /* Some padding to make it look like a pill */
+    margin-bottom: 16px;
+}
+
+.current-order-details-button {
+    display: flex;
+    justify-content: center; /* Center the button in the column */
+}
+

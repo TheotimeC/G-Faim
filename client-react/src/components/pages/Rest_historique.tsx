@@ -39,9 +39,7 @@ interface Article {
     deliveryFee: number;
     total: number;
     orderDate: string;
-    restaurantStatus: "to accept" | "in preparation" | "ready";
-    deliveryStatus: "awaiting pickup" | "in transit" | "delivered";
-    status: "cart" | "paid" | "fulfilled";
+    status: "Panier" | "A accepter" | "En preparation" |"En attente de retrait" |"En cours de livraison"|"Livrée";
     createdAt?: string;
     updatedAt?: string;
     __v?: number;
@@ -132,12 +130,14 @@ const Historique = () =>{
         },
         {
           title: 'Statut',
-          dataIndex: 'restaurantStatus',
-          key: 'restaurantStatus',
+          dataIndex: 'status',
+          key: 'status',
           filters: [
-            { text: 'To accept', value: 'to accept' },
-            { text: 'In preparation', value: 'in preparation' },
-            { text: 'Ready', value: 'ready' },
+            { text: 'A accepter', value: 'A accepter' },
+            { text: 'En preparation', value: 'En preparation' },
+            { text: 'En attente de retrait', value: 'En attente de retrait' },
+            { text: 'En cours de livraison', value: 'En cours de livraison' },
+            { text: 'Livrée', value: 'Livrée' },
           ],
           onFilter: (value, record) => record.restaurantStatus.indexOf(value) === 0,
         },
