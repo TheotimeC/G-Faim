@@ -10,22 +10,20 @@ import Profil from './components/pages/Profil';
 import Connection from "./components/pages/Connection";
 import Restaurant from './components/pages/Restaurant';
 // Composants Restaurateur
-import RestHome from './components/pages/Rest_Home';
 import RestNav from './components/layout/Rest_Navbar.tsx';
 // Composants Layout
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/common/Footer";
 //Composants livreur
 import LivNav from './components/layout/Liv_NavBar.tsx';
-import Liv_Accueil from './components/pages/Liv_Accueil';
 //composants admin
 import Admin from './components/pages/Admin.tsx';
+import Inscription from "./components/pages/Inscription.tsx";
 function App() {
   const { isAuthenticated, role } = useAuth();
   const isRestaurateur = isAuthenticated && role === 'restaurateur';
   const isLivreur = isAuthenticated && role === 'livreur';
   const isAdmin = isAuthenticated && role === 'admin';
-  const isClient = isAuthenticated && role === 'client';
 
   return (
     <>
@@ -65,6 +63,7 @@ function App() {
 
           {/* Redirection par défaut pour sécuriser les routes non autorisées */}
           <Route path="*" element={<Navigate replace to="/" />} />
+          <Route path="/inscription" element={<Inscription />} />
         </Routes>
       </Router>
       {!isRestaurateur && !isLivreur && !isAdmin && (
