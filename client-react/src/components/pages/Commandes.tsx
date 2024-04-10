@@ -9,7 +9,8 @@ import {getUserId} from "../assets/user-api.ts";
 
 const userId = await getUserId();
 async function getOrdersWithRestaurantNames() {
-    console.log("User id: ", userId)
+    if (!userId)
+        return null;
     // Step 1: Retrieve all orders for the user
     const response = await OrderApi.getOrdersByUserId(userId);
     const allOrders = response.data
@@ -44,9 +45,9 @@ export default function Commandes() {
 
         const {currentOrders, pastOrders} = await getOrdersWithRestaurantNames();
         // @ts-ignore
-        setCurrentOrders(currentOrders);
+        setCurrentOrders(currentOrders ? currentOrders : []);
         // @ts-ignore
-        setPastOrders(pastOrders);
+        setPastOrders(pastOrders ? pastOrders : []);
         }
         fetchData();
     }, []);
