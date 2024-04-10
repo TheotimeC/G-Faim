@@ -57,8 +57,6 @@ exports.loginUser = async (req, res) => {
         }
         const role = utilisateur.role;
         const apiKey = utilisateur.apiKey;
-        console.log("utilisateur: ",utilisateur);
-        console.log("utilisateur.apiKey: ",utilisateur.apiKey);
         // Générer l'access token avec une expiration courte (par exemple, 15 minutes)
         const accessToken = jwt.sign(
             { userId: utilisateur._id, email: utilisateur.email },
@@ -156,7 +154,6 @@ exports.protect = async (req, res, next) => {
     ) {
         token = req.headers.authorization.split(' ')[1];
     }
-    console.log("token",token)
     if (!token) {
         return res.status(401).json({ message: "Vous n'êtes pas autorisé à accéder à cette ressource"  });
     }

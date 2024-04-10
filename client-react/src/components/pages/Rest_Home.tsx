@@ -50,22 +50,26 @@ const RestHome = () =>{
     const [selectedRecord, setSelectedRecord] = useState<Commande | null>(null);
     const [orders, setOrders] = useState<Commande[]>([]);
     const [messages, setMessages] = useState<string[]>([]);
-
+    /*
     useEffect(() => {
       // Connexion au serveur WebSocket
-      const ws = new WebSocket('ws://localhost:8081');
+      const ws = new WebSocket('ws://localhost:14101');
   
       ws.onmessage = (event) => {
         // Lors de la réception d'un message, mettez à jour l'état avec le nouveau message
+        
         const message = event.data;
+        console.log("Nouveau message WebSocket reçu:", message);
         setMessages(prevMessages => [...prevMessages, message]);
       };
-      console.log("messagesKAfka : ",messages);
+      
   
       return () => {
-        ws.close();
-      };
-    }, []);
+        if (ws.readyState === 1) { // <-- This is important
+          ws.close();
+        }
+    }
+    }, []);*/
     
     // Transformer les données
     const transformOrdersToChartData = (orders: Commande[]) => {
@@ -329,7 +333,7 @@ const RestHome = () =>{
         <b className="a-accepter1">{selectedRecord.status}</b>
       </div>
         <div className="frame-wrapper20">
-          <div className="rectangle-parent23">
+          <div className="rectangle-parent233">
             <div className="frame-child65" />
             <b className="demande">Demande :</b>
             <div className="sans-tomates-chef">
@@ -393,7 +397,7 @@ const RestHome = () =>{
         <b className="a-accepter1">{selectedRecord.status}</b>
       </div>
         <div className="frame-wrapper20">
-          <div className="rectangle-parent23">
+          <div className="rectangle-parent233">
             <div className="frame-child65" />
             <b className="demande">Demande :</b>
             <div className="sans-tomates-chef">

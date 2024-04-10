@@ -333,7 +333,7 @@ export const sendMessageToKafkaOrder = async (orderId: string, orderStatus: stri
         const messages = [{ key: "orderUpdate", value: messageValue }];
         await kafkaConfig.produce("Order", messages);
 
-        console.log("Message successfully sent!");
+        console.log("Message successfully sent!",messages);
     } catch (error) {
         console.error("Failed to send message:", error);
     }
@@ -343,7 +343,7 @@ export const sendMessageToKafka = async (req: any, res: FastifyReply) => {
     try {
         const { message } = req.body;
         const kafkaConfig = new KafkaConfig();
-        const messages = [{ key: "key1", value: message }];
+        const messages = [{ key: "orderUpdate", value: message }];
         await kafkaConfig.produce("Order", messages); // Assuming produce is an async method
 
         res.status(200).send({ message: "Message successfully sent!" });
