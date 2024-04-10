@@ -17,7 +17,7 @@ router.delete('/restaurant/delete/menu/:menuId',taskController.protect, taskCont
 router.get('/restaurant/get', taskController.getRestaurant);
 router.get('/restaurant/getAll', taskController.getAllRestaurants);
 router.get('/restaurant/getUser', taskController.getRestaurantUser);
-
+router.get('/restaurant/name', taskController.getRestaurantNameById)
 router.get('/dev/restaurant/getAll',[taskController.verifyApiKeyWithUserService, taskController.verifyJwtWithUserService], taskController.getAllRestaurants);
 
 module.exports = router;
