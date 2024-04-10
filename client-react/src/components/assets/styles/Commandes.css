@@ -1,0 +1,13 @@
+.current-orders{
+    margin-left: 1.5rem;
+}
+.order-history{
+    margin-left: 1.5rem;
+}
+
+.orders-title{
+    font-family: Poppins, serif;
+}
+body {
+    overflow-x: hidden;
+}
