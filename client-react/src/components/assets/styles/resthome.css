@@ -46,6 +46,23 @@
     font-size: 18px;
     font-weight: bold;
 }
+.titre1111{
+  font-size: 18px;
+    font-weight: bold;
+    padding-top: 30px;
+}
+.cajour{
+  box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+
+}
+.titre12{
+  font-size: 18px;
+  font-weight: bold;
+  padding-top: 20px;
+  text-align: center;
+
+}
 .titre11{
   font-size: 18px;
   font-weight: bold;
@@ -56,7 +73,14 @@
     text-align: center;
     font-weight: bold;
     font-size: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+}
+.statsnumber2{
+  padding-top: 20px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 20px;
 }
 .colmodal2{
     width:375px;
@@ -635,4 +659,6 @@
   background: #FF3A44;
   color: #fff;
 }
+
+
 

@@ -286,6 +286,17 @@ exports.verifyApiKeyWithUserService = async (req, res, next) => {
   
       // Si la clé API est valide (c'est-à-dire que le service utilisateur ne renvoie pas d'erreur),
       // le middleware passe au middleware/route suivant
+      const logData = {
+        entityType: 'Request', 
+        entityId: 'Call Api dev', 
+        action: `${config.method ? `${config.method.toUpperCase()}` : ''}`,
+        description: `${config.url}`,
+        timestamp: new Date(), 
+        userId: userId,
+        // additionalData: {...} 
+      };
+      //sendLog(logData);
+      console.log("logData:",logData)
       next();
     } catch (error) {
       if (error.response) {
@@ -297,6 +308,14 @@ exports.verifyApiKeyWithUserService = async (req, res, next) => {
       }
     }
   };        
+
+  const sendLog = async (logData) => {
+    try {
+      await axios.post(LOGS_API_URL, logData); // logData est un objet structuré
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du log au serveur:", error);
+    }
+  };
 
   exports.verifyJwtWithUserService = async (req, res, next) => {
     const authToken = req.headers.authorization;
