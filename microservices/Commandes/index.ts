@@ -4,6 +4,7 @@ import cors from '@fastify/cors'
 import * as mongoose from "mongoose";
 import * as process from "process";
 import registerRoutes from "./src/routes/routes";
+import { KafkaConfig } from './src/Kafka/config-kafka';
 
 dotenv.config();
 const fastify = Fastify({
@@ -19,6 +20,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 })
     .then(async () => {
         console.log('Connecté a MongoDB');
+        const kafkaConfig = new KafkaConfig();
+        kafkaConfig.startWebSocketServer();
         registerRoutes(fastify);
         await fastify.listen({port: 3002});
         console.log(`Server running at http://localhost:${PORT}`);

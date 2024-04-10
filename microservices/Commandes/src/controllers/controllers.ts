@@ -284,7 +284,7 @@ export const setOrderRestaurantStatus = async (request: any, reply: any) => {
             reply.code(404).send({ message: 'Order not found' });
             return;
         }
-
+        sendMessageToKafkaOrder(updateOrder._id, updateOrder.status);
         reply.code(200).send(updateOrder);
     } catch (error: any) {
         reply.code(500).send(error);
@@ -300,6 +300,7 @@ export const updateOrderById = async (request: any  , reply: any) => {
             reply.code(404).send({ message: 'Order not found' });
             return;
         }
+        
         reply.code(200).send(updatedOrder);
     } catch (error: any) {
         reply.code(500).send(error);
@@ -320,6 +321,23 @@ export const deleteOrderById = async (request: any, reply: any) => {
     }
 };
 
+export const sendMessageToKafkaOrder = async (orderId: string, orderStatus: string) => {
+    try {
+       
+        const messageValue = JSON.stringify({
+            orderId,
+            orderStatus
+        });
+
+        const kafkaConfig = new KafkaConfig();
+        const messages = [{ key: "orderUpdate", value: messageValue }];
+        await kafkaConfig.produce("Order", messages);
+
+        console.log("Message successfully sent!");
+    } catch (error) {
+        console.error("Failed to send message:", error);
+    }
+};
 
 export const sendMessageToKafka = async (req: any, res: FastifyReply) => {
     try {
