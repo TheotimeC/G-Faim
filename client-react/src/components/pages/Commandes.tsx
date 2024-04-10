@@ -34,41 +34,32 @@ async function getOrdersWithRestaurantNames() {
     return { currentOrders, pastOrders };
 }
 
+const ws = new WebSocket('ws://localhost:8080');
+
+function wsHandling(currentOrders: any, setCurrentOrders: any){
+    // Connexion au serveur WebSocket
+    ws.onmessage = (event) => {
+        try {
+                const { orderId, orderStatus } = JSON.parse(event.data);
+                console.log("kafka order message: ", event)
+                // Update the order status in currentOrders
+                const updatedCurrentOrders: any[] = currentOrders.map((order: any) => {
+                    if (order._id === orderId) {
+                        return { ...order, status: orderStatus }; // Return a new object with the updated status
+                    }
+                    return order; // Return the original order if not the one to update
+                });
+                setCurrentOrders(updatedCurrentOrders);
+        } catch (error) {
+        }
+    };
+}
 export default function Commandes() {
     const [currentOrders, setCurrentOrders] = useState<any[]>([]);
     const [pastOrders, setPastOrders] = useState<any[]>([]);
-
+    wsHandling(currentOrders, setCurrentOrders);
     useEffect(() => {
         fetchData();
-        const ws = new WebSocket('ws://localhost:62214');
-        // Connexion au serveur WebSocket
-
-        ws.onmessage = (event) => {
-            console.log(event.data);
-            try {
-                const message = JSON.parse(event.data);
-                console.log("kafka message: ", message);
-                if (message.key === 'orderUpdate') {
-                    const { orderId, orderStatus } = JSON.parse(message.value);
-
-                    // Update the order status in currentOrders
-                    const updatedCurrentOrders: any[] = currentOrders.map((order: any) => {
-                        if (order._id === orderId) {
-                            return { ...order, status: orderStatus }; // Return a new object with the updated status
-                        }
-                        return order; // Return the original order if not the one to update
-                    });
-                    console.log("updating order because of WS: ", updatedCurrentOrders);
-                    setCurrentOrders(updatedCurrentOrders);
-                }
-            } catch (error) {
-                console.error('Error parsing message from WebSocket', error);
-            }
-        };
-
-        return () => {
-            if (ws.readyState === 1) ws.close();
-        }
         async function fetchData() {
 
         const {currentOrders, pastOrders} = await getOrdersWithRestaurantNames();
