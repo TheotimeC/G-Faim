@@ -1,11 +1,9 @@
 import { Kafka, Producer, Consumer, EachMessagePayload } from "kafkajs";
-import WebSocket, { WebSocketServer } from 'ws'; // Importation avec les types
 
 export class KafkaConfig {
   private kafka: Kafka;
   private producer: Producer;
   private consumer: Consumer;
-  private wss: WebSocketServer; // Typage du serveur WebSocket
 
   constructor() {
     this.kafka = new Kafka({
