@@ -4,38 +4,31 @@ import { PoweroffOutlined } from '@ant-design/icons';
 import '../assets/styles/livaccueil.css';
 import Logo from '../assets/images/logo.png';
 import LivTableau from '../common/LivTableau';
+import LivDetailCommande from '../common/LivDetailCommande';
 
 
 
 const Liv_Accueil: React.FC = () => {
   const [isActive, setIsActive] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedDelivery, setSelectedDelivery] = useState(null);
 
   const toggleActiveStatus = () => {
     setIsActive(!isActive);
   };
 
+
+
   const deliveries = [
-    { key: '1', client: 'Ludovic', restaurant: 'Burger Queen', distance: '2,6 km', price: '6.50€' },
-    { key: '2', client: 'Thomas', restaurant: 'Burger Queen', distance: '2,6 km', price: '6.50€' },
-    { key: '3', client: 'Tim', restaurant: 'Mcdo', distance: '9,6 km', price: '10.90€' },
+    { key: '1', client: 'Ludovic', restaurant: 'Burger Queen', addressResto: '5 rue des roses', numResto:'0388762541', distance: '2,6 km', price: '6.50€', addressClient:'2 rue doigby', numClient: '0708552253' },
+    { key: '2', client: 'Thomas', restaurant: 'Burger Queen', addressResto: '5 rue des roses', numResto:'0388762541', distance: '2,6 km', price: '6.50€', addressClient:'2 rue doigby', numClient: '0708552253' },
+    { key: '3', client: 'Tim', restaurant: 'Mcdo', addressResto: '5 rue des roses', numResto:'0388762541', distance: '9,6 km', price: '10.90€', addressClient:'2 rue doigby', numClient: '0708552253' },
   ];
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedDelivery, setSelectedDelivery] = useState(null);
-
-  const showModal = (delivery) => {
+  const onViewDetails = (delivery: DeliveryItem) => {
     setSelectedDelivery(delivery);
     setIsModalVisible(true);
   };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
 
   return (
     <div className='liv-accueil'>
@@ -61,16 +54,13 @@ const Liv_Accueil: React.FC = () => {
       <div className="delivery-title-container">
           <h3>Livraisons autour de moi</h3>
       </div>
-      <Modal title="Détails de la commande" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        {/* Vous pouvez placer ici le contenu de votre Modal, par exemple le composant LivTableau */}
-        {selectedDelivery && (
-          <div>
-            <LivTableau deliveries={deliveries} onViewDetails={showModal }/>
-          </div>
-        )}
-      </Modal>
       <div>
-        <LivTableau deliveries={deliveries} onViewDetails={showModal }/>
+        <LivTableau deliveries={deliveries} onViewDetails={onViewDetails}/>
+        <LivDetailCommande
+        visible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        delivery={selectedDelivery}
+        />
       </div>
     </div>
   );

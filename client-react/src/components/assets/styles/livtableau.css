@@ -23,11 +23,11 @@
     font-weight: bold;
   }
 
-  .table-eye-icon{
+  .liv-eye-icon{
     cursor: pointer;
     color: #03081F;
   }
 
-  .table-eye-icon:hover {
+  .liv-eye-icon:hover {
     color: #298029;
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import '../assets/styles/livtableau.css';
 import Icon from '@mdi/react';
 import { mdiEye } from '@mdi/js';
+import { Button } from 'antd';
 
 interface DeliveryItem {
   key: React.Key;
@@ -13,10 +14,13 @@ interface DeliveryItem {
 
 interface LivTableauProps {
   deliveries: DeliveryItem[];
-  onViewDetails: (key: React.Key) => void;
+  onViewDetails: (delivery: DeliveryItem) => void;
 }
 
-const LivTableau: React.FC<LivTableauProps> = ({ deliveries, onViewDetails }) => {
+
+
+
+const LivTableau: React.FC<LivTableauProps> = ({ deliveries, onViewDetails}) => {
   return (
     <div className="liv-tableau">
       <table>
@@ -37,12 +41,9 @@ const LivTableau: React.FC<LivTableauProps> = ({ deliveries, onViewDetails }) =>
               <td>{delivery.distance}</td>
               <td>{delivery.price}</td>
               <td>
-                <Icon 
-                    path={mdiEye} 
-                    size={1} 
-                    className="table-eye-icon" 
-                    onClick={() => onViewDetails(delivery.key)}
-                />
+                <div className="liv-eye-icon" onClick={() => onViewDetails(delivery)}>
+                <Icon path={mdiEye} size={1} />
+                </div>
               </td>
             </tr>
           ))}
@@ -51,5 +52,4 @@ const LivTableau: React.FC<LivTableauProps> = ({ deliveries, onViewDetails }) =>
     </div>
   );
 };
-
 export default LivTableau;
