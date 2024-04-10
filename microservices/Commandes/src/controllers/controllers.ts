@@ -323,17 +323,17 @@ export const deleteOrderById = async (request: any, reply: any) => {
 
 export const sendMessageToKafkaOrder = async (orderId: string, orderStatus: string) => {
     try {
-       
         const messageValue = JSON.stringify({
             orderId,
             orderStatus
         });
 
-        const kafkaConfig = new KafkaConfig();
+        // Retrieve the singleton instance instead of creating a new one
+        const kafkaConfig = KafkaConfig.getInstance();
         const messages = [{ key: "orderUpdate", value: messageValue }];
         await kafkaConfig.produce("Order", messages);
 
-        console.log("Message successfully sent!",messages);
+        console.log("Message successfully sent!", messages);
     } catch (error) {
         console.error("Failed to send message:", error);
     }
@@ -342,7 +342,9 @@ export const sendMessageToKafkaOrder = async (orderId: string, orderStatus: stri
 export const sendMessageToKafka = async (req: any, res: FastifyReply) => {
     try {
         const { message } = req.body;
-        const kafkaConfig = new KafkaConfig();
+
+        // Retrieve the singleton instance instead of creating a new one
+        const kafkaConfig = KafkaConfig.getInstance();
         const messages = [{ key: "orderUpdate", value: message }];
         await kafkaConfig.produce("Order", messages); // Assuming produce is an async method
 
@@ -352,4 +354,5 @@ export const sendMessageToKafka = async (req: any, res: FastifyReply) => {
         res.status(500).send({ error: "Failed to send message" });
     }
 };
+
 
