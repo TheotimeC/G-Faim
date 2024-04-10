@@ -1,21 +1,14 @@
 import mongoose, { Document } from 'mongoose';
 
-enum OrderStatus {
-  Cart = "cart",
-  Paid = "paid",
-  Fulfilled = "fulfilled",
-}
-
-export enum RestaurantStatus {
-  TO_ACCEPT = "to accept",
-  IN_PREPARATION = "in preparation",
-  READY = "ready",
-}
-
-enum DeliveryStatus {
-  AWAITING_PICKUP = "awaiting pickup",
-  IN_TRANSIT = "in transit",
-  DELIVERED = "delivered",
+export enum OrderStatus {
+  CANCELLED = "Annulée",
+  CART = "Panier",
+  PAID = "Payée",
+  TO_ACCEPT = "A accepter",
+  IN_PREPARATION = "En préparation",
+  AWAITING_PICKUP = "En attente de retrait",
+  IN_TRANSIT = "En cours de livraison",
+  DELIVERED = "Livrée",
 }
 
 interface IOrderItem {
@@ -49,8 +42,6 @@ interface IOrder extends Document {
   deliveryDate?: Date; // Optional
   deliveryAddress?: DeliveryAddress; // Optional
   status: OrderStatus;
-  restaurantStatus: RestaurantStatus;
-  deliveryStatus: DeliveryStatus;
 }
 
 const orderItemSchema = new mongoose.Schema({
@@ -84,9 +75,7 @@ const orderSchema = new mongoose.Schema({
     },
     required: false, // Optional
   },
-  restaurantStatus: { type: String, required: true, enum: Object.values(RestaurantStatus), default: RestaurantStatus.TO_ACCEPT },
-  deliveryStatus: { type: String, required: false, enum: Object.values(DeliveryStatus), default: DeliveryStatus.AWAITING_PICKUP }, // Optional if your logic requires
-  status: { type: String, required: true, enum: Object.values(OrderStatus), default: OrderStatus.Cart },
+  status: { type: String, required: true, enum: Object.values(OrderStatus), default: OrderStatus.CART },
 }, { timestamps: true });
 
 const Order = mongoose.model<IOrder>('Order', orderSchema);
