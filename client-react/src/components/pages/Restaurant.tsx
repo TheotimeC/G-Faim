@@ -173,6 +173,7 @@ const Restaurant: FunctionComponent = () => {
           <RestoCard
               Titre={article.Titre}
               Description={article.Description}
+              restaurantId={restaurant._id}
               itemId={article._id}
               img={article.img}
               propPadding="1.5rem 1.5rem 1.375rem 1.813rem"
