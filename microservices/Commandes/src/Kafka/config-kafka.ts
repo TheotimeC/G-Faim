@@ -12,7 +12,7 @@ export class KafkaConfig {
     });
 
     this.producer = this.kafka.producer();
-    this.consumer = this.kafka.consumer({ groupId: "Commandes" });
+    this.consumer = this.kafka.consumer({ groupId: "Order" });
   }
 
   async produce(topic: string, messages: { value: string }[]): Promise<void> {
@@ -36,8 +36,7 @@ export class KafkaConfig {
       await this.consumer.run({
         eachMessage: async ({ topic, partition, message }: EachMessagePayload) => {
           let value = "";
-          if (message.value)
-             value = message.value.toString();
+          if (message.value) value = message.value.toString();
           callback(value);
         },
       });
@@ -45,4 +44,5 @@ export class KafkaConfig {
       console.error(error);
     }
   }
+
 }

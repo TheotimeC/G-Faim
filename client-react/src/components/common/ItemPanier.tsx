@@ -1,5 +1,5 @@
 // CartItem.jsx
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../assets/styles/ItemPanier.css';
 import {InputNumber, Modal} from "antd"; // Make sure to create a separate CSS file for the CartItem
 interface CartItemProps {
@@ -16,8 +16,12 @@ function ItemPanier({ name, price, imageSrc, initialQuantity, removeItem, update
     // This is a static quantity for display purposes
     // You might want to manage the quantity state here or in the parent component
     const [quantity, setQuantity] = useState(initialQuantity);
-    const [tempQuantity, setTempQuantity] = useState(1);
+    const [tempQuantity, setTempQuantity] = useState(initialQuantity);
     const [isEditable, setIsEditable] = useState<boolean>(false);
+    useEffect(() => {
+        setQuantity(initialQuantity);
+        setTempQuantity(initialQuantity);
+    }, [initialQuantity]);
     const addQuantity = () => {
         const newQuantity = quantity + 1;
         setQuantity(newQuantity);
@@ -51,6 +55,11 @@ function ItemPanier({ name, price, imageSrc, initialQuantity, removeItem, update
             showDeleteConfirm();
 
     }
+    const handleKeyPress = (event: { key: string; }) => {
+        if (event.key === "Enter") {
+            toggleEditable();
+        }
+    }
     const toggleEditable = () => {
         setIsEditable(!isEditable);
         if (isEditable)
@@ -78,6 +87,7 @@ function ItemPanier({ name, price, imageSrc, initialQuantity, removeItem, update
                         className="cart-quantity-input"
                         value={quantity}
                         onChange={handleQuantityChange}
+                        onKeyPress={handleKeyPress}
                         onBlur={toggleEditable}
                         autoFocus
                         controls={false}

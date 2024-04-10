@@ -39,7 +39,7 @@ interface Commande {
   deliveryFee: number;
   total: number;
   orderDate: string;
-  status: "Panier" | "A accepter" | "En preparation" |"En attente de retrait" |"En cours de livraison"|"Livrée";
+  status: "Panier" | "A accepter" | "En préparation" |"En attente de retrait" |"En cours de livraison"|"Livrée";
   createdAt?: string;
   updatedAt?: string;
   __v?: number;
@@ -49,7 +49,24 @@ const RestHome = () =>{
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState<Commande | null>(null);
     const [orders, setOrders] = useState<Commande[]>([]);
+    const [messages, setMessages] = useState<string[]>([]);
 
+    useEffect(() => {
+      // Connexion au serveur WebSocket
+      const ws = new WebSocket('ws://localhost:8081');
+  
+      ws.onmessage = (event) => {
+        // Lors de la réception d'un message, mettez à jour l'état avec le nouveau message
+        const message = event.data;
+        setMessages(prevMessages => [...prevMessages, message]);
+      };
+      console.log("messagesKAfka : ",messages);
+  
+      return () => {
+        ws.close();
+      };
+    }, []);
+    
     // Transformer les données
     const transformOrdersToChartData = (orders: Commande[]) => {
       // Étape 1: Récupérer les dates des commandes et les comptabiliser
@@ -76,10 +93,10 @@ const RestHome = () =>{
       var updatedStatus;
       switch(originalStatus){
         case 'A accepter':
-           updatedStatus = 'En preparation'
+           updatedStatus = 'En préparation'
           break;
 
-        case 'En preparation':
+        case 'En préparation':
            updatedStatus = 'En attente de retrait'
           break;
       }
@@ -208,7 +225,7 @@ const RestHome = () =>{
           },
       ];
       const getPrepOrders = (orders: Commande[]) => {
-        return orders.filter(order => order.status == "En preparation");
+        return orders.filter(order => order.status == "En préparation");
       };
 
       const getToAcceptOrders = (orders: Commande[]) => {
