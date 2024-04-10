@@ -4,7 +4,7 @@
   "description": "Microservice for the orders of GFaim",
   "main": "index-old.js",
   "scripts": {
-    "start": "nodemon index.ts",
+    "start": "npx ts-node index.ts",
     "prod": "tsc && node dist/index.js"
   },
   "dependencies": {
