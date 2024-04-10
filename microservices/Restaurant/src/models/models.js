@@ -27,7 +27,8 @@ const articleSchema = new mongoose.Schema({
   },
   activ: {
     type: Boolean,
-    required: false
+    required: false,
+    default:true
   }
 });
 
@@ -58,7 +59,8 @@ const menuSchema = new mongoose.Schema({
   },
   activ: {
     type: Boolean,
-    required: false
+    required: false,
+    default:true
   }
 });
 

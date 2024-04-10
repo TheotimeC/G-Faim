@@ -39,7 +39,7 @@ interface Commande {
   deliveryFee: number;
   total: number;
   orderDate: string;
-  status: "cart" | "paid" | "fulfilled";
+  status: "Panier" | "A accepter" | "En preparation" |"En attente de retrait" |"En cours de livraison"|"Livrée";
   createdAt?: string;
   updatedAt?: string;
   __v?: number;
@@ -75,12 +75,12 @@ const RestHome = () =>{
       const originalStatus = record.status;
       var updatedStatus;
       switch(originalStatus){
-        case 'to accept':
-           updatedStatus = 'in preparation'
+        case 'A accepter':
+           updatedStatus = 'En preparation'
           break;
 
-        case 'in preparation':
-           updatedStatus = 'ready'
+        case 'En preparation':
+           updatedStatus = 'En attente de retrait'
           break;
       }
 
@@ -101,7 +101,7 @@ const RestHome = () =>{
 
     const countNonReadyOrders = (orders: Commande[]): number => {
       return orders.reduce((count, order) => {
-        if (order.status !== 'ready') {
+        if (order.status !== 'En attente de retrait') {
           count += 1;
         }
         return count;
@@ -208,11 +208,11 @@ const RestHome = () =>{
           },
       ];
       const getPrepOrders = (orders: Commande[]) => {
-        return orders.filter(order => order.status == "in preparation");
+        return orders.filter(order => order.status == "En preparation");
       };
 
       const getToAcceptOrders = (orders: Commande[]) => {
-        return orders.filter(order => order.status == "to accept");
+        return orders.filter(order => order.status == "A accepter");
       };
 
     const showModal = (record) => {
