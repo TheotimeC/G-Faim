@@ -46,10 +46,14 @@ export default function Connection(){
         // Gérer l'erreur, par exemple en affichant un message à l'utilisateur
       }
     };
+    async function handleKeyPress(event: any) {
+        if (event.key === "Enter")
+            await handleLogin();
+    }
 
     return (
         <>
-            <div className={styles.loginContainer}>
+            <div className={styles.loginContainer} onKeyUp={handleKeyPress}>
             <Row className={styles.antRow}>
                 <Col span={12} className={styles.columnFlex}>
                     <h1>Se Connecter</h1>
