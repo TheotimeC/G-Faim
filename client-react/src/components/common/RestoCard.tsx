@@ -4,7 +4,9 @@ import { mdiPlusCircle } from '@mdi/js';
 import "../assets/styles/restocard.css"
 import {message} from "antd";
 import orderApi from "../assets/order-api.ts";
-const userId = "user123"; // Example user ID
+import {getUserId} from "../assets/user-api.ts";
+
+const userId = await getUserId();
 
 export type GroupComponent2Type = {
   Titre?: string;
@@ -76,25 +78,9 @@ const GroupComponent2: FunctionComponent<GroupComponent2Type> = ({
       backgroundImage: propBackgroundImage,
     };
   }, [propBackgroundImage]);
-  type CartItem = {
-    id: number;
-    name: string;
-    price: string; // Consider converting this to number if your backend sends it as a number
-    quantity: number;
-    imgSrc: string;
-  };
-  const getCart = async (): Promise<CartItem[]> => {
-    try {
-      const response = await orderApi.getUserCart(userId);
-      return response.data.items; // Assuming the response data structure includes an items array
-    } catch (error: any) {
-      console.error('Error fetching cart:', error.response ? error.response.data : error.message);
-      return []; // Return empty array on error
-    }
-  };
   const [messageApi, contextHolder] = message.useMessage()
-  const success = () => {
-    messageApi.open({
+  const success = async () => {
+    await messageApi.open({
       type: 'success',
       content: 'Item added to cart !',
       duration: 2
