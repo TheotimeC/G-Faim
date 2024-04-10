@@ -42,24 +42,24 @@ export default function Commandes() {
     const [messages, setMessages] = useState<string[]>([]);
 
     useEffect(() => {
-      // Connexion au serveur WebSocket
-      const ws = new WebSocket('ws://localhost:42402');
-  
-      ws.onmessage = (event) => {
-        // Lors de la réception d'un message, mettez à jour l'état avec le nouveau message
+        // Connexion au serveur WebSocket
+        const ws = new WebSocket('ws://localhost:14101');
+    
+        ws.onmessage = (event) => {
+          // Lors de la réception d'un message, mettez à jour l'état avec le nouveau message
+          
+          const message = event.data;
+          console.log("Nouveau message WebSocket reçu:", message);
+          setMessages(prevMessages => [...prevMessages, message]);
+        };
         
-        const message = event.data;
-        console.log("Nouveau message WebSocket reçu:", message);
-        setMessages(prevMessages => [...prevMessages, message]);
-      };
-      
-  
-      return () => {
-        if (ws.readyState === 1) { // <-- This is important
-          ws.close();
-        }
-    }
-    }, []);
+    
+        return () => {
+          if (ws.readyState === 1) { // <-- This is important
+            ws.close();
+          }
+      }
+      }, []);
 
     useEffect(() => {
         async function fetchData() {
