@@ -31,7 +31,7 @@ function App() {
     <>
       <Router>
         {/* Affiche la Navbar appropriée en fonction du rôle */}
-        { !isRestaurateur && !isLivreur && !isAdmin && <Navbar />}
+        { !isRestaurateur && !isLivreur && !isAdmin && !isAuthenticated&&<Navbar />}
         {isAuthenticated && isRestaurateur && <RestNav />}
         {isAuthenticated && isAdmin && <Admin />}
         {isAuthenticated && isLivreur && <LivNav />}

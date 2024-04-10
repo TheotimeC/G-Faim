@@ -53,18 +53,22 @@ const RestHome = () =>{
 
     useEffect(() => {
       // Connexion au serveur WebSocket
-      const ws = new WebSocket('ws://localhost:8081');
+      const ws = new WebSocket('ws://localhost:17875');
   
       ws.onmessage = (event) => {
         // Lors de la réception d'un message, mettez à jour l'état avec le nouveau message
+        
         const message = event.data;
+        console.log("Nouveau message WebSocket reçu:", message);
         setMessages(prevMessages => [...prevMessages, message]);
       };
-      console.log("messagesKAfka : ",messages);
+      
   
       return () => {
-        ws.close();
-      };
+        if (ws.readyState === 1) { // <-- This is important
+          ws.close();
+        }
+    }
     }, []);
     
     // Transformer les données

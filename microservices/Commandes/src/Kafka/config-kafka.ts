@@ -15,7 +15,7 @@ export class KafkaConfig {
 
     this.producer = this.kafka.producer();
     this.consumer = this.kafka.consumer({ groupId: "Order" });
-    this.wss = new WebSocketServer({ port: 8081 }); // Initialisation du serveur WebSocket sur le port 8080
+    this.wss = new WebSocketServer({ port: 0 }); // Initialisation du serveur WebSocket sur le port 8080
   }
 
   async produce(topic: string, messages: { value: string }[]): Promise<void> {
@@ -59,11 +59,15 @@ export class KafkaConfig {
       // Vous pouvez remplacer 'your_kafka_topic' par le nom de votre topic Kafka réel
       this.consume('Order', kafkaMessageCallback);
     });
+
+    this.wss.on('listening', () => {
+      // Obtient le port sur lequel le serveur WebSocket est en train d'écouter
+      const address = this.wss.address();
+      console.log(`Serveur WebSocket démarré sur le port ${typeof address === 'string' ? address : address.port}`);
+    });
+
     this.wss.on('error', (error) => {
       console.error('Erreur du serveur WebSocket:', error);
     });
-    
-
-    console.log('Serveur WebSocket démarré sur le port 8080');
-  }
+}
 }
