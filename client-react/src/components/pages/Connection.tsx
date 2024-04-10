@@ -4,7 +4,7 @@ import Button from "../common/Button.tsx";
 import { useState} from 'react'
 import styles from "../assets/styles/Connection.module.css"
 import api from '../assets/api.ts';
-import { useAuth } from '../assets/Auth.tsx'; // Importez le hook d'authentification
+import { useAuth } from '../assets/Auth.tsx';
 
 // Dans votre fonction de connexion :
 // Après une connexion réussie :
@@ -59,12 +59,15 @@ export default function Connection(){
                     <div className={styles.buttonContainer}> 
                     <Button text="Connexion" color="FFA500" size="28" onClick={handleLogin}/>
                     </div>
+                    <a href="/inscription"> pas encore membre ? </a>
                 </Col>
                 <Col span={1}  className={styles.columnFlex}> <Divider type="vertical" className={styles.dividerVertical} /></Col>
                 <Col span={11} className={styles.columnFlex} >
                     <img src="/connexion_nourriture.png" alt="food"/>
                 </Col>
+
             </Row>
+
             </div>
 
         </>
