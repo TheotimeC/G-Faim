@@ -1,8 +1,9 @@
 import '../assets/styles/adminmanage.css'; 
 import React, { useEffect, useState } from 'react';
 import { Table, Space, Button, Modal } from 'antd';
-import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, EyeOutlined,StopOutlined } from '@ant-design/icons';
 import api from '../assets/api';
+import orderApi from '../assets/order-api';
 const API_URL = 'http://localhost:3000/user';
 
 interface User {
@@ -25,6 +26,13 @@ interface Adresse {
     pays: string;
   }
 
+  interface Order {
+    id: string;
+    status: string;
+    total: number;
+}
+
+
 export const getUsers = async () => {
     const token = localStorage.getItem('accessToken');
     try {
@@ -42,6 +50,8 @@ const AdminManage = () =>{
     const [isModalVisible, setIsModalVisible] = useState(false);
     // État pour stocker les données de l'utilisateur sélectionné
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
+    const [userOrders, setUserOrders] = useState<Order[]>([]);
+
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -50,6 +60,30 @@ const AdminManage = () =>{
         };
         fetchUsers();
     }, []);
+
+    const columns2= [
+        {
+            title: 'ID Commande',
+            dataIndex: '_id',
+            key: 'id',
+        },
+        {
+            title: 'Statut',
+            dataIndex: 'status',
+            key: 'status',
+        },
+        {
+            title: 'Total',
+            dataIndex: 'total',
+            key: 'total',
+        },
+        {
+            title: 'Date de commande',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+        },
+    ];
 
     const columns = [
         {
@@ -82,19 +116,33 @@ const AdminManage = () =>{
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button icon={<EyeOutlined />} onClick={() => viewDetails(record)}></Button>
-                    <Button icon={<EditOutlined />} onClick={() => editUser(record)}></Button>
-                    <Button icon={<DeleteOutlined />} onClick={() => deleteUser(record)}></Button>
+                    <Button icon={<EyeOutlined />} onClick={() => viewDetails(record)}>Voir +</Button>
+                    <Button icon={<StopOutlined />} onClick={() => editUser(record)}>Suspendre</Button>
+                    <Button icon={<DeleteOutlined />} onClick={() => deleteUser(record)}>Supprimer</Button>
                 </Space>
             ),
         },
     ];
 
     // Exemple de fonctions d'action
-    const viewDetails = (record: User) => {
+    const viewDetails = async (record: User) => {
         setSelectedUser(record);
         setIsModalVisible(true);
+        if (record._id) {
+            try {
+                
+                const response = await orderApi.getOrdersByUserId(record._id);
+                const orders = response.data; // Supposons que cela renvoie un tableau d'objets commande
+                console.log("Commandes récupérées :", orders); // Vérifiez les données retournées
+                setUserOrders(orders);
+            } catch (error) {
+                console.error('Erreur lors de la récupération des commandes:', error);
+                setUserOrders([]); // Gestion de l'erreur
+            }
+        }
     };
+    
+    
 
     const editUser = (user) => {
         console.log('Modifier', user);
@@ -105,13 +153,14 @@ const AdminManage = () =>{
         console.log('Supprimer', user);
         // Ici, implémentez la logique pour supprimer l'utilisateur
     };
-
+    
     return (
         <div>
             <h1>Gestion des Utilisateurs</h1>
             <Table columns={columns} dataSource={users} rowKey="email" />
             <Modal
-                title="Détails de l'utilisateur"
+                title=""
+                width={1300}
                 open={isModalVisible}
                 onOk={() => setIsModalVisible(false)}
                 onCancel={() => setIsModalVisible(false)}
@@ -121,14 +170,44 @@ const AdminManage = () =>{
                     </Button>,
                 ]}
             >
-                {/* Afficher les détails de l'utilisateur ici */}
+                
                 {selectedUser && (
-                    <div>
+                    <div className="modal-content">
+                    <div  className='user-infos'>
+                        <h3>Détails de l'utilisateur</h3>
+                        <p>Prenom: {selectedUser.prenom}</p>
                         <p>Nom: {selectedUser.nom}</p>
                         <p>Email: {selectedUser.email}</p>
+                        <p>Téléphone: {selectedUser.telephone}</p>
                         <p>Rôle: {selectedUser.role}</p>
-                        {/* Affichez d'autres champs de l'utilisateur ici */}
+                        <p>Total Parrainages: {selectedUser.total_personnes_parrainees}</p>
                     </div>
+                    <div className='user-ordersinfos'>
+                        <h3>Commandes de l'utilisateur :</h3>
+                        <Table
+                            columns={columns2}
+                            dataSource={userOrders}
+                            rowKey="_id"
+                            expandable={{
+                                expandedRowRender: (record) => (
+                                    <div>
+                                        <p><b>Restaurant : </b>{record.restaurantId}</p>
+                                        <p><b>Articles commandés :</b></p>
+                                        {record.items.map((item, index) => (
+                            
+                                            <div key={index}>
+                                                <p>{item.name} x {item.quantity} - €{item.price.toFixed(2)}</p>
+                                            </div>
+                                        ))}
+                                        <p><b>Sous-total :</b> €{record.subtotal.toFixed(2)}</p>
+                                        <p><b>Frais de livraison :</b> €{record.deliveryFee.toFixed(2)}</p>
+                                        <p><b>Total :</b> €{record.total.toFixed(2)}</p>
+                                    </div>
+                                ),
+                            }}
+                        />
+                    </div>
+                </div>
                 )}
             </Modal>
         </div>

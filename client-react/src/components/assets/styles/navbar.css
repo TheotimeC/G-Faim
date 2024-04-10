@@ -86,7 +86,7 @@ li{
   color: #ffffff; /* Couleur du texte du bouton */
   font-weight: bold; /* Si vous voulez que le texte soit en gras */
   cursor: pointer; /* Change le curseur pour indiquer que c'est un bouton */
-
+  background-color: #FFA500 !important;
 }
 .icon img{
     width: auto;
@@ -117,3 +117,20 @@ li{
     height: 20px; 
 
   }
+
+   .dropnav{
+    clear: both;
+    color: #ffffff !important;
+    font-weight: bold !important;
+    margin: 0;
+    padding: 5px 12px;
+    color: rgba(0, 0, 0, 0.88);
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 1.5714285714285714;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 4px;
+    background-color: #FFA500 ;
+    width: 100%;
+}

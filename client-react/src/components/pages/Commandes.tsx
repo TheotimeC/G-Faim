@@ -40,7 +40,7 @@ export default function Commandes() {
 
     useEffect(() => {
         fetchData();
-        const ws = new WebSocket('ws://localhost:62214');
+        const ws = new WebSocket('ws://localhost:29286');
         // Connexion au serveur WebSocket
 
         ws.onmessage = (event) => {
