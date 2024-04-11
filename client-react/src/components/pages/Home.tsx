@@ -82,7 +82,7 @@ const Home = () =>{
                             to={`/Restaurants/${item._id}`} 
                             className={({ isActive }) => isActive ? "activeLink" : ""}
                         > 
-                        
+
                         <Card
                             title={item.Nom}
                             subtitle={item.Categorie}
@@ -94,57 +94,57 @@ const Home = () =>{
               />
             </div>
 
-            <div className="how-it-works">
+            <div className="home-how-it-works">
               <h2>Comment ça marche ?</h2>
               <h1>C'est très simple !</h1>
 
-              <div className="how-it-works-steps">
-                <div className="step">
-                  <Icon path={mdiFood} size={2} className="icon" />
+              <div className="home-how-it-works-steps">
+                <div className="home-step">
+                  <Icon path={mdiFood} size={2} className="home-icon" />
                   <h3>Trouvez ce dont vous avez envie</h3>
                   <p>Cherchez par article ou repas, par partenaire ou type de cuisine.</p>
                 </div>
                 
-                <div className="step">
-                  <Icon path={mdiBasketCheck} size={2} className="icon" />
+                <div className="home-step">
+                  <Icon path={mdiBasketCheck} size={2} className="home-icon" />
                   <h3>Commandez à livrer</h3>
                   <p>Nous vous tiendrons au courant du déroulement de votre commande.</p>
                 </div>
               </div>
             </div>
 
-            <div className="benefits">
+            <div className="home-benefits">
               <h2>G FAIM</h2>
               <h1>Le meilleur endroit pour commander !</h1>
 
-              <div className="benefits-cards">
-                <div className="card">
-                  <div className="icon-container">
-                    <Icon path={mdiShieldStar} size={2} className="icon" />
+              <div className="home-benefits-cards">
+                <div className="home-card">
+                  <div className="home-icon-container">
+                    <Icon path={mdiShieldStar} size={2} className="home-icon" />
                   </div>
-                  <div className="content-container">
+                  <div className="home-content-container">
                     <h3>Programmes de fidélité</h3>
                     <p>Cumulez des points à chaque commande et obtenez des récompenses.</p>
                     <p>Offres exclusives pour les membres.</p>
                   </div>
                 </div>
 
-                <div className="card">
-                  <div className="icon-container">
-                    <Icon path={mdiMessageStar} size={2} className="icon" />
+                <div className="home-card">
+                  <div className="home-icon-container">
+                    <Icon path={mdiMessageStar} size={2} className="home-icon" />
                   </div>
-                  <div className="content-container">
+                  <div className="home-content-container">
                     <h3>Notre garantie</h3>
                     <p>Un service d'exception à chaque commande.</p>
                     <p>Satisfaction garantie.</p>
                   </div>
                 </div>
 
-                <div className="card">
-                  <div className="icon-container">
-                    <Icon path={mdiStar} size={2} className="icon" />
+                <div className="home-card">
+                  <div className="home-icon-container">
+                    <Icon path={mdiStar} size={2} className="home-icon" />
                   </div>
-                  <div className="content-container">
+                  <div className="home-content-container">
                     <h3>Vos avantages</h3>
                     <p>Commandez quand vous voulez et où vous voulez.</p>
                     <p>Large choix de cuisines et de restaurants.</p>
