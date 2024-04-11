@@ -5,10 +5,14 @@ export default async function (fastify: FastifyInstance) {
     fastify.get('/current', {
         handler: orderController.getCurrentOrderByRestaurantId,
     });
+    fastify.get('/todeliver', {
+        handler: orderController.getAllOrdersWithoutDeliveryMan,
+    });
     fastify.put('/status', {
         handler: orderController.setOrderRestaurantStatus,
     });
     fastify.get('/', {
         handler: orderController.getOrderByRestaurantId,
     });
+    
 }

@@ -38,7 +38,11 @@ const Restaurants = () => {
     const handleCardClick = (id: string) => {
         setSelectedRestId(id); // Définir l'ID du restaurant sélectionné
     };
-    const Francerestaurants = restaurants.filter(restaurant => restaurant.Categorie === "Cuisine française");
+    const Francerestaurants = restaurants.filter(restaurant => restaurant.Categorie === "Cuisine Française");
+    const brassrestaurants = restaurants.filter(restaurant => restaurant.Categorie === "Brasserie");
+    const Pizzarestaurants = restaurants.filter(restaurant => restaurant.Categorie === "Pizzeria");
+    const Mexicrestaurants = restaurants.filter(restaurant => restaurant.Categorie === "Cuisine Mexicaine");
+    const Sushirestaurants = restaurants.filter(restaurant => restaurant.Categorie === "Sushi");
     // Si un restaurant est sélectionné, affichez le composant Restaurant, sinon le contenu par défaut
     if (selectedRestId) {
         return <Restaurant/>;
@@ -46,26 +50,7 @@ const Restaurants = () => {
         return (
             <div>
                 <CategoriesDisplay
-                    title="Restaurants populaires"
-                    data={restaurants}
-                    renderItem={(item) => (
-                        <NavLink 
-                            key={item._id} 
-                            to={`/Restaurants/${item._id}`} 
-                            className={({ isActive }) => isActive ? "activeLink" : ""}
-                            >
-                            
-                        <Card
-                            title={item.Nom}
-                            subtitle={item.Categorie}
-                            img={item.img}
-                            onClick={() => handleCardClick(item._id)}
-                        />
-                        </NavLink>
-                    )}
-                />
-                <CategoriesDisplay
-                    title="Restaurants Français"
+                    title="Restaurants Français 🥐"
                     data={Francerestaurants}
                     renderItem={(item) => (
                         <NavLink 
@@ -84,8 +69,67 @@ const Restaurants = () => {
                     )}
                 />
                 <CategoriesDisplay
-                    title="Restaurants Vegans"
-                    data={restaurants}
+                    title="Brasseries 🍻"
+                    data={brassrestaurants}
+                    renderItem={(item) => (
+                        <NavLink 
+                            key={item._id} 
+                            to={`/Restaurants/${item._id}`} 
+                            className={({ isActive }) => isActive ? "activeLink" : ""}
+                            >
+                            
+                        <Card
+                            title={item.Nom}
+                            subtitle={item.Categorie}
+                            img={item.img}
+                            onClick={() => handleCardClick(item._id)}
+                        />
+                        </NavLink>
+                    )}
+                />
+
+                <CategoriesDisplay
+                    title="Cuisine Mexicaine 🌮"
+                    data={Mexicrestaurants}
+                    renderItem={(item) => (
+                        <NavLink 
+                            key={item._id} 
+                            to={`/Restaurants/${item._id}`} 
+                            className={({ isActive }) => isActive ? "activeLink" : ""}
+                            >
+                            
+                        <Card
+                            title={item.Nom}
+                            subtitle={item.Categorie}
+                            img={item.img}
+                            onClick={() => handleCardClick(item._id)}
+                        />
+                        </NavLink>
+                    )}
+                />
+                <CategoriesDisplay
+                    title="Pizzeria 🍕"
+                    data={Pizzarestaurants}
+                    renderItem={(item) => (
+                        <NavLink 
+                            key={item._id} 
+                            to={`/Restaurants/${item._id}`} 
+                            className={({ isActive }) => isActive ? "activeLink" : ""}
+                            >
+                            
+                        <Card
+                            title={item.Nom}
+                            subtitle={item.Categorie}
+                            img={item.img}
+                            onClick={() => handleCardClick(item._id)}
+                        />
+                        </NavLink>
+                    )}
+                />
+
+                <CategoriesDisplay
+                    title="Sushi 🍣"
+                    data={Sushirestaurants}
                     renderItem={(item) => (
                         <NavLink 
                             key={item._id} 

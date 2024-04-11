@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const axios = require('axios');
 
 exports.createRestaurant = async (req, res) => {
-    const { userId, Nom, Telephone, Email, Categorie, img, Horairesouverture, Menus, Articles } = req.body;
+    const { userId, Nom, Telephone, Adresse, Email, Categorie, img, Horairesouverture, Menus, Articles } = req.body;
     try {
         const nouveauRestaurant = new Restaurant({ userId, Nom, Telephone, Email, Categorie, img, Horairesouverture, Menus, Articles });
         await nouveauRestaurant.save();

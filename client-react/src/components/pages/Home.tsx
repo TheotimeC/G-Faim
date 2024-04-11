@@ -20,9 +20,7 @@ export const getAllRestaurants = async (): Promise<Restaurant[]> => {
     const cacheKey = 'restaurantsCache';
   // Essayez de récupérer les données mises en cache
   const cachedData = localStorage.getItem(cacheKey);
-  if (cachedData) {
-    return JSON.parse(cachedData); // Parse et retourne les données mises en cache si disponibles
-  }
+  
 
   try {
     const response = await api.get<Restaurant[]>(`${API_URL}/getAll`);
@@ -76,7 +74,7 @@ const Home = () =>{
             <div className='Cate-pop'>
 
             <CategoriesDisplay
-                    title="Restaurants populaires"
+                    title="Restaurants populaires ✨"
                     data={restaurants}
                     renderItem={(item) => (
                         <NavLink 

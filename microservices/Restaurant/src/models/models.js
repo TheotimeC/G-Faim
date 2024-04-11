@@ -91,6 +91,10 @@ const restaurantSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  Adresse: {
+    type: String,
+    required: true
+  },
   Email: {
     type: String,
     required: true

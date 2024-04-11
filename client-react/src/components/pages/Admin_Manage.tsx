@@ -1,7 +1,7 @@
 import '../assets/styles/adminmanage.css'; 
 import React, { useEffect, useState } from 'react';
 import { Table, Space, Button, Modal } from 'antd';
-import { EditOutlined, DeleteOutlined, EyeOutlined,StopOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, EyeOutlined,StopOutlined,UndoOutlined } from '@ant-design/icons';
 import api from '../assets/api';
 import orderApi from '../assets/order-api';
 const API_URL = 'http://localhost:3000/user';
@@ -17,6 +17,7 @@ interface User {
     code_parrain?: string;
     total_personnes_parrainees?: number;
     role?:string;
+    suspended:boolean;
   }
   
 interface Adresse {
@@ -32,7 +33,6 @@ interface Adresse {
     total: number;
 }
 
-
 export const getUsers = async () => {
     const token = localStorage.getItem('accessToken');
     try {
@@ -45,13 +45,52 @@ export const getUsers = async () => {
       throw error;
     }
   };
+
+  export const updateUserSuspendedStatus = async (userId: string, suspendedStatus: boolean) => {
+    const token = localStorage.getItem('accessToken');
+    try {
+      const response = await api.put(`${API_URL}/modify/?id=${userId}`, {
+        suspended: suspendedStatus
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du statut de l\'utilisateur:', error);
+      throw error;
+    }
+};
+
 const AdminManage = () =>{
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState<User[]>([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     // État pour stocker les données de l'utilisateur sélectionné
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [userOrders, setUserOrders] = useState<Order[]>([]);
 
+    const suspendUser = async (user: User) => {
+        try {
+          await updateUserSuspendedStatus(user._id, true); // Suspendre l'utilisateur
+          // Recharger la liste des utilisateurs pour refléter le changement
+          const updatedUsers = await getUsers();
+          setUsers(updatedUsers);
+        } catch (error) {
+          console.error('Erreur lors de la suspension de l\'utilisateur:', error);
+
+        }
+      };
+    
+      const toggleUserSuspendedStatus = async (user: User) => {
+        const newSuspendedStatus = !user.suspended; // Inverse le statut de suspension
+        try {
+          await updateUserSuspendedStatus(user._id, newSuspendedStatus); // Met à jour le statut de suspension
+          message.success(newSuspendedStatus ? 'Utilisateur suspendu avec succès.' : 'Utilisateur rétabli avec succès.');
+          setUsers(users.map(u => u.id === user.id ? { ...u, suspended: !u.suspended } : u));
+        } catch (error) {
+          console.error('Erreur lors de la mise à jour du statut de l\'utilisateur:', error);
+          message.error('Erreur lors de la mise à jour du statut de l\'utilisateur.');
+        }
+      };
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -114,12 +153,17 @@ const AdminManage = () =>{
         {
             title: 'Action',
             key: 'action',
-            render: (_, record) => (
-                <Space size="middle">
-                    <Button icon={<EyeOutlined />} onClick={() => viewDetails(record)}>Voir +</Button>
-                    <Button icon={<StopOutlined />} onClick={() => editUser(record)}>Suspendre</Button>
-                    <Button icon={<DeleteOutlined />} onClick={() => deleteUser(record)}>Supprimer</Button>
-                </Space>
+            render: (_, record: User) => (
+            <Space size="middle">
+                <Button icon={<EyeOutlined />} onClick={() => viewDetails(record)}>Voir +</Button>
+                <Button 
+                icon={record.suspended ? <UndoOutlined /> :<StopOutlined /> } 
+                onClick={() => toggleUserSuspendedStatus(record)}
+                >
+                {record.suspended ? 'Rétablir' : 'Suspendre'}
+                </Button>
+                <Button icon={<DeleteOutlined />} onClick={() => deleteUser(record)}>Supprimer</Button>
+            </Space>
             ),
         },
     ];

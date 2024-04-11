@@ -7,6 +7,7 @@ import { MenuInfo } from 'rc-menu/lib/interface';
 import AdminLogs from './Admin_Logs';
 import AdminManage from './Admin_Manage';
 import AdminHome from './AdminHome';
+import Profil from './Profil';
 
 const { Header, Sider, Content } = Layout;
 
@@ -33,7 +34,7 @@ const Admin = () =>{
         return <AdminManage/>;
         case '4':
         // return <VotreComposantPourNav3 />;
-        return <div><h1>Historique</h1></div>;
+        return <Profil/>;
         case '5':
         // return <VotreComposantPourNav3 />;
         return <div>1</div>;
@@ -45,6 +46,7 @@ const Admin = () =>{
     { key: '1', icon: mdiHomeVariantOutline },
     { key: '2', icon: mdiChartBoxOutline },
     { key: '3', icon: mdiAccountCogOutline },
+    { key: '4', icon: mdiCog },
 
 ];
     return(
