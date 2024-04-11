@@ -238,9 +238,7 @@ const RestParam: React.FC = () => {
                             </Col>
 
                             <Col span={12} className='ProfCol2'>
-                            <h3 className="prof-title2">Informations de Livraison</h3>
-                                
-                              <Input titre='Adresse de Livraison' text={userAdresse.adresse} placeholder='' size='90' margintop='3' onChange={setAdresse}/>
+                            
                             
                             <h3 className="prof-title3">Parrainage</h3>
                             <div className='parrain-container'>

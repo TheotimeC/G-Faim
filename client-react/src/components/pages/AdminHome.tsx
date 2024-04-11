@@ -8,7 +8,7 @@ import { CheckCircleOutlined , DeleteOutlined, EyeOutlined, StopOutlined } from 
 
 const API_URL_USER = 'http://localhost:3000/user';
 const API_URL_ORDER = 'http://localhost:3000/api';
-const API_URL_REST = 'http://localhost:3001/restaurant';
+
 
 export const getUserId = async (id:any) => {
   try {
@@ -21,7 +21,7 @@ export const getUserId = async (id:any) => {
   }
 };
 
-
+const API_URL_REST = 'http://localhost:3001/restaurant';
 export const getRestName = async (id:any) => {
 
   try {
@@ -109,34 +109,9 @@ export interface User {
   }
 
 const AdminHome = () =>{
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [selectedRecord, setSelectedRecord] = useState<Commande | null>(null);
     const [orders, setOrders] = useState<Commande[]>([]);
     const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
-    const [messages, setMessages] = useState<string[]>([]);
     const [user, setUser] = useState<User | null>(null);
-    const [expandedRowKeys, setExpandedRowKeys] = useState([]);
-
-    /*
-    useEffect(() => {
-      // Connexion au serveur WebSocket
-      const ws = new WebSocket('ws://localhost:14101');
-  
-      ws.onmessage = (event) => {
-        // Lors de la réception d'un message, mettez à jour l'état avec le nouveau message
-        
-        const message = event.data;
-        console.log("Nouveau message WebSocket reçu:", message);
-        setMessages(prevMessages => [...prevMessages, message]);
-      };
-      
-  
-      return () => {
-        if (ws.readyState === 1) { // <-- This is important
-          ws.close();
-        }
-    }
-    }, []);*/
 
 
     useEffect(() => {
@@ -226,13 +201,7 @@ const AdminHome = () =>{
         },
         
       ];
-      const getPrepOrders = (orders: Commande[]) => {
-        return orders.filter(order => order.status == "En préparation");
-      };
-
-      const getToAcceptOrders = (orders: Commande[]) => {
-        return orders.filter(order => order.status == "A accepter");
-      };
+    
       //"Panier" | "A accepter" | "En préparation" |"En attente de retrait" |"En cours de livraison"|"Livrée";
       const getOrdersRest = (orders: Commande[]) => {
         return orders.filter(order => order.status == "A accepter" || order.status == "En préparation" || order.status == "En attente de retrait" );
@@ -240,12 +209,7 @@ const AdminHome = () =>{
       const getOrdersLivr = (orders: Commande[]) => {
         return orders.filter(order => order.status == "En cours de livraison");
       };
-      const getOrdersFin = (orders: Commande[]) => {
-        return orders.filter(order => order.status == "Livrée");
-      };
-      const getOrdersAnnu = (orders: Commande[]) => {
-        return orders.filter(order => order.status == "Annulée");
-      };
+    
 
       const calculateTodaysOrdersTotal = (orders: Commande[]): number => {
         const today = new Date();

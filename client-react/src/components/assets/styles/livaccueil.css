@@ -46,3 +46,23 @@
 font-family: Poppins;
 margin-left: 12px;
 }
+
+.delivery-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.delivery-section {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc; /* Ajouter une bordure légère pour distinguer les sections */
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+.delivery-section h3 {
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}

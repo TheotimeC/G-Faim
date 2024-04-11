@@ -30,6 +30,8 @@ const orderApi = {
     //Users routes
     getOrdersByUserId: (userId: string) => api.get(baseRoute + `/users?userId=${userId}`),
 
+    //Delivery Routes
+    getAllOrdersWithoutDeliveryMan: () => api.get(baseRoute + `/restaurants/todeliver`),
 
     // Basic Routes
     createOrder: (orderData: any) => api.post(baseRoute + '/orders', orderData),
