@@ -1,6 +1,10 @@
 import { useEffect, useState, FunctionComponent } from "react";
 import { useParams } from 'react-router-dom';
 import { Col, Row, Spin } from 'antd';
+import { Input, Space } from 'antd';
+import type { SearchProps } from 'antd/es/input/Search';
+
+const { Search } = Input;
 import Restoheader from "../common/RestoHeader";
 import "../assets/styles/restaurant.css";
 import FilterBar from "../layout/FilterBar";
@@ -205,7 +209,7 @@ const Restaurant: FunctionComponent = () => {
               <Row className="rowresto">
                 <Col span={8} className="colresto">Carte de {restaurant.Nom}</Col>
                 <Col span={8} className="colresto"></Col>
-                <Col span={8} className="colresto">SearchBar</Col>
+                <Col span={8} className="colresto"><Search placeholder="Rechercher un article" style={{ width: 200 }} /></Col>
               </Row>
 
               <Row className="rowresto">

@@ -48,15 +48,32 @@ margin-left: 12px;
 }
 
 .delivery-container {
-  display: flex;
-  justify-content: space-between;
   margin-top: 20px;
 }
 
+.command-section {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px; /* Espace entre la commande et les sections en dessous */
+}
+
+.command-section h3 {
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.bottom-sections {
+  display: flex;
+  justify-content: space-between;
+}
+
 .delivery-section {
+  padding-top: 25px;
   flex: 1;
   padding: 10px;
-  border: 1px solid #ccc; /* Ajouter une bordure légère pour distinguer les sections */
+  border: 1px solid #ccc;
   border-radius: 5px;
   margin: 0 10px;
 }
@@ -66,3 +83,4 @@ margin-left: 12px;
   border-bottom: 1px solid #ccc;
   padding-bottom: 10px;
 }
+

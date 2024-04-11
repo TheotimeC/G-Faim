@@ -68,7 +68,7 @@ const Home = () =>{
 
 
             <Row className='SearchBarRow'>
-                <Col span={24} className='SearchBarCol'>SearchBar</Col>
+                <Col span={24} className='SearchBarCol'></Col>
             </Row>
 
             <div className='Cate-pop'>

@@ -47,29 +47,42 @@ const Navbar = () =>{
     const [form] = Form.useForm();
 
     useEffect(() => {
-        const userDataString = localStorage.getItem('userCache');
-        if (userDataString) {
-          const userData = JSON.parse(userDataString);
-          setAddresses(userData.adresses_de_livraison || []);
-          const activeAddress = localStorage.getItem('activeAddressId');
-          if (activeAddress) {
-            setSelectedAddress(activeAddress);
-          } else if (userData.adresses_de_livraison && userData.adresses_de_livraison.length > 0) {
-            setSelectedAddress(userData.adresses_de_livraison[0]._id); // Default to first address if no active address is set
-            localStorage.setItem('activeAddressId', userData.adresses_de_livraison[0]._id);
+      const fetchUserData = async () => {
+          const userDataString = localStorage.getItem('userCache');
+          if (userDataString) {
+              const userData = JSON.parse(userDataString);
+              setAddresses(userData.adresses_de_livraison || []);
+  
+              // Déterminez quelle adresse est actuellement active
+              let activeAddress = localStorage.getItem('activeAddressId');
+              if (!activeAddress && userData.adresses_de_livraison && userData.adresses_de_livraison.length > 0) {
+                  activeAddress = userData.adresses_de_livraison[0]._id;
+                  localStorage.setItem('activeAddressId', activeAddress);
+              }
+  
+              // Mettre à jour l'état avec l'adresse active
+              setSelectedAddressId(activeAddress);
+              const activeAddrObj = userData.adresses_de_livraison.find(addr => addr._id === activeAddress);
+              if (activeAddrObj) {
+                  setSelectedAddressName(`${activeAddrObj.adresse}, ${activeAddrObj.ville}`);
+              }
           }
-        }
-      }, []);
-
-      const handleAddressSelectionChange = (e) => {
-        const addressId = e.target.value;
-        const selected = addresses.find(address => address._id === addressId);
-        if (selected) {
-          setSelectedAddressId(selected._id); // Gardez l'ID de l'adresse sélectionnée
-          setSelectedAddressName(selected.adresse); // Mettez à jour avec le nom de l'adresse pour l'affichage
-          localStorage.setItem('activeAddressId', selected._id); // Optionnel: sauvegarder l'ID d'adresse active dans localStorage
-        }
       };
+  
+      fetchUserData();
+  }, []);
+  
+
+  const handleAddressSelectionChange = (e) => {
+    const addressId = e.target.value;
+    const selected = addresses.find(address => address._id === addressId);
+    if (selected) {
+        setSelectedAddress(addressId);
+        setSelectedAddressName(`${selected.adresse}, ${selected.code_postal}, ${selected.ville}, ${selected.pays}`);
+        localStorage.setItem('activeAddressId', addressId); // Sauvegarder l'adresse active dans le localStorage
+    }
+};
+
 
     
 
@@ -121,12 +134,8 @@ const Navbar = () =>{
         <div className="bar">
             <div className="navbar-top-rectangle">
             <Button type="primary" onClick={() => setIsModalVisible(true)} className='bouton-addrr'>
-            <Icon path={mdiMapMarkerRadius}
-        title="User Profile"
-        size={1}
-        color="white"
-      />
-                {selectedAddressName}
+            <Icon path={mdiMapMarkerRadius} title="User Profile" size={1} color="white" />
+            {selectedAddressName || "Sélectionner une adresse"}
             </Button>
             <Modal
   title="Gérer les adresses de livraison"

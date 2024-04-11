@@ -1,7 +1,7 @@
 import OrderCard from "../common/OrderCard.tsx";
 import "../assets/styles/Commandes.css"
 import React, {useEffect, useState} from 'react';
-import {Col, Row} from 'antd';
+import {Col, Row, notification} from 'antd';
 import CurrentOrderCard from "../common/CurrentOrderCard.tsx";
 import restaurantApi from "../assets/restaurant-api.ts";
 import OrderApi, {OrderStatus} from "../assets/order-api.ts";
@@ -50,6 +50,12 @@ function wsHandling(currentOrders: any, setCurrentOrders: any){
                     return order; // Return the original order if not the one to update
                 });
                 setCurrentOrders(updatedCurrentOrders);
+                notification.success({
+                    message: 'Votre commande à changé de statut',
+                    description: `Votre commande est actuellement : ${orderStatus}`,
+                    placement: 'top',
+                    duration: 4.5,
+                  });
         } catch (error) {
         }
     };
