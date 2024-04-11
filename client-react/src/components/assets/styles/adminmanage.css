@@ -1,0 +1,21 @@
+/* Style pour le contenu du modal */
+.modal-content {
+  display: flex; /* Utilise Flexbox pour organiser les contenus */
+  gap: 20px; /* Espacement entre les deux zones */
+  width: 100%;
+}
+
+/* Style pour les informations de l'utilisateur */
+.user-infos {
+  flex: 1; /* Permet aux informations de l'utilisateur de prendre la moitié de l'espace */
+  padding-right: 10px; /* Espacement à droite pour ne pas coller au séparateur */
+  border-right: 2px solid #ccc; /* Séparateur entre les informations de l'utilisateur et les commandes */
+  width: 300;
+}
+
+/* Style pour les informations des commandes */
+.user-ordersinfos {
+  flex: 1; /* Permet aux informations des commandes de prendre la moitié de l'espace */
+  padding-left: 10px; /* Espacement à gauche pour ne pas coller au séparateur */
+  width: 500px
+}

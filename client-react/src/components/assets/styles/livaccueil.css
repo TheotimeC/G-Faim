@@ -16,10 +16,10 @@
     font-family: Poppins;
   }
 
-  :where(.css-dev-only-do-not-override-42nv3w).ant-layout-content {
-    margin: 0px !important;
-    padding: 0px !important;
-  }
+:where(.css-dev-only-do-not-override-42nv3w).ant-layout-content {
+  margin: 0px !important;
+  padding: 0px !important;
+}
 
   .liv-btn{
     margin-right: 12px;
@@ -43,6 +43,6 @@
 
 
 .delivery-title-container{
-  font-family: Poppins;
-  margin-left: 12px;
+font-family: Poppins;
+margin-left: 12px;
 }

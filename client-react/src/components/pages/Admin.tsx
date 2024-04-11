@@ -6,6 +6,7 @@ import { Layout, Menu, Button, theme } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import AdminLogs from './Admin_Logs';
 import AdminManage from './Admin_Manage';
+import AdminHome from './AdminHome';
 
 const { Header, Sider, Content } = Layout;
 
@@ -23,7 +24,7 @@ const Admin = () =>{
   const renderContent = () => {
     switch (selectedMenu) {
       case '1':
-        return <div>1</div>;
+        return <AdminHome/>;
       case '2':
         // return <VotreComposantPourNav2 />;
         return <AdminLogs/>;

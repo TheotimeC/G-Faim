@@ -1,13 +1,14 @@
 import { Kafka, Producer, Consumer, EachMessagePayload } from "kafkajs";
-import WebSocket, { WebSocketServer } from 'ws'; // Importation avec les types
+import WebSocket, { WebSocketServer } from 'ws';
 
 export class KafkaConfig {
+  private static instance: KafkaConfig;
   private kafka: Kafka;
   private producer: Producer;
   private consumer: Consumer;
-  private wss: WebSocketServer; // Typage du serveur WebSocket
-  
-  constructor() {
+  private wss: WebSocketServer;
+
+  private constructor() {
     this.kafka = new Kafka({
       clientId: "nodejs-kafka",
       brokers: ["localhost:9092"],
@@ -15,32 +16,44 @@ export class KafkaConfig {
 
     this.producer = this.kafka.producer();
     this.consumer = this.kafka.consumer({ groupId: "Order" });
-    this.wss = new WebSocketServer({ port: 0 }); // Initialisation du serveur WebSocket sur le port 8080
+    // Initialize the WebSocket server on the appropriate port
+    this.wss = new WebSocketServer({ port: 8080 });
   }
 
-  async produce(topic: string, messages: { value: string }[]): Promise<void> {
-    try {
-      await this.producer.connect();
-      await this.producer.send({
-        topic,
-        messages,
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      await this.producer.disconnect();
+  public static getInstance(): KafkaConfig {
+    if (!KafkaConfig.instance) {
+      KafkaConfig.instance = new KafkaConfig();
     }
+    return KafkaConfig.instance;
   }
 
-  async consume(topic: string, callback: (value: string) => void): Promise<void> {
+  async produce(topic: string, messages: { key: string, value: string }[]): Promise<void> {
+    await this.producer.connect();
+    await this.producer.send({
+      topic,
+      messages,
+    });
+    // Note: You might consider not disconnecting after each send in real-world applications
+    // to improve performance, unless this behavior is specifically desired.
+    await this.producer.disconnect();
+  }
+
+  async consumeAndBroadcast(): Promise<void> {
     try {
       await this.consumer.connect();
-      await this.consumer.subscribe({ topic, fromBeginning: true });
+      await this.consumer.subscribe({ topic: 'Order', fromBeginning: true });
+
       await this.consumer.run({
         eachMessage: async ({ topic, partition, message }: EachMessagePayload) => {
           let value = "";
           if (message.value) value = message.value.toString();
-          callback(value);
+
+          // Broadcast to all connected WebSocket clients
+          this.wss.clients.forEach((client) => {
+            if (client.readyState === WebSocket.OPEN) {
+              client.send(value);
+            }
+          });
         },
       });
     } catch (error) {
@@ -50,24 +63,21 @@ export class KafkaConfig {
 
   startWebSocketServer() {
     this.wss.on('connection', (ws: WebSocket) => {
-      console.log('Nouveau client WebSocket connecté');
-
-      const kafkaMessageCallback = (message: string) => {
-        ws.send(message);
-      };
-
-      // Vous pouvez remplacer 'your_kafka_topic' par le nom de votre topic Kafka réel
-      this.consume('Order', kafkaMessageCallback);
+      console.log('New WebSocket client connected');
+      // No need to start a new consumer for each connection
+      // The broadcast is handled by consumeAndBroadcast method
     });
 
     this.wss.on('listening', () => {
-      // Obtient le port sur lequel le serveur WebSocket est en train d'écouter
       const address = this.wss.address();
-      console.log(`Serveur WebSocket démarré sur le port ${typeof address === 'string' ? address : address.port}`);
+      console.log(`WebSocket server started on port ${typeof address === 'string' ? address : address.port}`);
     });
 
     this.wss.on('error', (error) => {
-      console.error('Erreur du serveur WebSocket:', error);
+      console.error('WebSocket server error:', error);
     });
-}
+
+    // Start consuming messages from Kafka and broadcasting to WebSocket clients
+    this.consumeAndBroadcast();
+  }
 }

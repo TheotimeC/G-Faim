@@ -7,16 +7,18 @@ interface CurrentOrderCardProps {
     restaurant: string;
     id: string;
     expectedDeliveryTime: string;
+    status: string;
 }
 
-const CurrentOrderCard: React.FC<CurrentOrderCardProps> = ({ restaurant, id, expectedDeliveryTime }) => {
+const CurrentOrderCard: React.FC<CurrentOrderCardProps> = ({ restaurant, id, expectedDeliveryTime, status }) => {
     return (
         <Card className="current-order-card custom-card">
             <Row>
                 <Col span={8}>
                     <div className="current-order-header">
                         <h3>{restaurant}</h3>
-                        <span>#{id}</span>
+                        <span>#{id.slice(0,3)}</span>
+                        <span>{status}</span>
                     </div>
                 </Col>
                 <Col span={16} className="current-order-image-container">
