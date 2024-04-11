@@ -4,14 +4,11 @@ import { PoweroffOutlined } from '@ant-design/icons';
 import '../assets/styles/livaccueil.css';
 import Logo from '../assets/images/logo.png';
 import LivTableau from '../common/LivTableau';
-import LivDetailCommande from '../common/LivDetailCommande';
 
 
 
-const Liv_Accueil: React.FC = () => {
+const Liv_History: React.FC = () => {
   const [isActive, setIsActive] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedDelivery, setSelectedDelivery] = useState(null);
 
   const toggleActiveStatus = () => {
     setIsActive(!isActive);
@@ -25,16 +22,7 @@ const Liv_Accueil: React.FC = () => {
     { key: '3', client: 'Tim', restaurant: 'Mcdo', addressResto: '5 rue des roses', numResto:'0388762541', distance: '9,6 km', price: '10.90€', addressClient:'2 rue doigby', numClient: '0708552253' },
   ];
 
-  const onViewDetails = (delivery: DeliveryItem) => {
-    setSelectedDelivery(delivery);
-    setIsModalVisible(true);
-  };
-
-  const handleAccept = () => {
-    console.log("Commande acceptée:", delivery);
-    // Cette fonction peut être utilisée pour mettre à jour l'état de la commande dans votre backend
-    //setOrderAccepted(true);  Vous pouvez utiliser cet état pour conditionner l'affichage des boutons si nécessaire
-  };
+  
 
   return (
     <div className='liv-accueil'>
@@ -58,19 +46,13 @@ const Liv_Accueil: React.FC = () => {
         </div>
       </div>
       <div className="delivery-title-container">
-          <h3>Livraisons autour de moi</h3>
+          <h3>Historiques des livraisons</h3>
       </div>
       <div>
-        <LivTableau deliveries={deliveries} onViewDetails={onViewDetails}/>
-        <LivDetailCommande
-        visible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}
-        onAccept={handleAccept}
-        delivery={selectedDelivery}
-        />
+        <LivTableau deliveries={deliveries} showIcon={false}/>
       </div>
     </div>
   );
 };
 
-export default Liv_Accueil;
+export default Liv_History;

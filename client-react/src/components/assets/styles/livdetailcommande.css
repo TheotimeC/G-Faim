@@ -1,0 +1,80 @@
+.delivery-details h3{
+    font-family: Poppins;
+}
+
+.delivery-details p{
+    font-family: Inter;
+}
+
+.liv-tableau-detail {
+    border: 1px solid #ddd; /* Adapt to your styling */
+    border-radius: 10px; /* Adapt to your styling */
+    overflow: hidden;
+    background-color: #ffffff;
+    margin-top: 20px;
+  }
+  
+  .liv-tableau-detail table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .liv-tableau-detail th, .liv-tableau-detail td {
+    text-align: left;
+    padding: 3px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .liv-tableau-detail th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  .liv-btn-refuse {
+    background-color: #FF3A44;
+    color: #f0f0f0;
+    position: absolute;
+    left: 0;
+    margin-left: 30px;
+  }
+
+  .liv-btn-accept{
+    background-color: #298029;
+    color: #f0f0f0;
+    right: 12px;
+  }
+
+  .liv-btn-message{
+    background-color: #F8A431;
+    margin-right: 8em;
+    color: #f0f0f0;
+  }
+  .liv-btn-message:hover{
+    background-color: #f0f0f0 !important;
+    color: #F8A431!important;
+    border-color: #F8A431 !important;
+  }
+
+  .liv-btn-deliver{
+    background-color: #298029;
+    color: #f0f0f0;
+    right: 1em;
+  }
+  .liv-btn-deliver:hover{
+    background-color: #f0f0f0 !important;
+    color: #298029 !important;
+    border-color: #298029 !important;
+  }
+
+  .liv-btn-cancel{
+    background-color: #FF3A44;
+    color: #f0f0f0;
+    position: absolute;
+    left: 0;
+    margin-left: 2em;
+  }
+  .liv-btn-cancel:hover {
+    background-color: #f0f0f0 !important;
+    border-color: #FF3A44 !important;
+    color: #FF3A44 !important;
+  }
