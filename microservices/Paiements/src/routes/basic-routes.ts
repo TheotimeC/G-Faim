@@ -9,9 +9,9 @@ export default async function (fastify: FastifyInstance) {
     fastify.post('/', {
         handler: paiementController.createCheckoutSession,
     });
-    // fastify.post('record/', {
-    //     handler: paiementController.recordPayment,
-    // });
+    fastify.post('/record', {
+        handler: paiementController.recordPayment,
+    });
 
 
 }
