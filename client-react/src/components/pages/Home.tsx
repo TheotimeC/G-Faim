@@ -1,10 +1,9 @@
 import '../assets/styles/navbar.css';
 import '../assets/styles/home.css'
-import { Col, Row } from 'antd';
+import {Col, Input, Row} from 'antd';
 import {useState, useEffect} from 'react';
 import {NavLink} from 'react-router-dom';
 import Card from '../common/Card'
-import RestoData from '../assets/FakeData/Resto.json';
 import CategoriesDisplay from '../layout/CardDisplay';
 import CookieConsent from '../common/CookieConsent';
 import api from '../assets/api';
@@ -13,6 +12,7 @@ import Icon from '@mdi/react';
 import { mdiFood, mdiBasketCheck } from '@mdi/js';
 import { mdiShieldStar, mdiMessageStar, mdiStar } from '@mdi/js';
 import foodImage from '../assets/images/food-explosion.png';
+const  {Search} = Input;
 
 const API_URL = 'http://localhost:3001/restaurant';
 
@@ -35,6 +35,7 @@ export const getAllRestaurants = async (): Promise<Restaurant[]> => {
 const Home = () =>{
     const [selectedRestId, setSelectedRestId] = useState<string | null>(null);
     const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+    const [searchTerm, setSearchTerm] = useState(''); // State for search term
 
     useEffect(() => {
         // Appel pour obtenir tous les restaurants sans vérifier `id_params`
@@ -44,6 +45,13 @@ const Home = () =>{
       const handleCardClick = (id: string) => {
         setSelectedRestId(id); // Définir l'ID du restaurant sélectionné
     };
+    // Function to handle search input changes
+    const onSearch = (value: string) => setSearchTerm(value.toLowerCase());
+
+    // Filter restaurants based on the search term
+    const filteredRestaurants = restaurants.filter(restaurant =>
+        restaurant.Nom.toLowerCase().includes(searchTerm)
+    );
 
     return(
         <>
@@ -66,16 +74,22 @@ const Home = () =>{
               </div>
             </div>
 
-
             <Row className='SearchBarRow'>
-                <Col span={24} className='SearchBarCol'></Col>
+                <Col span={24} className='SearchBarCol'>
+                    <Search
+                        placeholder="Recherchez un restaurant"
+                        onSearch={onSearch}
+                        style={{ width: 400, marginBottom: '20px' }}
+                        enterButton
+                    />
+                </Col>
             </Row>
 
             <div className='Cate-pop'>
 
             <CategoriesDisplay
                     title="Restaurants populaires ✨"
-                    data={restaurants}
+                    data={filteredRestaurants}
                     renderItem={(item) => (
                         <NavLink 
                             key={item._id} 
