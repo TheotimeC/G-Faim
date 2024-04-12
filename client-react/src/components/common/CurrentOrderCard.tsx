@@ -1,16 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card, Col, Progress, Row} from 'antd';
 import DefaultButton from './DefaultButton';
 import '../assets/styles/CurrentOrderCard.css';
+import {OrderStatus} from "../assets/order-api.ts";
 
 interface CurrentOrderCardProps {
     restaurant: string;
     id: string;
     expectedDeliveryTime: string;
     status: string;
+    image: string;
 }
 
-const CurrentOrderCard: React.FC<CurrentOrderCardProps> = ({ restaurant, id, expectedDeliveryTime, status }) => {
+const CurrentOrderCard: React.FC<CurrentOrderCardProps> = ({ restaurant, id, expectedDeliveryTime, status, image }) => {
+    const [detailState, setdetailState] = useState(false);
+    const index: number = 20 * (Object.values(OrderStatus).indexOf(status) - 2);
+    const [progressValue, setProgressValue] = useState(index);
+    useEffect(() => {
+        setProgressValue(index);
+    }, [status]);
     return (
         <Card className="current-order-card custom-card">
             <Row>
@@ -23,7 +31,7 @@ const CurrentOrderCard: React.FC<CurrentOrderCardProps> = ({ restaurant, id, exp
                 </Col>
                 <Col span={16} className="current-order-image-container">
                     <img
-                        src="https://static.actu.fr/uploads/2023/09/mcdonald-s-frites-arnaque-960x640.jpeg"
+                        src={image}
                         alt={`${restaurant} order`}
                         className="current-order-image"
                     />
@@ -31,14 +39,14 @@ const CurrentOrderCard: React.FC<CurrentOrderCardProps> = ({ restaurant, id, exp
             </Row>
             <Row>
                 <Col span={24}>
-                    <Progress percent={50} showInfo={false} className="current-order-progress" status={"active"} strokeColor={"green"} />
+                    <Progress percent={progressValue} showInfo={false} className="current-order-progress" status={"active"} strokeColor={"green"} />
                 </Col>
             </Row>
             <Row>
                 <Col span={24} className="current-order-footer">
                     <div className="footer-content">
                     <p className="delivery-time">Livraison estimée: {expectedDeliveryTime}</p>
-                    <DefaultButton text="Details" textColor="FFF" bgColor="298029" width="9rem" height="2.5rem" />
+                    <DefaultButton text="Détails" textColor="FFF" bgColor="298029" width="9rem" height="2.5rem" onClick={() => {setdetailState(true)}}/>
                     </div>
                 </Col>
             </Row>

@@ -18,12 +18,12 @@ exports.getRestaurantNameById = async (req, res) => {
     const id = req.query.restaurantId;
 
     try {
-        const restaurant = await Restaurant.findById(id, "Nom"); // 'Nom' is assumed to be the name field in your schema
+        const restaurant = await Restaurant.findById(id, "Nom img"); // 'Nom' is assumed to be the name field in your schema
         if (!restaurant) {
             return res.status(404).json({ message: "Restaurant not found" });
         }
 
-        res.status(200).send(restaurant.Nom); // Send back the name of the restaurant
+        res.status(200).send({Nom: restaurant.Nom, image: restaurant.img}); // Send back the name of the restaurant
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

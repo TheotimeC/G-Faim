@@ -18,8 +18,8 @@ async function getOrdersWithRestaurantNames() {
         return {currentOrders: [], pastOrders: []};
     // Step 2 & 3: For each order, retrieve the restaurant name and augment the order object
     const augmentedOrdersPromises = allOrders.map(async (order: any) => {
-        const restaurantName = (await restaurantApi.getRestaurantNameById(order.restaurantId)).data;
-        return { ...order, restaurantName};
+        const restaurantInfo = (await restaurantApi.getRestaurantNameById(order.restaurantId)).data;
+        return { ...order, restaurantName: restaurantInfo.Nom, restaurantImage: restaurantInfo.image };
     });
     const augmentedOrders =  await Promise.all(augmentedOrdersPromises);
 
@@ -83,7 +83,8 @@ export default function Commandes() {
                 <Row gutter={[16, 16]} className="">
                     {currentOrders.map((order: any, index) => (
                         <Col key={index} xs={24} sm={12} md={8} lg={8}>
-                            <CurrentOrderCard restaurant={order.restaurantName} id={order._id} expectedDeliveryTime={"12:00"} status={order.status} />
+                            <CurrentOrderCard restaurant={order.restaurantName} id={order._id}
+                                              expectedDeliveryTime={"12:00"} status={order.status} image={order.restaurantImage} />
                         </Col>
                     ))}
                 </Row>
