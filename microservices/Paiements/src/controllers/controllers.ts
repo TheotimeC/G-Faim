@@ -18,7 +18,7 @@ const db = new sqlite3.Database('./database.sqlite', err => {
     } else {
         console.log('Database opened successfully');
         // Ensure your payments table exists; adjust columns as needed
-        db.run(`CREATE TABLE IF NOT EXISTS payments (
+        db.run(`CREATE TABLE IF NOT EXISTS payments 
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       sessionId TEXT,
       userId TEXT,

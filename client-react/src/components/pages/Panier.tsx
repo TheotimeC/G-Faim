@@ -2,13 +2,15 @@ import { Drawer } from "antd";
 import "../assets/styles/Panier.css";
 import ItemPanier from "../common/ItemPanier";
 import Button from "../common/Button";
-import { useState, useEffect } from "react";
-import api from "../assets/api";
-import orderApi from "../assets/order-api.ts";
+import {useState, useEffect, useRef} from "react";
+import orderApi, {OrderStatus} from "../assets/order-api.ts";
+import {getUserId} from "../assets/user-api.ts";
+import paymentApi from "../assets/payment-api.ts";
+import {useLocation} from "react-router";
 
 // Define types for your item and response from the API
 type CartItem = {
-    _id: number;
+    _id: string;
     name: string;
     price: string; // Consider converting this to number if your backend sends it as a number
     quantity: number;
@@ -19,18 +21,19 @@ type DrawerType = {
     drawerState: boolean;
     setDrawerState: (state: boolean) => void;
 };
-const userId = "user123"
+const userId = await getUserId();
 
 // Function to fetch cart items
-const getCart = async (): Promise<CartItem[]> => {
+const getCart = async (): Promise<any> => {
     try {
         const response = await orderApi.getUserCart(userId);
-        return response.data.items; // Assuming the response data structure includes an items array
+        return response.data; // Assuming the response data structure includes an items array
     } catch (error: any) {
         console.error('Error fetching cart:', error.response ? error.response.data : error.message);
         return []; // Return empty array on error
     }
 };
+
 
 // Function to update the cart
 const updateCart = async (items: CartItem[]): Promise<CartItem[]> => {
@@ -48,11 +51,37 @@ const updateCart = async (items: CartItem[]): Promise<CartItem[]> => {
 
 const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const location = useLocation();
+    const hasCalledAPI = useRef(false); // Using useRef to persist the value without triggering re-renders
 
     useEffect(() => {
         (async () => {
-            const items = await getCart();
-            setCartItems(items);
+            const queryParams = new URLSearchParams(location.search);
+            const isSuccess = queryParams.get('success');
+            const cart = await getCart();
+            if (isSuccess === 'true' && !hasCalledAPI.current) {
+                hasCalledAPI.current = true; // Set the flag to true after calling your API
+                orderApi.setRestaurantStatus(cart._id, OrderStatus.TO_ACCEPT);
+            }
+        })();
+    }, [location.search]); // Depend on location.search
+    const checkout = async () => {
+        try {
+            // Assuming createCheckout function expects a userId and the cart items, and it returns a URL
+            const checkoutSession = await paymentApi.createCheckout(userId, cartItems);
+            // Redirect to Stripe's hosted checkout page
+            console.log("session: ", checkoutSession);
+            window.location.href = checkoutSession.data;
+        } catch (error) {
+            console.error('Error initiating checkout:', error);
+            // Handle the error appropriately in your UI
+        }
+    };
+
+    useEffect(() => {
+        (async () => {
+            const cart = await getCart();
+            setCartItems(cart.items);
         })();
     }, [drawerState]); // Fetch cart items when drawerState changes
 
@@ -60,14 +89,14 @@ const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
         setDrawerState(false);
     };
 
-    const removeItemFromCart = async (itemId: number): Promise<void> => {
+    const removeItemFromCart = async (itemId: string): Promise<void> => {
         await orderApi.deleteCartItem(userId, itemId);
         const updatedItems = cartItems.filter(item => item._id !== itemId);
         // const items = await updateCart(updatedItems);
         setCartItems(updatedItems);
     };
 
-    const updateItemQuantityFromCart = async (itemId: number, quantity: number): Promise<void> => {
+    const updateItemQuantityFromCart = async (itemId: string, quantity: number): Promise<void> => {
         const updatedItems = cartItems.map(item => {
             if (item._id === itemId) {
                 return { ...item, quantity };
@@ -83,7 +112,7 @@ const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
     if (cartItems != null) {
          subtotal = cartItems.reduce((acc, item) => {
             // const price = parseFloat(item.price.replace(',', '.').replace('€', ''));
-            const price = item.price;
+            const price = Number(item.price);
             return acc + (price * item.quantity);
         }, 0).toFixed(2);
 
@@ -119,7 +148,7 @@ const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
                         <span>Total :</span>
                         <span>{total}€</span>
                     </div>
-                    <Button className="checkout-button" text="Paiement" color="FFA500" size="100" />
+                    <Button className="checkout-button" text="Paiement" color="FFA500" size="100" onClick={checkout} />
                 </div>
             </Drawer>
         </>
