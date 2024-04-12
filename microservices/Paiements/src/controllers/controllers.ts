@@ -18,12 +18,12 @@ const db = new sqlite3.Database('./database.sqlite', err => {
     } else {
         console.log('Database opened successfully');
         // Ensure your payments table exists; adjust columns as needed
-        db.run(`CREATE TABLE IF NOT EXISTS payments 
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      sessionId TEXT,
-      userId TEXT,
-      amount INTEGER
-    )`);
+        db.run(`CREATE TABLE IF NOT EXISTS payments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            orderId TEXT,
+            userId TEXT,
+            total REAL
+        )`);
     }
 });
 
@@ -88,7 +88,6 @@ export const createCheckoutSession = async (req: FastifyRequest, res: FastifyRep
         // Record the payment details in the database
         // Calculate the total amount from lineItems if needed for recordPayment
         const totalAmount = totalItemCost + shippingCost;
-        await recordPayment(session.id, userId, totalAmount);
 
         // @ts-ignore
         res.status(200).send(session.url);
@@ -99,20 +98,33 @@ export const createCheckoutSession = async (req: FastifyRequest, res: FastifyRep
 };
 
 
-export const recordPayment = async (sessionId: string, userId: string, amount: number): Promise<any> => {
+export const recordPayment = async (request: any, reply: any) => {
     try {
-        const result = await dbQuery('INSERT INTO payments (sessionId, userId, amount) VALUES (?, ?, ?)', [
-            sessionId,
+        // Assuming orderId, userId, and amount are passed in the request body
+        const { orderId, userId, total } = request.body;
+
+        if (!orderId || !userId || isNaN(total)) {
+            reply.code(400).send({ error: 'Invalid request data' });
+            return;
+        }
+
+        const result = await dbQuery('INSERT INTO payments (orderId, userId, total) VALUES (?, ?, ?)', [
+            orderId,
             userId,
-            amount,
+            total,
         ]);
+
         // @ts-ignore
-        console.log('Payment recorded with ID:', result.id);
-        return result;
+        console.log('Payment recorded with ID:', result.insertId); // Adjust based on how your DB returns the ID
+
+        // @ts-ignore
+        reply.code(200).send({ message: 'Payment recorded successfully', id: result.insertId });
     } catch (error) {
         console.error('Failed to record payment:', error);
-        throw error;
+        // @ts-ignore
+        reply.code(500).send({ message: 'Failed to record payment', error: error.toString() });
     }
 };
+
 
 // Additional controller functions can go here
