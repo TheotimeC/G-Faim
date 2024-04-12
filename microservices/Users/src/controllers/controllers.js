@@ -30,6 +30,20 @@ exports.majUtilisateur = async (req, res) => {
     }
 };
 
+exports.majUtilisateurAddr = async (req, res) => {
+    const { id } = req.query; 
+    try {
+        const nouvelleAdresse = req.body.adresses_de_livraison[req.body.adresses_de_livraison.length - 1];
+        const utilisateur = await User.findByIdAndUpdate(id, { $push: { "adresses_de_livraison": nouvelleAdresse } }, { new: true });
+        if (!utilisateur) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+        res.status(200).json(utilisateur);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 exports.delUtilisateur = async (req, res) => {
     const { id } = req.query; 
     try {
@@ -201,7 +215,6 @@ exports.getUtilisateurs = async (req, res) => {
 
 exports.getUtilisateursfromid = async (req, res) => {
     const { id } = req.query; 
-    console.log("id:",id)
     try {
             const getUtilisateurs = await User.find({_id:id});
             res.status(200).json(getUtilisateurs);

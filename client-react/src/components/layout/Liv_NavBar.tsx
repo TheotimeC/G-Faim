@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Icon from '@mdi/react';
-import { mdiHomeVariantOutline, mdiMapMarker, mdiAccount } from '@mdi/js';
+import { mdiHomeVariantOutline, mdiHistory, mdiAccount } from '@mdi/js';
 import '../assets/styles/livnavbar.css'
 import { Layout, Menu, Button, theme } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import LivAccueil from '../pages/Liv_Accueil';
+import LivHistory from '../pages/Liv_History';
+import LivProfil from '../pages/Liv_Profil';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -23,19 +25,17 @@ const LivNav = () =>{
     switch (selectedMenu) {
       case '1':
         return <LivAccueil />;
-      //case '2':
-        // return <VotreComposantPourNav2 />;
-       // return <RestArticles/>;
-      //case '3':
-        // return <VotreComposantPourNav3 />;
-        //return <div><h1>Statistiques</h1></div>;
+      case '2':
+        return <LivHistory />;
+      case '3':
+        return <LivProfil/>;
       default:
         return <LivAccueil />;
     }
   };
   const menuItems = [
     { key: '1', icon: mdiHomeVariantOutline },
-    { key: '2', icon: mdiMapMarker },
+    { key: '2', icon: mdiHistory },
     { key: '3', icon: mdiAccount },
 ];
 return(

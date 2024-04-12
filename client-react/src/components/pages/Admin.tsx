@@ -6,6 +6,8 @@ import { Layout, Menu, Button, theme } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import AdminLogs from './Admin_Logs';
 import AdminManage from './Admin_Manage';
+import AdminHome from './AdminHome';
+import Profil from './Profil';
 
 const { Header, Sider, Content } = Layout;
 
@@ -23,7 +25,7 @@ const Admin = () =>{
   const renderContent = () => {
     switch (selectedMenu) {
       case '1':
-        return <div>1</div>;
+        return <AdminHome/>;
       case '2':
         // return <VotreComposantPourNav2 />;
         return <AdminLogs/>;
@@ -32,7 +34,7 @@ const Admin = () =>{
         return <AdminManage/>;
         case '4':
         // return <VotreComposantPourNav3 />;
-        return <div><h1>Historique</h1></div>;
+        return <Profil/>;
         case '5':
         // return <VotreComposantPourNav3 />;
         return <div>1</div>;
@@ -44,6 +46,7 @@ const Admin = () =>{
     { key: '1', icon: mdiHomeVariantOutline },
     { key: '2', icon: mdiChartBoxOutline },
     { key: '3', icon: mdiAccountCogOutline },
+    { key: '4', icon: mdiCog },
 
 ];
     return(

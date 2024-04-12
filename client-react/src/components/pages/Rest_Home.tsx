@@ -122,8 +122,9 @@ const RestHome = () =>{
 
     const countNonReadyOrders = (orders: Commande[]): number => {
       return orders.reduce((count, order) => {
-        if (order.status !== 'En attente de retrait') {
+        if (order.status == 'A accepter' || order.status == 'En préparation') {
           count += 1;
+          
         }
         return count;
       }, 0);
@@ -136,7 +137,7 @@ const RestHome = () =>{
       return orders.reduce((total, order) => {
         const orderDateStr = new Date(order.orderDate).toISOString().split('T')[0];
         if (orderDateStr === todayStr) {
-          total += order.total;
+          total += order.subtotal;
         }
         return total;
       }, 0);
@@ -264,7 +265,7 @@ const RestHome = () =>{
 
                     <Col span={12} className='Rectangle3'>
                         <div className='titre1'>CA journalier</div>
-                        <div className='statsnumber'>{calculateTodaysOrdersTotal(orders)}€</div>
+                        <div className='statsnumber'>{calculateTodaysOrdersTotal(orders).toFixed(2)}€</div>
                     </Col>
 
                     </Row>
@@ -314,7 +315,7 @@ const RestHome = () =>{
             </div>
       <div className="prix-total-parent">
         <b className="prix-total1">Prix Total : </b>
-        <b className="b27">{`${selectedRecord.subtotal} €`}</b>
+        <b className="b27">{`${selectedRecord.subtotal.toFixed(2)} €`}</b>
       </div>
     </div>
     
@@ -378,7 +379,7 @@ const RestHome = () =>{
             </div>
       <div className="prix-total-parent">
         <b className="prix-total1">Prix Total : </b>
-        <b className="b27">{`${selectedRecord.subtotal} €`}</b>
+        <b className="b27">{`${selectedRecord.subtotal.toFixed(2)} €`}</b>
       </div>
     </div>
     

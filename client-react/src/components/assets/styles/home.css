@@ -1,0 +1,149 @@
+.home-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 50px;
+
+  }
+  
+  .home-banner-text {
+    max-width: 40%;
+    font-family: Poppins;
+    margin-left: 7em;
+  }
+  
+
+  .home-logo-g {
+    color: #FFA500;
+    font-weight: bold;
+  }
+  .home-logo-faim {
+    color: #298029; 
+    font-weight: bold;
+  }
+
+  .home-banner-text .slogan {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #03081F;
+    margin: 20px 0;
+
+  }
+  
+  .home-banner-text .catchphrase {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #03081F;
+  }
+  
+  .home-banner-image img {
+    max-width: 70%;
+    height: auto;
+    margin-right :17em;
+  }
+
+
+
+
+.home-how-it-works {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff; /* Ou la couleur de votre choix */
+  }
+  
+  .home-how-it-works h1 {
+    color: #FFA500; /* La couleur rouge comme dans l'image */
+    margin-bottom: 20px;
+    font-family: Poppins;
+  }
+
+  .home-how-it-works h2 {
+    color: #298029 ; /* La couleur rouge comme dans l'image */
+    font-family: Poppins;
+  }
+  
+  .home-how-it-works-steps {
+    display: flex;
+    justify-content: space-around; /* Espacement entre les étapes */
+    align-items: center;
+  }
+  
+  .home-step {
+    width: 45%; /* Ajuster en fonction de la largeur souhaitée */
+    font-family: Poppins;
+  }
+
+  .home-step .icon {
+    width: 100px; /* Ajuster en fonction de la taille des icônes */
+    height: auto;
+    margin-bottom: 10px;
+    color :#298029;
+  }
+  
+  /* Ajoutez des media queries pour rendre le layout responsive si nécessaire */
+  @media (max-width: 768px) {
+    .home-how-it-works-steps {
+      flex-direction: column;
+    }
+    
+    .home-step {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+
+  
+
+
+  .home-benefits {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .home-benefits h1 {
+    color: #FFA500;
+    font-family: Poppins;
+  }
+  
+  .home-benefits h2 {
+    margin-bottom: 20px;
+    color: #298029;
+    font-family: Poppins;
+  }
+  
+  .home-benefits-cards {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .home-card {
+    width: 200px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    background: #fff;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+  
+  .home-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .home-card .icon {
+    margin-bottom: 10px;
+    color :#298029;
+  }
+
+  .home-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 40px;
+  }
+
+  .home-content-container {
+    flex-grow: 1;
+  }

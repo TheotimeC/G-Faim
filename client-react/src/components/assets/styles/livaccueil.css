@@ -6,86 +6,81 @@
     background-color: #f0f0f0; /* Modifiez selon votre thème de couleur */
   }
   
-  .logo-section {
-    /* Ajustez en fonction de la taille de votre logo */
-  }
-  
-  .liv-logo {
-    max-width: 100px; /* Ou la taille que vous voulez */
-  }
-  
   .livreur-info-section {
     display: flex;
     align-items: center;
   }
   
   .livreur-name h2 {
-    margin-right: 20px; /* Espace entre le nom et le bouton */
+    margin-right: 20px;
+    font-family: Poppins;
   }
 
-  :where(.css-dev-only-do-not-override-42nv3w).ant-layout-content {
-    margin: 0px !important;
-    padding: 0px !important;
+:where(.css-dev-only-do-not-override-42nv3w).ant-layout-content {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+  .liv-btn{
+    margin-right: 12px;
   }
 
-  .liv-accueil-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #298029; /* Couleur de fond vert */
-    color: white; /* Couleur du texte et de l'icône */
-    padding: 10px; /* Espacement interne */
-    border-radius: 10px; /* Bords arrondis */
-    font-size: 14px; /* Taille du texte */
-    font-weight: bold; /* Poids de la police */
-    cursor: pointer; /* Style du curseur en tant que pointeur */
-    margin-top: 10px; /* Marge au-dessus du bouton */
-  }
-
-/*.liv-accueil-container .default-button.active {
-  background-color: #298029; 
-  color: white;
-}
-
-.liv-accueil-container .default-button.inactive {
-  background-color: #d9d9d9; 
-  color: black;
-}
-
-.liv-accueil-container .default-button.active :hover {
-  background-color: #298029; 
-  color: white;
-}
-
-.liv-accueil-container .default-button.inactive :hover {
-  background-color: #d9d9d9; 
-  color: black;
-}*/
-
-:where(.css-dev-only-do-not-override-42nv3w).ant-btn-primary {
-  color: #fff;
-  background: #298029;
-  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+/* Pour le bouton actif */
+.liv-btn .ant-btn-primary {
+  background-color: #298029; /* Couleur verte pour actif */
+  border-color: #298029; /* Bordure verte pour actif */
 }
 
 
-:where(.css-dev-only-do-not-override-42nv3w).ant-btn-default {
-  color: #fff;
-  background: #FF3A44;
-  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+
+/* Pour le bouton inactif */
+.liv-btn .ant-btn-default {
+  background-color: #FF3A44; /* Couleur rouge pour inactif */
+  border-color: #FF3A44; /* Bordure rouge pour inactif */
+  color: #f0f0f0;
 }
 
-:where(.css-dev-only-do-not-override-42nv3w).ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
-  color: #fff;
-  background: #298029;
-}
 
-:where(.css-dev-only-do-not-override-42nv3w).ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
-  color: #fff;
-  background: #FF3A44;
-}
 
 .delivery-title-container{
-  font-family: Poppins;
-  margin-left: 12px;
+font-family: Poppins;
+margin-left: 12px;
 }
+
+.delivery-container {
+  margin-top: 20px;
+}
+
+.command-section {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px; /* Espace entre la commande et les sections en dessous */
+}
+
+.command-section h3 {
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.bottom-sections {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delivery-section {
+  padding-top: 25px;
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+.delivery-section h3 {
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+

@@ -209,7 +209,15 @@ export const getAllOrders = async (request: any, reply: any) => {
         reply.code(500).send(error);
     }
 };
-
+// Get all orders without a delivery man
+export const getAllOrdersWithoutDeliveryMan = async (request: any, reply: any) => {
+    try {
+        const orders = await Order.find({ deliveryManId: null });
+        reply.code(200).send(orders);
+    } catch (error: any) {
+        reply.code(500).send(error);
+    }
+};
 // Get a single order by ID
 export const getOrderById = async (request: any, reply: any) => {
     try {

@@ -57,6 +57,11 @@ const userSchema = new mongoose.Schema({
   apiKey:{
     type: String,
     required:false
+  },
+  suspended:{
+    type: Boolean,
+    required: true,
+    default:false,
   }
 }, { collection: 'Users' });
 
