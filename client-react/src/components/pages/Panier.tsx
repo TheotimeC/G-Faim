@@ -1,4 +1,4 @@
-import { Drawer } from "antd";
+import {Drawer, message} from "antd";
 import "../assets/styles/Panier.css";
 import ItemPanier from "../common/ItemPanier";
 import Button from "../common/Button";
@@ -53,7 +53,15 @@ const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const location = useLocation();
     const hasCalledAPI = useRef(false); // Using useRef to persist the value without triggering re-renders
+    const [messageApi, contextHolder] = message.useMessage()
 
+    const success = async () => {
+        await messageApi.open({
+            type: 'success',
+            content: 'Your payment has been successfully processed! Thank you for your purchase.',
+            duration: 2.5
+        });
+    };
     useEffect(() => {
         (async () => {
             const queryParams = new URLSearchParams(location.search);
@@ -62,6 +70,8 @@ const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
             if (isSuccess === 'true' && !hasCalledAPI.current) {
                 hasCalledAPI.current = true; // Set the flag to true after calling your API
                 orderApi.setRestaurantStatus(cart._id, OrderStatus.TO_ACCEPT);
+                paymentApi.recordPayment(cart.userId, cart._id, Number(cart.total.toFixed(2)));
+                success();
             }
         })();
     }, [location.search]); // Depend on location.search
@@ -70,7 +80,6 @@ const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
             // Assuming createCheckout function expects a userId and the cart items, and it returns a URL
             const checkoutSession = await paymentApi.createCheckout(userId, cartItems);
             // Redirect to Stripe's hosted checkout page
-            console.log("session: ", checkoutSession);
             window.location.href = checkoutSession.data;
         } catch (error) {
             console.error('Error initiating checkout:', error);
@@ -123,6 +132,7 @@ const Panier: React.FC<DrawerType> = ({ drawerState, setDrawerState }) => {
 
     return (
         <>
+            {contextHolder}
             <Drawer title="Panier" onClose={turnOff} open={drawerState} className="cart-drawer">
                 {cartItems && cartItems.map(item => (
                     <ItemPanier
