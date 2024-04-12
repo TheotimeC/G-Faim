@@ -421,6 +421,7 @@
 .a-accepter1 {
   align-self: stretch;
   color: #03081f;
+  font-weight: initial;
 }
 .statut-parent {
   width: 156px;

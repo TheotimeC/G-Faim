@@ -84,7 +84,8 @@ export default function Commandes() {
                     {currentOrders.map((order: any, index) => (
                         <Col key={index} xs={24} sm={12} md={8} lg={8}>
                             <CurrentOrderCard restaurant={order.restaurantName} id={order._id}
-                                              expectedDeliveryTime={"12:00"} status={order.status} image={order.restaurantImage} />
+                                              expectedDeliveryTime={"12:00"} status={order.status}
+                                              image={order.restaurantImage} items={order.items} />
                         </Col>
                     ))}
                 </Row>
